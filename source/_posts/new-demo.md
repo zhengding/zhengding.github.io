@@ -1,7 +1,9 @@
 ---
 title: new demo
-tags: demo
-categories: 前端
+tags: 
+  - tag1
+  - Hexo
+categories: 后端
 ---
 Welcome to [Hexo][1]! This is your very first post. Check [documentation][2] for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting][3] or you can ask me on [GitHub][4].
 
