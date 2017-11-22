@@ -26,7 +26,7 @@ $ hexo server
 More info: [Server][6]
 
 ### Generate static files
-
+![]()
 ``` bash
 $ hexo generate
 ```
@@ -49,3 +49,4 @@ More info: [Deployment][8]
 [6]:	https://hexo.io/docs/server.html
 [7]:	https://hexo.io/docs/generating.html
 [8]:	https://hexo.io/docs/deployment.html
+
