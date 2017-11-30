@@ -9,7 +9,7 @@ categories: 后端
 
 ## Java代码：
 ### CommonInterceptor.java
-```bash
+```java
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +65,7 @@ public class CommonInterceptor implements HandlerInterceptor {
 }
 ```
 ### ServletContextConfig.java
-```bash
+```java
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;

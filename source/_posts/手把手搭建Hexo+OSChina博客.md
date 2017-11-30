@@ -20,7 +20,7 @@ $ git config --global user.name "username"
 $ git config --global user.email "email@example.com"
 ```
 
-## 3.本地Git与GitHub建立联系
+## 3.本地Git与OSChina建立联系
 这里介绍SSH的配置，先检查电脑是否已经有SSH  
 
 ``` bash
@@ -154,7 +154,7 @@ INFO  Deploy done: git
 
 # 日常操作
 ## 1.写文章
-执行new命令，生成指定名称的文章至 Admin-blog\source_posts\文章标题.md 。  
+执行new命令，生成指定名称的文章至 Admin-blog\source\_posts\文章标题.md 。  
 
 ```bash
 $ hexo new [layout] "文章标题" #新建文章
