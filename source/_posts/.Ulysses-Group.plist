@@ -6,6 +6,16 @@
 	<dict>
 		<key>sheetClusters</key>
 		<dict>
+			<key>Mac系统安装PHP7教程.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534154875.244811</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>30</integer>
+				</dict>
+			</dict>
 			<key>[转]全文搜索引擎 Elasticsearch 入门教程.md</key>
 			<dict>
 				<key>lastModification</key>
@@ -36,14 +46,14 @@
 					<integer>17</integer>
 				</dict>
 			</dict>
-			<key>hello-world.md</key>
+			<key>安装 node-sass 的正确姿势 - 2.md</key>
 			<dict>
 				<key>lastModification</key>
-				<real>533038586.21491599</real>
+				<real>533798841.58909303</real>
 				<key>version</key>
 				<dict>
 					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
-					<integer>7</integer>
+					<integer>26</integer>
 				</dict>
 			</dict>
 			<key>手把手搭建Hexo+OSChina博客.md</key>
@@ -63,13 +73,16 @@
 	<key>sheetClusters</key>
 	<array>
 		<array>
+			<string>Mac系统安装PHP7教程.md</string>
+		</array>
+		<array>
 			<string>[转]全文搜索引擎 Elasticsearch 入门教程.md</string>
 		</array>
 		<array>
 			<string>filter配置跨域访问.md</string>
 		</array>
 		<array>
-			<string>hello-world.md</string>
+			<string>安装 node-sass 的正确姿势 - 2.md</string>
 		</array>
 		<array>
 			<string>手把手搭建Hexo+OSChina博客.md</string>
@@ -87,7 +100,7 @@
 		<key>sheetClusters</key>
 		<dict>
 			<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
-			<integer>21</integer>
+			<integer>31</integer>
 		</dict>
 		<key>sheetOrder</key>
 		<dict>
