@@ -9,7 +9,7 @@ categories: PHP
 
 安装教程：
 ## 1.首先我们需要安装Homebrew
-一条命令完美安装：[http://brew.sh/index_zh-cn.html][1]
+一条命令完美安装：[http://brew.sh/index\_zh-cn.html][1]
 ## 2.终端输入以下命令
 
 ```bash
@@ -42,6 +42,35 @@ Zend Engine v3.0.0, Copyright (c) 1998-2016 Zend Technologies
 ```bash
 brew install php70 --with-apxs2  --with-apache --with-gmp --with-imap --with-tidy --with-debug
 ```
+
+## 3.配置Apache
+```bash
+$ sudo vim /etc/apache2/httpd.conf
+找到这行注释掉(大概在168行）
+Comment out the PHP5 module   
+LoadModule php5_module libexec/apache2/libphp5.so
+
+Enable PHP 7 module  
+LoadModule php7_module /usr/local/opt/php70/libexec/apache2/libphp7.so  <FilesMatch \.php$>
+SetHandler application/x-httpd-php
+</FilesMatch>
+```
+
+## 4.重启Apache
+
+```bash
+sudo apachectl restart
+```
+
+## 5.到你的Apache的默认目录/Library/WebServer/Documents下面去增加一个info.php的文件
+```bash
+<?php    
+phpinfo();    
+?>
+```
+
+最后到你的 http://localhost/info.php 去看看测试以下，如果看到相关的信息，就说明已经安装好了。
+
 
 
 [1]:	http://brew.sh/index_zh-cn.html

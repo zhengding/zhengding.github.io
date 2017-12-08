@@ -6,6 +6,26 @@
 	<dict>
 		<key>sheetClusters</key>
 		<dict>
+			<key>Centos7.0 中的中iptables、firewall和SELINUX.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534417256.88399202</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>46</integer>
+				</dict>
+			</dict>
+			<key>Git撤销&amp;回滚操作.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534307037.87491602</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>38</integer>
+				</dict>
+			</dict>
 			<key>Mac系统安装PHP7教程.md</key>
 			<dict>
 				<key>lastModification</key>
@@ -14,6 +34,16 @@
 				<dict>
 					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
 					<integer>30</integer>
+				</dict>
+			</dict>
+			<key>React总结.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534329716.04420799</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>42</integer>
 				</dict>
 			</dict>
 			<key>[转]全文搜索引擎 Elasticsearch 入门教程.md</key>
@@ -34,6 +64,16 @@
 				<dict>
 					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
 					<integer>7</integer>
+				</dict>
+			</dict>
+			<key>git reset revert 回退回滚取消提交返回上一版本.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534305134.08832097</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>34</integer>
 				</dict>
 			</dict>
 			<key>git教程.md</key>
@@ -73,6 +113,18 @@
 	<key>sheetClusters</key>
 	<array>
 		<array>
+			<string>Centos7.0 中的中iptables、firewall和SELINUX.md</string>
+		</array>
+		<array>
+			<string>React总结.md</string>
+		</array>
+		<array>
+			<string>Git撤销&amp;回滚操作.md</string>
+		</array>
+		<array>
+			<string>git reset revert 回退回滚取消提交返回上一版本.md</string>
+		</array>
+		<array>
 			<string>Mac系统安装PHP7教程.md</string>
 		</array>
 		<array>
@@ -100,7 +152,7 @@
 		<key>sheetClusters</key>
 		<dict>
 			<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
-			<integer>31</integer>
+			<integer>47</integer>
 		</dict>
 		<key>sheetOrder</key>
 		<dict>
