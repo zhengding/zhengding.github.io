@@ -18,7 +18,7 @@ after_script:
   - git config user.email "18895608221@163.com"
   - git add .
   - git commit -m "Update docs"
-  - git push --force --quiet "https://${GH_REF}" master:master
+  - git push --force --quiet "https://gitee.com/ding-data/zhengdingblog.git" master:master
 
 # E: Build LifeCycle
 branches:
