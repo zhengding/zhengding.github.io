@@ -8,22 +8,26 @@ node_js:
 install:
   - npm install
 
+
+#before_script:
+ # - npm install -g gulp
+
 script:
   - hexo g
 
 after_script:
   - cd ./public
   - git init
-  - git config user.name "zhengding"
-  - git config user.email "18895608221@163.com"
+  - git config user.name "lifengsofts"
+  - git config user.email "lifengsofts@gmail.com"
   - git add .
   - git commit -m "Update docs"
-  - git push  "https://${GH_TOKEN}@${GH_REF}" master:master
-
+  - git push --force --quiet "https://61566eec3f3f4620e6dbe660fb4a10123ff6c26b@github.com/zhengding/zhengding.github.io.git" master:master
 # E: Build LifeCycle
+
 branches:
   only:
-    - master
+    - blog-source
 env:
  global:
    - GH_REF: github.com/zhengding/zhengding.github.io.git
