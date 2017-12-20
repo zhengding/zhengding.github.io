@@ -249,6 +249,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/zhengdingblog/zhengdingblog/2017/12/07/Git撤销&回滚操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhengdingblog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengdingblog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhengdingblog/2017/12/07/Git撤销&回滚操作/" itemprop="url">Git撤销&回滚操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-07T10:35:59+08:00">
+                2017-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhengdingblog/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>开发过程中，你肯定会遇到这样的场景：</p>
+<h2 id="场景一："><a href="#场景一：" class="headerlink" title="场景一："></a>场景一：</h2><blockquote>
+<p>糟了，我刚把不想要的代码，commit到本地仓库中了，但是还没有做push操作！</p>
+</blockquote>
+<h2 id="场景二："><a href="#场景二：" class="headerlink" title="场景二："></a>场景二：</h2><blockquote>
+<p>彻底完了，刚线上更新的代码出现问题了，需要还原这次提交的代码！</p>
+</blockquote>
+<h2 id="场景三："><a href="#场景三：" class="headerlink" title="场景三："></a>场景三：</h2><blockquote>
+<p>刚才我发现之前的某次提交太愚蠢了，现在想要干掉它！</p>
+</blockquote>
+<h1 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h1><p>上述场景一，在未进行git push前的所有操作，都是在“本地仓库”中执行的。我们暂且将“本地仓库”的代码还原操作叫做“撤销”！</p>
+<h2 id="情况一：文件被修改了，但未执行git-add操作-working-tree内撤销"><a href="#情况一：文件被修改了，但未执行git-add操作-working-tree内撤销" class="headerlink" title="情况一：文件被修改了，但未执行git add操作(working tree内撤销)"></a>情况一：文件被修改了，但未执行git add操作(working tree内撤销)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout fileName</span><br><span class="line">git checkout .</span><br></pre></td></tr></table></figure>
+<h2 id="情况二：同时对多个文件执行了git-add操作，但本次只想提交其中一部分文件"><a href="#情况二：同时对多个文件执行了git-add操作，但本次只想提交其中一部分文件" class="headerlink" title="情况二：同时对多个文件执行了git add操作，但本次只想提交其中一部分文件"></a>情况二：同时对多个文件执行了git add操作，但本次只想提交其中一部分文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git add *</span><br><span class="line">$ git status</span><br><span class="line"><span class="comment"># 取消暂存</span></span><br><span class="line">$ git reset HEAD &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="情况三：文件执行了git-add操作，但想撤销对其的修改（index内回滚）"><a href="#情况三：文件执行了git-add操作，但想撤销对其的修改（index内回滚）" class="headerlink" title="情况三：文件执行了git add操作，但想撤销对其的修改（index内回滚）"></a>情况三：文件执行了git add操作，但想撤销对其的修改（index内回滚）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取消暂存</span></span><br><span class="line">git reset HEAD fileName</span><br><span class="line"><span class="comment"># 撤销修改</span></span><br><span class="line">git checkout fileName</span><br></pre></td></tr></table></figure>
+<h2 id="情况四：修改的文件已被git-commit，但想再次修改不再产生新的Commit"><a href="#情况四：修改的文件已被git-commit，但想再次修改不再产生新的Commit" class="headerlink" title="情况四：修改的文件已被git commit，但想再次修改不再产生新的Commit"></a>情况四：修改的文件已被git commit，但想再次修改不再产生新的Commit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改最后一次提交 </span></span><br><span class="line">$ git add sample.txt</span><br><span class="line">$ git commit --amend -m<span class="string">"说明"</span></span><br></pre></td></tr></table></figure>
+<h2 id="情况五：已在本地进行了多次git-commit操作，现在想撤销到其中某次Commit"><a href="#情况五：已在本地进行了多次git-commit操作，现在想撤销到其中某次Commit" class="headerlink" title="情况五：已在本地进行了多次git commit操作，现在想撤销到其中某次Commit"></a>情况五：已在本地进行了多次git commit操作，现在想撤销到其中某次Commit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [--hard|soft|mixed|merge|keep] [commit|HEAD]</span><br></pre></td></tr></table></figure>
+<h1 id="回滚"><a href="#回滚" class="headerlink" title="回滚"></a>回滚</h1><p>上述场景二，已进行git push，即已推送到“远程仓库”中。我们将已被提交到“远程仓库”的代码还原操作叫做“回滚”！注意：对远程仓库做回滚操作是有风险的，需提前做好备份和通知其他团队成员！<br>如果你每次更新线上，都会打tag，那恭喜你，你可以很快的处理上述场景二的情况</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;tag&gt;</span><br></pre></td></tr></table></figure>
+<p>如果你回到当前HEAD指向</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="情况一：撤销指定文件到指定版本"><a href="#情况一：撤销指定文件到指定版本" class="headerlink" title="情况一：撤销指定文件到指定版本"></a>情况一：撤销指定文件到指定版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看指定文件的历史版本</span></span><br><span class="line">git <span class="built_in">log</span> &lt;filename&gt;</span><br><span class="line"><span class="comment"># 回滚到指定commitID</span></span><br><span class="line">git checkout &lt;commitID&gt; &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="情况二：删除最后一次远程提交"><a href="#情况二：删除最后一次远程提交" class="headerlink" title="情况二：删除最后一次远程提交"></a>情况二：删除最后一次远程提交</h2><h3 id="方式一：使用revert"><a href="#方式一：使用revert" class="headerlink" title="方式一：使用revert"></a>方式一：使用revert</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h3 id="方式二：使用reset"><a href="#方式二：使用reset" class="headerlink" title="方式二：使用reset"></a>方式二：使用reset</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line">git push origin master -f</span><br></pre></td></tr></table></figure>
+<p>二者区别：</p>
+<ol>
+<li>revert是放弃指定提交的修改，但是会生成一次新的提交，需要填写提交注释，以前的历史记录都在；</li>
+<li>reset是指将HEAD指针指到指定提交，历史记录中不会出现放弃的提交记录。<h2 id="情况三：回滚某次提交"><a href="#情况三：回滚某次提交" class="headerlink" title="情况三：回滚某次提交"></a>情况三：回滚某次提交</h2></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到要回滚的commitID</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">git revert commitID</span><br></pre></td></tr></table></figure>
+<h3 id="删除某次提交"><a href="#删除某次提交" class="headerlink" title="删除某次提交"></a>删除某次提交</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline -n5</span><br><span class="line">		</span><br><span class="line">git rebase -i <span class="string">"commit id"</span>^</span><br></pre></td></tr></table></figure>
+<p>注意：需要注意最后的^号，意思是commit id的前一次提交</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i <span class="string">"5b3ba7a"</span>^</span><br></pre></td></tr></table></figure>
+<p>在编辑框中删除相关commit，如pick 5b3ba7a test2，然后保存退出（如果遇到冲突需要先解决冲突）！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master -f</span><br></pre></td></tr></table></figure>
+<p>通过上述操作，如果你想对历史多个commit进行处理或者，可以选择git rebase -i，只需删除对应的记录就好。rebase还可对 commit 消息进行编辑，以及合并多个commit。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/zhengdingblog/zhengdingblog/2017/12/07/git reset revert 回退回滚取消提交返回上一版本/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -914,148 +1090,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/zhengdingblog/zhengdingblog/2017/11/20/filter配置跨域访问/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhengdingblog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengdingblog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhengdingblog/2017/11/20/filter配置跨域访问/" itemprop="url">filter配置跨域访问</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-20T16:16:01+08:00">
-                2017-11-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhengdingblog/categories/后端/" itemprop="url" rel="index">
-                    <span itemprop="name">后端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Java代码："><a href="#Java代码：" class="headerlink" title="Java代码："></a>Java代码：</h2><h3 id="CommonInterceptor-java"><a href="#CommonInterceptor-java" class="headerlink" title="CommonInterceptor.java"></a>CommonInterceptor.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; excludedUrls;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getExcludedUrls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setExcludedUrls</span><span class="params">(List&lt;String&gt; excludedUrls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.excludedUrls = excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在业务处理器处理请求之前被调用 如果返回false</span></span><br><span class="line"><span class="comment">     * 从当前的拦截器往回执行所有拦截器的afterCompletion(),</span></span><br><span class="line"><span class="comment">     * 再退出拦截器链, 如果返回true 执行下一个拦截器,</span></span><br><span class="line"><span class="comment">     * 直到所有的拦截器都执行完毕 再执行被拦截的Controller</span></span><br><span class="line"><span class="comment">     * 然后进入拦截器链,</span></span><br><span class="line"><span class="comment">     * 从最后一个拦截器往回执行所有的postHandle()</span></span><br><span class="line"><span class="comment">     * 接着再从最后一个拦截器往回执行所有的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"3600"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,Content-Encoding"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在业务处理器处理请求执行完成后,生成视图之前执行的动作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在DispatcherServlet完全处理完请求后被调用</span></span><br><span class="line"><span class="comment">     * 当有拦截器抛出异常时,</span></span><br><span class="line"><span class="comment">     * 会从当前拦截器往回执行所有的拦截器的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handler</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="ServletContextConfig-java"><a href="#ServletContextConfig-java" class="headerlink" title="ServletContextConfig.java"></a>ServletContextConfig.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; excludedUrls;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getExcludedUrls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setExcludedUrls</span><span class="params">(List&lt;String&gt; excludedUrls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.excludedUrls = excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在业务处理器处理请求之前被调用 如果返回false</span></span><br><span class="line"><span class="comment">     * 从当前的拦截器往回执行所有拦截器的afterCompletion(),</span></span><br><span class="line"><span class="comment">     * 再退出拦截器链, 如果返回true 执行下一个拦截器,</span></span><br><span class="line"><span class="comment">     * 直到所有的拦截器都执行完毕 再执行被拦截的Controller</span></span><br><span class="line"><span class="comment">     * 然后进入拦截器链,</span></span><br><span class="line"><span class="comment">     * 从最后一个拦截器往回执行所有的postHandle()</span></span><br><span class="line"><span class="comment">     * 接着再从最后一个拦截器往回执行所有的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"3600"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,Content-Encoding"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在业务处理器处理请求执行完成后,生成视图之前执行的动作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在DispatcherServlet完全处理完请求后被调用</span></span><br><span class="line"><span class="comment">     * 当有拦截器抛出异常时,</span></span><br><span class="line"><span class="comment">     * 会从当前拦截器往回执行所有的拦截器的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handler</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/zhengdingblog/zhengdingblog/2017/11/20/git教程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1542,6 +1576,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/zhengdingblog/zhengdingblog/2017/11/20/filter配置跨域访问/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhengdingblog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengdingblog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhengdingblog/2017/11/20/filter配置跨域访问/" itemprop="url">filter配置跨域访问</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-20T16:16:01+08:00">
+                2017-11-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhengdingblog/categories/后端/" itemprop="url" rel="index">
+                    <span itemprop="name">后端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Java代码："><a href="#Java代码：" class="headerlink" title="Java代码："></a>Java代码：</h2><h3 id="CommonInterceptor-java"><a href="#CommonInterceptor-java" class="headerlink" title="CommonInterceptor.java"></a>CommonInterceptor.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; excludedUrls;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getExcludedUrls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setExcludedUrls</span><span class="params">(List&lt;String&gt; excludedUrls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.excludedUrls = excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在业务处理器处理请求之前被调用 如果返回false</span></span><br><span class="line"><span class="comment">     * 从当前的拦截器往回执行所有拦截器的afterCompletion(),</span></span><br><span class="line"><span class="comment">     * 再退出拦截器链, 如果返回true 执行下一个拦截器,</span></span><br><span class="line"><span class="comment">     * 直到所有的拦截器都执行完毕 再执行被拦截的Controller</span></span><br><span class="line"><span class="comment">     * 然后进入拦截器链,</span></span><br><span class="line"><span class="comment">     * 从最后一个拦截器往回执行所有的postHandle()</span></span><br><span class="line"><span class="comment">     * 接着再从最后一个拦截器往回执行所有的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"3600"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,Content-Encoding"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在业务处理器处理请求执行完成后,生成视图之前执行的动作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在DispatcherServlet完全处理完请求后被调用</span></span><br><span class="line"><span class="comment">     * 当有拦截器抛出异常时,</span></span><br><span class="line"><span class="comment">     * 会从当前拦截器往回执行所有的拦截器的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handler</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ServletContextConfig-java"><a href="#ServletContextConfig-java" class="headerlink" title="ServletContextConfig.java"></a>ServletContextConfig.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; excludedUrls;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getExcludedUrls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setExcludedUrls</span><span class="params">(List&lt;String&gt; excludedUrls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.excludedUrls = excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在业务处理器处理请求之前被调用 如果返回false</span></span><br><span class="line"><span class="comment">     * 从当前的拦截器往回执行所有拦截器的afterCompletion(),</span></span><br><span class="line"><span class="comment">     * 再退出拦截器链, 如果返回true 执行下一个拦截器,</span></span><br><span class="line"><span class="comment">     * 直到所有的拦截器都执行完毕 再执行被拦截的Controller</span></span><br><span class="line"><span class="comment">     * 然后进入拦截器链,</span></span><br><span class="line"><span class="comment">     * 从最后一个拦截器往回执行所有的postHandle()</span></span><br><span class="line"><span class="comment">     * 接着再从最后一个拦截器往回执行所有的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"3600"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,Content-Encoding"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在业务处理器处理请求执行完成后,生成视图之前执行的动作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在DispatcherServlet完全处理完请求后被调用</span></span><br><span class="line"><span class="comment">     * 当有拦截器抛出异常时,</span></span><br><span class="line"><span class="comment">     * 会从当前拦截器往回执行所有的拦截器的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handler</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/zhengdingblog/zhengdingblog/2017/11/17/手把手搭建Hexo+OSChina博客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1778,7 +1954,7 @@
               
                 <a href="/zhengdingblog/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1800,7 +1976,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhengdingblog/tags/index.html">
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
