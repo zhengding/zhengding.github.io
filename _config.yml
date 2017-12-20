@@ -81,5 +81,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@gitee.com:ding-data/zhengdingblog.git
+  repo: https://github.com/zhengding/zhengding.github.io.git
   branch: master
