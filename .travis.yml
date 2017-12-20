@@ -22,7 +22,7 @@ after_script:
   - git config user.email "lifengsofts@gmail.com"
   - git add .
   - git commit -m "Update docs"
-  - git push --force --quiet "https://61566eec3f3f4620e6dbe660fb4a10123ff6c26b@github.com/zhengding/zhengding.github.io.git" master:master
+  - git push --force --quiet "https://${GH_REF}" master:master
 # E: Build LifeCycle
 
 branches:
