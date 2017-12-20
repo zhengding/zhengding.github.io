@@ -1,0 +1,15 @@
+# running on container-based infrastructure
+sudo: false
+language: node_js
+node_js:
+  - "6.10"
+
+# S: Build Lifecycle
+install:
+  - npm install
+
+#before_script:
+
+script:
+  - hexo g
+  - hexo d

@@ -85,12 +85,12 @@
 <meta property="og:title" content="Centos7.0 中的中iptables、firewall和SELINUX">
 <meta property="og:url" content="http://ding-data.gitee.io/zhengdingblog/2017/12/08/Centos7.0 中的中iptables、firewall和SELINUX/index.html">
 <meta property="og:site_name" content="zhengdingblog">
-<meta property="og:description" content="CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。 firewallfirewall能够允许哪些服务可用，那些端口可用…. 属于更高一层的防火墙。firewall的底层是使用iptables进行数据过滤，建立在iptables之上。 firewall是动态防火墙，使用了D-BUS方式，修改配置不会破坏已有的数据链接。   关闭firewall12syste">
+<meta property="og:description" content="CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。 firewallfirewall能够允许哪些服务可用，那些端口可用…. 属于更高一层的防火墙。firewall的底层是使用iptables进行数据过滤，建立在iptables之上。 firewall是动态防火墙，使用了D-BUS方式，修改配置不会破坏已有的数据链接。   关闭firewall123syst">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-08T09:18:30.000Z">
+<meta property="og:updated_time" content="2017-12-11T07:41:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Centos7.0 中的中iptables、firewall和SELINUX">
-<meta name="twitter:description" content="CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。 firewallfirewall能够允许哪些服务可用，那些端口可用…. 属于更高一层的防火墙。firewall的底层是使用iptables进行数据过滤，建立在iptables之上。 firewall是动态防火墙，使用了D-BUS方式，修改配置不会破坏已有的数据链接。   关闭firewall12syste">
+<meta name="twitter:description" content="CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。 firewallfirewall能够允许哪些服务可用，那些端口可用…. 属于更高一层的防火墙。firewall的底层是使用iptables进行数据过滤，建立在iptables之上。 firewall是动态防火墙，使用了D-BUS方式，修改配置不会破坏已有的数据链接。   关闭firewall123syst">
 
 
 
@@ -345,12 +345,12 @@
         <p>CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。</p>
 <h2 id="firewall"><a href="#firewall" class="headerlink" title="firewall"></a>firewall</h2><p>firewall能够允许哪些服务可用，那些端口可用…. 属于更高一层的防火墙。<br>firewall的底层是使用iptables进行数据过滤，建立在iptables之上。</p>
 <p>firewall是动态防火墙，使用了D-BUS方式，修改配置不会破坏已有的数据链接。  </p>
-<h2 id="关闭firewall"><a href="#关闭firewall" class="headerlink" title="关闭firewall"></a>关闭firewall</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service <span class="comment">#停止firewall</span></span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld.service <span class="comment">#禁止firewall开机启动</span></span><br></pre></td></tr></table></figure>
+<h2 id="关闭firewall"><a href="#关闭firewall" class="headerlink" title="关闭firewall"></a>关闭firewall</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service <span class="comment">#停止firewall</span></span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld.service <span class="comment">#禁止firewall开机启动</span></span><br><span class="line">firewall-cmd --state <span class="comment">#查看默认防火墙状态（关闭后显示notrunning，开启后显示running）</span></span><br></pre></td></tr></table></figure>
 <h2 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h2><p>iptables用于过滤数据包，属于网络层防火墙.  </p>
 <p>在设置iptables后需要重启iptables，会重新加载防火墙模块，而模块的装载将会破坏状态防火墙和确立的连接。会破坏已经对外提供数据链接的程序。可能需要重启程序。  </p>
 <h2 id="iptables防火墙"><a href="#iptables防火墙" class="headerlink" title="iptables防火墙"></a>iptables防火墙</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install iptables-services <span class="comment">#安装iptables</span></span><br><span class="line">vi /etc/sysconfig/iptables <span class="comment">#编辑iptables防火墙配置文件</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Firewall configuration written by system-config-firewall</span><br><span class="line">Manual customization of this file is not recommended.</span><br><span class="line">*filter</span><br><span class="line">:INPUT ACCEPT [0:0]</span><br><span class="line">:FORWARD ACCEPT [0:0]</span><br><span class="line">:OUTPUT ACCEPT [0:0]</span><br><span class="line">-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span><br><span class="line">-A INPUT -p icmp -j ACCEPT</span><br><span class="line">-A INPUT -i lo -j ACCEPT</span><br><span class="line">-A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT</span><br><span class="line">-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT</span><br><span class="line">-A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT</span><br><span class="line">-A INPUT -j REJECT --reject-with icmp-host-prohibited</span><br><span class="line">-A FORWARD -j REJECT --reject-with icmp-host-prohibited</span><br><span class="line">COMMIT</span><br><span class="line">:wq! <span class="comment">#保存退出</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart iptables.service <span class="comment">#最后重启防火墙使配置生效</span></span><br><span class="line">systemctl <span class="built_in">enable</span> iptables.service <span class="comment">#设置防火墙开机启动</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart iptables.service <span class="comment">#最后重启防火墙使配置生效</span></span><br><span class="line">systemctl <span class="built_in">enable</span> iptables.service <span class="comment">#设置防火墙开机启动</span></span><br><span class="line">yum remove iptables   <span class="comment">#卸载iptables</span></span><br></pre></td></tr></table></figure>
 <h2 id="SELinux"><a href="#SELinux" class="headerlink" title="SELinux"></a>SELinux</h2><p>SELinux(Security-Enhanced Linux) 是美国国家安全局（NSA）对于强制访问控制的实现，是 Linux历史上最杰出的新安全子系统。它不是用来防火墙设置的。但它对Linux系统的安全很有用。Linux内核(Kernel)从2.6就有了SELinux。  </p>
 <p>SELinux是一种基于 域-类型 模型（domain-type）的强制访问控制（MAC）安全系统，它由NSA编写并设计成内核模块包含到内核中，相应的某些安全相关的应用也被打了SELinux的补丁，最后还有一个相应的安全策略。任何程序对其资源享有完全的控制权。假设某个程序打算把含有潜在重要信息的文件扔到/tmp目录下，那么在DAC情况下没人能阻止他。SELinux提供了比传统的UNⅨ权限更好的访问控制。</p>
 <h2 id="关闭SELinux"><a href="#关闭SELinux" class="headerlink" title="关闭SELinux"></a>关闭SELinux</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi  /etc/selinux/config</span><br></pre></td></tr></table></figure>
@@ -401,6 +401,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/zhengdingblog/2017/12/11/搭建ShadowSocks/" rel="prev" title="搭建ShadowSocks">
+                搭建ShadowSocks <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -477,7 +481,7 @@
               
                 <a href="/zhengdingblog/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -488,7 +492,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhengdingblog/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -499,7 +503,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhengdingblog/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

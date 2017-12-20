@@ -22,6 +22,7 @@ firewall是动态防火墙，使用了D-BUS方式，修改配置不会破坏已�
 ```bash
 systemctl stop firewalld.service #停止firewall
 systemctl disable firewalld.service #禁止firewall开机启动
+firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）  
 ```
 
 ## iptables
@@ -57,6 +58,7 @@ COMMIT
 ```bash
 systemctl restart iptables.service #最后重启防火墙使配置生效
 systemctl enable iptables.service #设置防火墙开机启动
+yum remove iptables   #卸载iptables
 ```
 
 ## SELinux

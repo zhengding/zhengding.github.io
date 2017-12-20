@@ -16,6 +16,16 @@
 					<integer>46</integer>
 				</dict>
 			</dict>
+			<key>Docker常用命令.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534751587.273996</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>60</integer>
+				</dict>
+			</dict>
 			<key>Git撤销&amp;回滚操作.md</key>
 			<dict>
 				<key>lastModification</key>
@@ -56,6 +66,16 @@
 					<integer>20</integer>
 				</dict>
 			</dict>
+			<key>componentWillReceiveProps详解（this.props）状态改变检测机制.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>535370744.39040297</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>74</integer>
+				</dict>
+			</dict>
 			<key>filter配置跨域访问.md</key>
 			<dict>
 				<key>lastModification</key>
@@ -86,6 +106,16 @@
 					<integer>17</integer>
 				</dict>
 			</dict>
+			<key>nrm -- NPM registry 管理工具.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534845481.71574003</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>70</integer>
+				</dict>
+			</dict>
 			<key>安装 node-sass 的正确姿势 - 2.md</key>
 			<dict>
 				<key>lastModification</key>
@@ -94,6 +124,16 @@
 				<dict>
 					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
 					<integer>26</integer>
+				</dict>
+			</dict>
+			<key>快速掌握dockerfile.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534733068.16119999</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>54</integer>
 				</dict>
 			</dict>
 			<key>手把手搭建Hexo+OSChina博客.md</key>
@@ -106,12 +146,63 @@
 					<integer>7</integer>
 				</dict>
 			</dict>
+			<key>把项目同时托管到github和oschina.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>535423540.59615099</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>78</integer>
+				</dict>
+			</dict>
+			<key>搭建ShadowSocks.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534668008.71126097</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>50</integer>
+				</dict>
+			</dict>
+			<key>解决 mac （windows）终端上代理的难题.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>534754021.82089001</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>66</integer>
+				</dict>
+			</dict>
 		</dict>
 		<key>sheetOrder</key>
 		<real>532860435.03196299</real>
 	</dict>
 	<key>sheetClusters</key>
 	<array>
+		<array>
+			<string>把项目同时托管到github和oschina.md</string>
+		</array>
+		<array>
+			<string>componentWillReceiveProps详解（this.props）状态改变检测机制.md</string>
+		</array>
+		<array>
+			<string>nrm -- NPM registry 管理工具.md</string>
+		</array>
+		<array>
+			<string>解决 mac （windows）终端上代理的难题.md</string>
+		</array>
+		<array>
+			<string>Docker常用命令.md</string>
+		</array>
+		<array>
+			<string>快速掌握dockerfile.md</string>
+		</array>
+		<array>
+			<string>搭建ShadowSocks.md</string>
+		</array>
 		<array>
 			<string>Centos7.0 中的中iptables、firewall和SELINUX.md</string>
 		</array>
@@ -152,7 +243,7 @@
 		<key>sheetClusters</key>
 		<dict>
 			<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
-			<integer>47</integer>
+			<integer>79</integer>
 		</dict>
 		<key>sheetOrder</key>
 		<dict>
