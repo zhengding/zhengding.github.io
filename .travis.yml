@@ -27,7 +27,7 @@ after_script:
 
 branches:
   only:
-    - blog-source
+    - master
 env:
  global:
    - GH_REF: github.com/zhengding/zhengding.github.io.git
