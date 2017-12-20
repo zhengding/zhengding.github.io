@@ -10,5 +10,20 @@ install:
 
 script:
   - hexo g
-  - hexo d
 
+after_script:
+  - cd ./public
+  - git init
+  - git config user.name "zhengding"
+  - git config user.email "18895608221@163.com"
+  - git add .
+  - git commit -m "Update docs"
+  - git push  "https://${GH_TOKEN}@${GH_REF}" master:master
+
+# E: Build LifeCycle
+branches:
+  only:
+    - master
+env:
+ global:
+   - GH_REF: github.com/zhengding/zhengding.github.io.git
