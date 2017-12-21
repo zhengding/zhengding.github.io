@@ -5,6 +5,9 @@
   "hexo": {
     "version": "3.4.4"
   },
+  "scripts": {
+    "commit": "git add . && git commit -am 'zhengding' && git push"
+  },
   "dependencies": {
     "hexo": "^3.2.0",
     "hexo-deployer-git": "^0.3.1",
