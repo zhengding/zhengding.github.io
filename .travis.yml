@@ -22,7 +22,7 @@ after_script:
   - git config user.email "18895608221@163.com"
   - git add .
   - git commit -m "Update docs"
-  - git push --force "https://${GH_TOKEN}@${GH_REF}" master:master
+  - git push --force --quiet "https://${GH_REF}" master:master
 # E: Build   LifeCycle
 
 branches:
@@ -30,4 +30,4 @@ branches:
     - blog-source
 env:
  global:
-   - GH_REF: github.com/zhengding/zhengding.github.io.git
+   - GH_REF: https://gitee.com/ding-data/zhengdingblog.git
