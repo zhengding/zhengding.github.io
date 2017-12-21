@@ -19,6 +19,6 @@ categories: 前端
   ['import', [{ libraryName: 'antd', style: true }]],  // import less
   'react-hot-loader/babel'
   ]
-  },
+},
 ```
 
