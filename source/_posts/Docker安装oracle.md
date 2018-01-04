@@ -25,7 +25,7 @@ apt-get install vim
 ## 常见错误
 1、Connection to @192.168.2.156 failed.
 [66000]()[12528]() Listener refused the connection with the following error:
-ORA-12528, TNS:listener: all appropriate instances are blocking new connections
+ORA-12528, TNS:listener: all appropriate instances are blocking new connections  
 
 
 
