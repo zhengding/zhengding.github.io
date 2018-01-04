@@ -3,11 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>order</key>
-	<array/>
+	<array>
+		<string>Docker安装oracle.md</string>
+	</array>
 	<key>resolutionData</key>
 	<dict>
 		<key>order</key>
-		<dict/>
+		<dict>
+			<key>Docker安装oracle.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>536752661.92157698</real>
+				<key>version</key>
+				<dict>
+					<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
+					<integer>67</integer>
+				</dict>
+			</dict>
+		</dict>
 	</dict>
 	<key>storeFormatVersion</key>
 	<integer>1</integer>
@@ -16,7 +29,7 @@
 		<key>order</key>
 		<dict>
 			<key>5df98ede0b1b43407e5d141db5fc08540620abc27db45c42af54d886b58c52b2</key>
-			<integer>64</integer>
+			<integer>68</integer>
 		</dict>
 	</dict>
 </dict>
