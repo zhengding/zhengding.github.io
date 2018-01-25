@@ -89,93 +89,18 @@ passwd: password updated successfully
 
 10、如何在Docker容器内外互相拷贝数据？
 
-​	从容器内拷贝文件到主机上：
+​	该 **cp**命令可以用来复制文件。一个特定的文件可以复制，如：
 
-```shell
-docker cp <containerId>:/file/path/within/container /host/path/target
+```
+docker cp foo.txt mycontainer:/foo.txt
+docker cp mycontainer:/foo.txt foo.txt
 ```
 
-​	从主机上拷贝文件到容器内:
+文件夹中包含的多个文件**src**可以使用以下命令复制到**target**文件夹中：
 
-### 1.用-v挂载主机数据卷到容器内
-
-```bash
-docker run -v /path/to/hostdir:/mnt $container  
-
-在容器内拷贝  
-
-cp /mnt/sourcefile  /path/to/destfile 
 ```
-
-### 2.直接在主机上拷贝到容器物理存储系统
-
-A. 获取容器名称或者id :
-
-```Bash
-$ docker ps 
-```
-
-B. 获取整个容器的id
-
-```bash
-$ docker inspect -f   '{{.Id}}'  步骤A获取的名称或者id  
-```
-
-C. 在主机上拷贝文件:
-
-```Bash
-$ sudo cp path-file-host /var/lib/docker/aufs/mnt/FULL_CONTAINER_ID/PATH-NEW-FILE   
-```
-
-或者  
-
-```Bash
-$ sudo cp path-file-host /var/lib/docker/devicemapper/mnt/123abc<<id>>/rootfs/root  
-```
-
-**例子：**
-
-```bash
-$ docker ps  
-
-  
-
-CONTAINER ID      IMAGE    COMMAND       CREATED      STATUS       PORTS        NAMES  
-
-  
-
-d8e703d7e303   solidleon/ssh:latest      /usr/sbin/sshd -D                      cranky_pare  
-
-  
-
-$ docker inspect -f   '{{.Id}}' cranky_pare  
-
-  
-
-or   
-
-$ docker inspect -f   '{{.Id}}' d8e703d7e303  
-
- 
-
-d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5  
-
-
-
-$ sudo cp file.txt /var/lib/docker/aufs/mnt/**d8e703d7e3039a6df6d01bd7fb58d1882e592a85059eb16c4b83cf91847f88e5 
+docker cp src/. mycontainer:/target
+docker cp mycontainer:/src/. target
 ```
 
  
-
-### 3.用输入输出符
-
-```Bash
-docker run -i ubuntu /bin/bash -c 'cat > /path/to/container/file' < /path/to/host/file/  
-```
-
-或者
-
-```Bahs
-docker exec -it <container_id> bash -c 'cat > /path/to/container/file' < /path/to/host/file/ 
-```
-
