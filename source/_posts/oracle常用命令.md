@@ -12,6 +12,5 @@ categories: 数据库
 
 ```sql
 exp east/east@xe file=/root/east.dmp full=y
-scp /root/east.dmp
 ```
 
