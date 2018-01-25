@@ -6,15 +6,33 @@ tag:
 categories: Docker
 ---
 
-查看所有容器
+1、查看所有容器
 docker ps -a
-停止容器  
+2、停止容器  
 docker stop $(docker ps -a | grep "Exited" | awk '{print $1 }')  
-删除容器
+3、删除容器
 docker rm $(docker ps -a | grep "Exited" | awk '{print $1 }') 
 或
 docker rm -v $(docker ps -aq -f status=exited)
-删除镜像
+4、删除镜像
 docker rmi $(docker images | grep "none" | awk '{print $3}')
-进入容器
+5、进入容器
 docker exec -it fc873 /bin/bash
+6、进入容器之后进行编辑ssh文件，如果没有ssh,需要先安装：
+安装ssh-client命令：sudo
+ apt-get install openssh-client  
+
+安装ssh-server命令：sudo apt-get install openssh-server
+安装完成以后，先启动服务：sudo /etc/init.d/ssh start  
+启动后，可以通过“ps -e|grep ssh”查看是否正确启动。
+
+7、编辑ssh配置文件：$sudo vim/etc/ssh/sshd_config
+PermitRootLogin without-password 改为 PermitRootLogin yes`
+`PasswordAuthentication yes 改为 PasswordAuthentication no
+
+8、重启服务：$ sudo service ssh restart
+
+9、设置ssh密码：$ passwd root
+      Enter new UNIX password:   
+       Retype new UNIX password:   
+       passwd: password updated successfully
