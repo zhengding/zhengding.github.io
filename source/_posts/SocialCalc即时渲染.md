@@ -284,7 +284,7 @@ SocialCalc.ProcessMouseWheel = function (e) {
 
 ##### 	2.2.1 判断editor此时状态，true则返回
 
-##### 	2.2.2 sheet滚动处理事件
+##### 	2.2.2 sheet滚动处理
 
 ```javascript
 SocialCalc.EditorProcessMouseWheel = function (event, delta, mousewheelinfo, wobj) {
