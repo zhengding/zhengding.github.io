@@ -108,17 +108,17 @@ SocialCalc.EditorRenderSheet = function (editor) {
 }
 ```
 
-### 1、取消editor鼠标事件
+### 	1、取消editor鼠标事件
 
-### 2、渲染sheet
+### 	2、渲染sheet
 
-​	一系列的sheet渲染操作，代码略
+​		一系列的sheet渲染操作，代码略
 
-### 3、为fullgrid分配id
+### 	3、为fullgrid分配id
 
-### 4、重新注册editor鼠标事件
+### 	4、重新注册editor鼠标事件
 
-​	设置鼠标单击、双击等事件
+​		设置鼠标单击、双击等事件
 
 ```javascript
 if (element.addEventListener) { // DOM Level 2 -- Firefox, et al
