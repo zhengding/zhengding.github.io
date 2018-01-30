@@ -243,7 +243,7 @@ else { // don't handle this
 
 1、获取滚动滚动对象event、滚动个数delta、鼠标滚动信息mousewheelinfo、sheet等对象信息wobj
 
-2、调用WheelMove方法，即SocialCalc.EditorProcessMouseWheel方法
+2、调用WheelMove方法，即SocialCalc.EditorProcessMouseWheel方法，见下2.2
 
 ```javascript
 SocialCalc.ProcessMouseWheel = function (e) {
@@ -284,7 +284,7 @@ SocialCalc.ProcessMouseWheel = function (e) {
 
 ##### 	2.2.1 判断editor此时状态，true则返回
 
-##### 	2.2.2判断滚动方式为垂直还是水平，垂直则上下加减1，水平则左右加减1
+##### 	2.2.2 sheet滚动处理时间
 
 ```javascript
 SocialCalc.EditorProcessMouseWheel = function (event, delta, mousewheelinfo, wobj) {
@@ -301,7 +301,23 @@ SocialCalc.EditorProcessMouseWheel = function (event, delta, mousewheelinfo, wob
 }
 ```
 
-##### 	2.2.3如果垂直、水平方向都滚动，调用ScrollRelativeBoth
+##### 	2.2.3 判断滚动方式为垂直还是水平，垂直则上下加减1，水平则左右加减1
+
+```javascript
+SocialCalc.ScrollRelative = function (editor, vertical, amount) {
+
+    if (vertical) {
+        editor.ScrollRelativeBoth(amount, 0);
+    }
+    else {
+        editor.ScrollRelativeBoth(0, amount);
+    }
+    return;
+
+}
+```
+
+##### 	2.2.4 调用ScrollRelativeBoth，处理横向、纵向滚动及渲染操作
 
 ```javascript
 SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
@@ -309,7 +325,7 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
     var context = editor.context;
 
     var vplen = context.rowpanes.length;
-    var vlimit = vplen > 1 ? context.rowpanes[vplen - 2].last + 1 : 1; // don't scroll past here
+    var vlimit = vplen > 1 ? context.rowpanes[vplen - 2].last + 1 : 1; // don't scroll past here 不要在这里滚动
     if (context.rowpanes[vplen - 1].first + vamount < vlimit) { // limit amount
         vamount = (-context.rowpanes[vplen - 1].first) + vlimit;
     }
@@ -320,7 +336,7 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
         hamount = (-context.colpanes[hplen - 1].first) + hlimit;
     }
 
-    if ((vamount == 1 || vamount == -1) && hamount == 0) { // special case quick scrolls
+    if ((vamount == 1 || vamount == -1) && hamount == 0) { // special case quick scrolls 针对快速滚动的情况
         if (vamount == 1) {
             editor.ScrollTableUpOneRow();
         }
@@ -332,7 +348,7 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
         return;
     }
 
-    // Do a gross move and render
+    // Do a gross move and render 做一个总的滚动和渲染操作
 
     if (vamount != 0 || hamount != 0) {
         context.rowpanes[vplen - 1].first += vamount;
