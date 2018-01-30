@@ -6,7 +6,7 @@ tag:
 categories: 前端
 ---
 
-SocialCalc即时渲染简介
+# SocialCalc即时渲染简介
 
 **作者**：[DanBricklin](https://github.com/DanBricklin)
 
@@ -17,12 +17,14 @@ SocialCalc即时渲染简介
 **主界面截图:**
 
 ![SocialCalc主页面](http://upload-images.jianshu.io/upload_images/10390285-ca9e2adf0d08f588.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-        初始化grid
-        创建grid
-    
+
+初始化grid
+
+创建grid
+
         SocialCalc.CreateTableEditor = function (editor, width, height) {}
 
-一、初始化参数
+## 一、初始化参数
 
     var scc = SocialCalc.Constants;
     var AssignID = SocialCalc.AssignID;
@@ -41,19 +43,16 @@ SocialCalc即时渲染简介
     if (scc.cteGriddivClass) editor.griddiv.className = scc.cteGriddivClass;
     AssignID(editor, editor.griddiv, "griddiv");
 
-二、适配grid，设置页面显示行数、列数
+## 二、适配grid，设置页面显示行数、列数
 
     editor.FitToEditTable();
-
-三、渲染grid
+## 三、渲染grid
 
     editor.EditorRenderSheet();
-
-四、添加grid节点
+## 四、添加grid节点
 
     editor.griddiv.appendChild(editor.fullgrid);
-
-五、纵向、横向滚动条配置
+## 五、纵向、横向滚动条配置
 
     //纵向滚动条配置
     editor.verticaltablecontrol = new SocialCalc.TableControl(editor, true,         
@@ -67,10 +66,10 @@ SocialCalc即时渲染简介
     editor.horizontaltablecontrol.CreateTableControl();
     AssignID(editor, editor.horizontaltablecontrol.main, "tablecontrolh");
 
-六、table配置及渲染
+## 六、table配置及渲染
+
 
     var table, tbody, tr, td, img, anchor, ta;
-
     table = document.createElement("table");
     editor.layouttable = table;
     table.cellSpacing = 0;
@@ -87,7 +86,7 @@ SocialCalc即时渲染简介
     td.appendChild(editor.griddiv);
     tr.appendChild(td);
 
-七、纵向、横向滚动条渲染
+## 七、纵向、横向滚动条渲染
 
     //纵向滚动条
     td = document.createElement("td");
@@ -108,15 +107,143 @@ SocialCalc即时渲染简介
     AssignID(editor, editor.logo, "logo");
     SocialCalc.TooltipRegister(td.firstChild.firstChild, "SocialCalc", null);
 
-八、添加table节点
+## 八、添加table节点
 
     editor.toplevel.appendChild(editor.layouttable);
-
-九、添加滚动条监听事件，实现滚动即时渲染
+## 九、添加滚动条监听事件，实现滚动即时渲染
 
     // sheet滚动操作 重点*****
     SocialCalc.MouseWheelRegister(editor.toplevel, {WheelMove:     
     SocialCalc.EditorProcessMouseWheel, editor: editor});
 
-事件说明
-    https://www.jianshu.com/p/e7fa2cddd4af
+### 1、其中参数：
+
+#### 1.1、editor.toplevel
+
+#### 1.2、WheelMove:SocialCalc.EditorProcessMouseWheel
+
+1.2.1 判断editor此时状态，true则返回
+
+1.2.2判断滚动方式为垂直还是水平，垂直则上下加减1，水平则左右加减1
+
+```
+SocialCalc.EditorProcessMouseWheel = function (event, delta, mousewheelinfo, wobj) {
+
+    if (wobj.functionobj.editor.busy) return; // ignore if busy
+
+    if (delta > 0) {
+        wobj.functionobj.editor.ScrollRelative(true, -1);
+    }
+    if (delta < 0) {
+        wobj.functionobj.editor.ScrollRelative(true, +1);
+    }
+
+}
+```
+
+1.2.3如果垂直、水平方向都滚动，调用ScrollRelativeBoth
+
+```
+SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
+
+    var context = editor.context;
+
+    var vplen = context.rowpanes.length;
+    var vlimit = vplen > 1 ? context.rowpanes[vplen - 2].last + 1 : 1; // don't scroll past here
+    if (context.rowpanes[vplen - 1].first + vamount < vlimit) { // limit amount
+        vamount = (-context.rowpanes[vplen - 1].first) + vlimit;
+    }
+
+    var hplen = context.colpanes.length;
+    var hlimit = hplen > 1 ? context.colpanes[hplen - 2].last + 1 : 1; // don't scroll past here
+    if (context.colpanes[hplen - 1].first + hamount < hlimit) { // limit amount
+        hamount = (-context.colpanes[hplen - 1].first) + hlimit;
+    }
+
+    if ((vamount == 1 || vamount == -1) && hamount == 0) { // special case quick scrolls
+        if (vamount == 1) {
+            editor.ScrollTableUpOneRow();
+        }
+        else {
+            editor.ScrollTableDownOneRow();
+        }
+        if (editor.ecell) editor.SetECellHeaders("selected");
+        editor.SchedulePositionCalculations();
+        return;
+    }
+
+    // Do a gross move and render
+
+    if (vamount != 0 || hamount != 0) {
+        context.rowpanes[vplen - 1].first += vamount;
+        context.rowpanes[vplen - 1].last += vamount;
+        context.colpanes[hplen - 1].first += hamount;
+        context.colpanes[hplen - 1].last += hamount;
+        editor.FitToEditTable();
+        editor.ScheduleRender();
+    }
+
+}
+```
+
+#### 1.3、editor
+
+### 2、实现流程：
+
+#### 2.1、将监听节点放入监听数组中
+
+```
+var mousewheelinfo = SocialCalc.MouseWheelInfo;
+
+mousewheelinfo.registeredElements.push(
+    {element: element, functionobj: functionobj}
+);
+```
+
+#### 2.2、兼容浏览器设置监听事件ProcessMouseWheel
+
+```
+if (element.addEventListener) { // DOM Level 2 -- Firefox, et al
+    element.addEventListener("DOMMouseScroll", SocialCalc.ProcessMouseWheel, false);
+    element.addEventListener("mousewheel", SocialCalc.ProcessMouseWheel, false); // Opera needs this
+}
+else if (element.attachEvent) { // IE 5+
+    element.attachEvent("onmousewheel", SocialCalc.ProcessMouseWheel);
+}
+else { // don't handle this
+    throw SocialCalc.Constants.s_BrowserNotSupported;
+}
+```
+
+##### 2.2.1监听事件ProcessMouseWheel流程
+
+```
+SocialCalc.ProcessMouseWheel = function (e) {
+    var event = e || window.event;
+    var delta;
+
+    if (SocialCalc.Keyboard.passThru) return; // ignore
+
+    var mousewheelinfo = SocialCalc.MouseWheelInfo;
+
+    var ele = event.target || event.srcElement; // source object is often within what we want
+    var wobj;
+
+    for (wobj = null; !wobj && ele; ele = ele.parentNode) { // go up tree looking for one of our elements
+        wobj = SocialCalc.LookupElement(ele, mousewheelinfo.registeredElements);
+    }
+    if (!wobj) return; // not one of our elements
+
+    if (event.wheelDelta) {
+        delta = event.wheelDelta / 120;
+    }
+    else delta = -event.detail / 3;
+    if (!delta) delta = 0;
+
+    if (wobj.functionobj && wobj.functionobj.WheelMove) wobj.functionobj.WheelMove(event, delta, mousewheelinfo, wobj);
+
+    if (event.preventDefault) event.preventDefault();
+    event.returnValue = false;
+
+}
+```
