@@ -282,6 +282,8 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
 
 #### 1.3、editor
 
+​	sheet编辑对象，存放参数、方法等
+
 ### 2、实现流程：
 
 #### 2.1、将监听节点放入监听数组中
@@ -294,7 +296,7 @@ mousewheelinfo.registeredElements.push(
 );
 ```
 
-#### 2.2、兼容浏览器设置监听事件ProcessMouseWheel
+#### 2.2、兼容浏览器配置监听事件ProcessMouseWheel
 
 ```javascript
 if (element.addEventListener) { // DOM Level 2 -- Firefox, et al
