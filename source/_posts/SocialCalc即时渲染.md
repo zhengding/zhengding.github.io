@@ -18,9 +18,9 @@ categories: 前端
 
 ![SocialCalc主页面](http://upload-images.jianshu.io/upload_images/10390285-ca9e2adf0d08f588.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-初始化grid
+初始化sheet
 
-创建grid
+创建sheet
 
 ```javascript
     SocialCalc.CreateTableEditor = function (editor, width, height) {}
@@ -87,12 +87,51 @@ needed = editor.tableheight - totalrows * context.pixelsPerRow; // estimate amou
 context.rowpanes[rowpane].last = context.rowpanes[rowpane].first + Math.floor(needed / context.pixelsPerRow) + 1;
 ```
 
-## 三、渲染grid
+## 三、渲染sheet，更新fullgrid
 
 ```javascript
 editor.EditorRenderSheet();
 ```
-## 四、添加grid节点
+```javascript
+SocialCalc.EditorRenderSheet = function (editor) {
+
+    editor.EditorMouseUnregister();
+
+    editor.fullgrid = editor.context.RenderSheet(editor.fullgrid);
+
+    if (editor.ecell) editor.SetECellHeaders("selected");
+
+    SocialCalc.AssignID(editor, editor.fullgrid, "fullgrid"); // give it an id
+
+    editor.EditorMouseRegister();
+
+}
+```
+
+### 1、取消editor鼠标事件
+
+### 2、渲染sheet
+
+​	一系列的sheet渲染操作，代码略
+
+### 3、为fullgrid分配id
+
+### 4、重新注册editor鼠标事件
+
+​	设置鼠标单击、双击等事件
+
+```javascript
+if (element.addEventListener) { // DOM Level 2 -- Firefox, et al
+    element.addEventListener("mousedown", SocialCalc.ProcessEditorMouseDown, false);
+    element.addEventListener("dblclick", SocialCalc.ProcessEditorDblClick, false);
+}
+else if (element.attachEvent) { // IE 5+
+    element.attachEvent("onmousedown", SocialCalc.ProcessEditorMouseDown);
+    element.attachEvent("ondblclick", SocialCalc.ProcessEditorDblClick);
+}
+```
+
+## 四、添加fullgrid节点
 
 ```javascript
 editor.griddiv.appendChild(editor.fullgrid);
