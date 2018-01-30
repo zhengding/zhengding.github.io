@@ -114,9 +114,11 @@ SocialCalc.EditorRenderSheet = function (editor) {
 
 ​		一系列的sheet渲染操作，代码略
 
-### 	3、为fullgrid分配id
+###         3、配置当前选中cell
 
-### 	4、重新注册editor鼠标事件
+### 	4、为fullgrid分配id
+
+### 	5、重新注册editor鼠标事件
 
 ​		设置鼠标单击、双击等事件
 
@@ -210,15 +212,79 @@ SocialCalc.MouseWheelRegister(editor.toplevel, {WheelMove:
 SocialCalc.EditorProcessMouseWheel, editor: editor});
 ```
 
-### 1、其中参数：
+### 1、实现流程：
 
-#### 1.1、editor.toplevel
+#### 2.1、将监听节点放入监听数组中
 
-#### 1.2、WheelMove:SocialCalc.EditorProcessMouseWheel
+```javascript
+var mousewheelinfo = SocialCalc.MouseWheelInfo;
 
-##### 	1.2.1 判断editor此时状态，true则返回
+mousewheelinfo.registeredElements.push(
+    {element: element, functionobj: functionobj}
+);
+```
 
-##### 	1.2.2判断滚动方式为垂直还是水平，垂直则上下加减1，水平则左右加减1
+#### 1.2、兼容浏览器配置监听事件ProcessMouseWheel
+
+```javascript
+if (element.addEventListener) { // DOM Level 2 -- Firefox, et al
+    element.addEventListener("DOMMouseScroll", SocialCalc.ProcessMouseWheel, false);
+    element.addEventListener("mousewheel", SocialCalc.ProcessMouseWheel, false); // Opera needs this
+}
+else if (element.attachEvent) { // IE 5+
+    element.attachEvent("onmousewheel", SocialCalc.ProcessMouseWheel);
+}
+else { // don't handle this
+    throw SocialCalc.Constants.s_BrowserNotSupported;
+}
+```
+
+##### 1.2.1监听事件ProcessMouseWheel流程
+
+1、获取滚动滚动对象event、滚动个数delta、鼠标滚动信息mousewheelinfo、sheet等对象信息wobj
+
+2、调用WheelMove方法，即SocialCalc.EditorProcessMouseWheel方法
+
+```javascript
+SocialCalc.ProcessMouseWheel = function (e) {
+    var event = e || window.event;
+    var delta;
+
+    if (SocialCalc.Keyboard.passThru) return; // ignore
+
+    var mousewheelinfo = SocialCalc.MouseWheelInfo;
+
+    var ele = event.target || event.srcElement; // source object is often within what we want
+    var wobj;
+
+    for (wobj = null; !wobj && ele; ele = ele.parentNode) { // go up tree looking for one of our elements
+        wobj = SocialCalc.LookupElement(ele, mousewheelinfo.registeredElements);
+    }
+    if (!wobj) return; // not one of our elements
+
+    if (event.wheelDelta) {
+        delta = event.wheelDelta / 120;
+    }
+    else delta = -event.detail / 3;
+    if (!delta) delta = 0;
+
+    if (wobj.functionobj && wobj.functionobj.WheelMove) wobj.functionobj.WheelMove(event, delta, mousewheelinfo, wobj);
+
+    if (event.preventDefault) event.preventDefault();
+    event.returnValue = false;
+
+}
+```
+
+### 2、其中参数：
+
+#### 2.1、editor.toplevel
+
+#### 2.2、WheelMove:SocialCalc.EditorProcessMouseWheel
+
+##### 	2.2.1 判断editor此时状态，true则返回
+
+##### 	2.2.2判断滚动方式为垂直还是水平，垂直则上下加减1，水平则左右加减1
 
 ```javascript
 SocialCalc.EditorProcessMouseWheel = function (event, delta, mousewheelinfo, wobj) {
@@ -235,7 +301,7 @@ SocialCalc.EditorProcessMouseWheel = function (event, delta, mousewheelinfo, wob
 }
 ```
 
-##### 	1.2.3如果垂直、水平方向都滚动，调用ScrollRelativeBoth
+##### 	2.2.3如果垂直、水平方向都滚动，调用ScrollRelativeBoth
 
 ```javascript
 SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
@@ -280,66 +346,6 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
 }
 ```
 
-#### 1.3、editor
+#### 2.3、editor
 
 ​	sheet编辑对象，存放参数、方法等
-
-### 2、实现流程：
-
-#### 2.1、将监听节点放入监听数组中
-
-```javascript
-var mousewheelinfo = SocialCalc.MouseWheelInfo;
-
-mousewheelinfo.registeredElements.push(
-    {element: element, functionobj: functionobj}
-);
-```
-
-#### 2.2、兼容浏览器配置监听事件ProcessMouseWheel
-
-```javascript
-if (element.addEventListener) { // DOM Level 2 -- Firefox, et al
-    element.addEventListener("DOMMouseScroll", SocialCalc.ProcessMouseWheel, false);
-    element.addEventListener("mousewheel", SocialCalc.ProcessMouseWheel, false); // Opera needs this
-}
-else if (element.attachEvent) { // IE 5+
-    element.attachEvent("onmousewheel", SocialCalc.ProcessMouseWheel);
-}
-else { // don't handle this
-    throw SocialCalc.Constants.s_BrowserNotSupported;
-}
-```
-
-##### 2.2.1监听事件ProcessMouseWheel流程
-
-```javascript
-SocialCalc.ProcessMouseWheel = function (e) {
-    var event = e || window.event;
-    var delta;
-
-    if (SocialCalc.Keyboard.passThru) return; // ignore
-
-    var mousewheelinfo = SocialCalc.MouseWheelInfo;
-
-    var ele = event.target || event.srcElement; // source object is often within what we want
-    var wobj;
-
-    for (wobj = null; !wobj && ele; ele = ele.parentNode) { // go up tree looking for one of our elements
-        wobj = SocialCalc.LookupElement(ele, mousewheelinfo.registeredElements);
-    }
-    if (!wobj) return; // not one of our elements
-
-    if (event.wheelDelta) {
-        delta = event.wheelDelta / 120;
-    }
-    else delta = -event.detail / 3;
-    if (!delta) delta = 0;
-
-    if (wobj.functionobj && wobj.functionobj.WheelMove) wobj.functionobj.WheelMove(event, delta, mousewheelinfo, wobj);
-
-    if (event.preventDefault) event.preventDefault();
-    event.returnValue = false;
-
-}
-```
