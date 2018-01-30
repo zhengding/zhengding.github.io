@@ -22,99 +22,154 @@ categories: 前端
 
 创建grid
 
-        SocialCalc.CreateTableEditor = function (editor, width, height) {}
+```javascript
+    SocialCalc.CreateTableEditor = function (editor, width, height) {}
+```
 
 ## 一、初始化参数
 
-    var scc = SocialCalc.Constants;
-    var AssignID = SocialCalc.AssignID;
-    
-    editor.toplevel = document.createElement("div");
-    editor.width = width;
-    editor.height = height;
-    
-    editor.griddiv = document.createElement("div");
-    editor.tablewidth = width - scc.defaultTableControlThickness;
-    editor.tableheight = height - scc.defaultTableControlThickness;
-    editor.griddiv.style.width = editor.tablewidth + "px";
-    editor.griddiv.style.height = editor.tableheight + "px";
-    editor.griddiv.style.overflow = "hidden";
-    editor.griddiv.style.cursor = "default";
-    if (scc.cteGriddivClass) editor.griddiv.className = scc.cteGriddivClass;
-    AssignID(editor, editor.griddiv, "griddiv");
+```javascript
+var scc = SocialCalc.Constants;
+var AssignID = SocialCalc.AssignID;
 
-## 二、适配grid，设置页面显示行数、列数
+editor.toplevel = document.createElement("div");
+editor.width = width;
+editor.height = height;
 
-    editor.FitToEditTable();
+editor.griddiv = document.createElement("div");
+editor.tablewidth = width - scc.defaultTableControlThickness;
+editor.tableheight = height - scc.defaultTableControlThickness;
+editor.griddiv.style.width = editor.tablewidth + "px";
+editor.griddiv.style.height = editor.tableheight + "px";
+editor.griddiv.style.overflow = "hidden";
+editor.griddiv.style.cursor = "default";
+if (scc.cteGriddivClass) editor.griddiv.className = scc.cteGriddivClass;
+AssignID(editor, editor.griddiv, "griddiv");
+```
+
+## 二、适配屏幕大小，设置页面显示行数、列数
+
+```javascript
+editor.FitToEditTable();
+```
+​	核心代码
+
+```javascript
+totalwidth = context.showRCHeaders ? context.rownamewidth - 0 : 0;
+for (colpane = 0; colpane < context.colpanes.length - 1; colpane++) { // Get width of all but last pane
+    for (colnum = context.colpanes[colpane].first; colnum <= context.colpanes[colpane].last; colnum++) {
+        colname = SocialCalc.rcColname(colnum);
+        colwidth = sheetobj.colattribs.width[colname] || sheetobj.attribs.defaultcolwidth || SocialCalc.Constants.defaultColWidth;
+        if (colwidth == "blank" || colwidth == "auto") colwidth = "";
+        totalwidth += (colwidth && ((colwidth - 0) > 0)) ? (colwidth - 0) : 10;
+    }
+}
+
+for (colnum = context.colpanes[colpane].first; colnum <= 10000; colnum++) { //!!! max for safety, but makes that col max!!!
+    colname = SocialCalc.rcColname(colnum);
+    colwidth = sheetobj.colattribs.width[colname] || sheetobj.attribs.defaultcolwidth || SocialCalc.Constants.defaultColWidth;
+    if (colwidth == "blank" || colwidth == "auto") colwidth = "";
+    totalwidth += (colwidth && ((colwidth - 0) > 0)) ? (colwidth - 0) : 10;
+    if (totalwidth > editor.tablewidth) break;
+}
+
+context.colpanes[colpane].last = colnum;
+
+// Calculate row height data
+
+totalrows = context.showRCHeaders ? 1 : 0;
+for (rowpane = 0; rowpane < context.rowpanes.length - 1; rowpane++) { // count all panes but last one
+    totalrows += context.rowpanes[rowpane].last - context.rowpanes[rowpane].first + 1;
+}
+
+needed = editor.tableheight - totalrows * context.pixelsPerRow; // estimate amount needed
+
+context.rowpanes[rowpane].last = context.rowpanes[rowpane].first + Math.floor(needed / context.pixelsPerRow) + 1;
+```
+
 ## 三、渲染grid
 
-    editor.EditorRenderSheet();
+```javascript
+editor.EditorRenderSheet();
+```
 ## 四、添加grid节点
 
-    editor.griddiv.appendChild(editor.fullgrid);
+```javascript
+editor.griddiv.appendChild(editor.fullgrid);
+```
 ## 五、纵向、横向滚动条配置
 
-    //纵向滚动条配置
-    editor.verticaltablecontrol = new SocialCalc.TableControl(editor, true,         
-    editor.tableheight);
-    editor.verticaltablecontrol.CreateTableControl();
-    AssignID(editor, editor.verticaltablecontrol.main, "tablecontrolv");
-    
-    //横向滚动条配置
-    editor.horizontaltablecontrol = new SocialCalc.TableControl(editor, false, 
-    editor.tablewidth);
-    editor.horizontaltablecontrol.CreateTableControl();
-    AssignID(editor, editor.horizontaltablecontrol.main, "tablecontrolh");
+```javascript
+//纵向滚动条配置
+editor.verticaltablecontrol = new SocialCalc.TableControl(editor, true,         
+editor.tableheight);
+editor.verticaltablecontrol.CreateTableControl();
+AssignID(editor, editor.verticaltablecontrol.main, "tablecontrolv");
+
+//横向滚动条配置
+editor.horizontaltablecontrol = new SocialCalc.TableControl(editor, false, 
+editor.tablewidth);
+editor.horizontaltablecontrol.CreateTableControl();
+AssignID(editor, editor.horizontaltablecontrol.main, "tablecontrolh");
+```
 
 ## 六、table配置及渲染
 
 
-    var table, tbody, tr, td, img, anchor, ta;
-    table = document.createElement("table");
-    editor.layouttable = table;
-    table.cellSpacing = 0;
-    table.cellPadding = 0;
-    AssignID(editor, table, "layouttable");
-    
-    tbody = document.createElement("tbody");
-    table.appendChild(tbody);
-    
-    //table
-    tr = document.createElement("tr");
-    tbody.appendChild(tr);
-    td = document.createElement("td");
-    td.appendChild(editor.griddiv);
-    tr.appendChild(td);
+```javascript
+var table, tbody, tr, td, img, anchor, ta;
+table = document.createElement("table");
+editor.layouttable = table;
+table.cellSpacing = 0;
+table.cellPadding = 0;
+AssignID(editor, table, "layouttable");
+
+tbody = document.createElement("tbody");
+table.appendChild(tbody);
+
+//table
+tr = document.createElement("tr");
+tbody.appendChild(tr);
+td = document.createElement("td");
+td.appendChild(editor.griddiv);
+tr.appendChild(td);
+```
 
 ## 七、纵向、横向滚动条渲染
 
-    //纵向滚动条
-    td = document.createElement("td");
-    td.appendChild(editor.verticaltablecontrol.main);
-    tr.appendChild(td);
-    
-    //横向滚动条
-    tr = document.createElement("tr");
-    tbody.appendChild(tr);
-    td = document.createElement("td");
-    td.appendChild(editor.horizontaltablecontrol.main);
-    tr.appendChild(td);
-    td = document.createElement("td"); // logo display: Required by CPAL License for this code!
-    td.style.background = "url(" + editor.imageprefix + "logo.gif) no-repeat center center";
-    td.innerHTML = "<div style='cursor:pointer;font-size:1px;'><img src='" + editor.imageprefix + "1x1.gif' border='0' width='18' height='18'></div>";
-    tr.appendChild(td);
-    editor.logo = td;
-    AssignID(editor, editor.logo, "logo");
-    SocialCalc.TooltipRegister(td.firstChild.firstChild, "SocialCalc", null);
+```javascript
+//纵向滚动条
+td = document.createElement("td");
+td.appendChild(editor.verticaltablecontrol.main);
+tr.appendChild(td);
+
+//横向滚动条
+tr = document.createElement("tr");
+tbody.appendChild(tr);
+td = document.createElement("td");
+td.appendChild(editor.horizontaltablecontrol.main);
+tr.appendChild(td);
+td = document.createElement("td"); // logo display: Required by CPAL License for this code!
+td.style.background = "url(" + editor.imageprefix + "logo.gif) no-repeat center center";
+td.innerHTML = "<div style='cursor:pointer;font-size:1px;'><img src='" + editor.imageprefix + "1x1.gif' border='0' width='18' height='18'></div>";
+tr.appendChild(td);
+editor.logo = td;
+AssignID(editor, editor.logo, "logo");
+SocialCalc.TooltipRegister(td.firstChild.firstChild, "SocialCalc", null);
+```
 
 ## 八、添加table节点
 
-    editor.toplevel.appendChild(editor.layouttable);
+```javascript
+editor.toplevel.appendChild(editor.layouttable);
+```
 ## 九、添加滚动条监听事件，实现滚动即时渲染
 
-    // sheet滚动操作 重点*****
-    SocialCalc.MouseWheelRegister(editor.toplevel, {WheelMove:     
-    SocialCalc.EditorProcessMouseWheel, editor: editor});
+```javascript
+// sheet滚动操作 重点*****
+SocialCalc.MouseWheelRegister(editor.toplevel, {WheelMove:     
+SocialCalc.EditorProcessMouseWheel, editor: editor});
+```
 
 ### 1、其中参数：
 
@@ -122,11 +177,11 @@ categories: 前端
 
 #### 1.2、WheelMove:SocialCalc.EditorProcessMouseWheel
 
-1.2.1 判断editor此时状态，true则返回
+##### 	1.2.1 判断editor此时状态，true则返回
 
-1.2.2判断滚动方式为垂直还是水平，垂直则上下加减1，水平则左右加减1
+##### 	1.2.2判断滚动方式为垂直还是水平，垂直则上下加减1，水平则左右加减1
 
-```
+```javascript
 SocialCalc.EditorProcessMouseWheel = function (event, delta, mousewheelinfo, wobj) {
 
     if (wobj.functionobj.editor.busy) return; // ignore if busy
@@ -141,9 +196,9 @@ SocialCalc.EditorProcessMouseWheel = function (event, delta, mousewheelinfo, wob
 }
 ```
 
-1.2.3如果垂直、水平方向都滚动，调用ScrollRelativeBoth
+##### 	1.2.3如果垂直、水平方向都滚动，调用ScrollRelativeBoth
 
-```
+```javascript
 SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
 
     var context = editor.context;
@@ -192,7 +247,7 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
 
 #### 2.1、将监听节点放入监听数组中
 
-```
+```javascript
 var mousewheelinfo = SocialCalc.MouseWheelInfo;
 
 mousewheelinfo.registeredElements.push(
@@ -202,7 +257,7 @@ mousewheelinfo.registeredElements.push(
 
 #### 2.2、兼容浏览器设置监听事件ProcessMouseWheel
 
-```
+```javascript
 if (element.addEventListener) { // DOM Level 2 -- Firefox, et al
     element.addEventListener("DOMMouseScroll", SocialCalc.ProcessMouseWheel, false);
     element.addEventListener("mousewheel", SocialCalc.ProcessMouseWheel, false); // Opera needs this
@@ -217,7 +272,7 @@ else { // don't handle this
 
 ##### 2.2.1监听事件ProcessMouseWheel流程
 
-```
+```javascript
 SocialCalc.ProcessMouseWheel = function (e) {
     var event = e || window.event;
     var delta;
