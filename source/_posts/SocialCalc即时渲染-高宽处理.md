@@ -38,12 +38,17 @@ spreadsheet.SizeSSDiv(); // calculate and fill in the size values
 
 ```javascript
 SocialCalc.SizeSSDiv = function (spreadsheet) {
+    // console.log('SizeSSDiv........')
     var sizes, pos, resized, nodestyle, newval;
     var fudgefactorX = 10; // for IE
     var fudgefactorY = 10;
 
     resized = false;
 
+    //result.width = window.innerWidth;
+    //result.height = window.innerHeight;
+    //result.horizontalScroll = window.pageXOffset;
+    //result.verticalScroll = window.pageYOffset;
     sizes = SocialCalc.GetViewportInfo();
     pos = SocialCalc.GetElementPosition(spreadsheet.parentNode);
     pos.bottom = 0;
@@ -63,7 +68,8 @@ SocialCalc.SizeSSDiv = function (spreadsheet) {
     if (nodestyle.marginRight) {
         pos.right += nodestyle.marginRight.slice(0, -2) - 0;
     }
-  
+
+    //ding
     newval = spreadsheet.requestedHeight ||
         sizes.height - (pos.top + pos.bottom + fudgefactorY) -
         (spreadsheet.requestedSpaceBelow || 0);
@@ -82,7 +88,6 @@ SocialCalc.SizeSSDiv = function (spreadsheet) {
         spreadsheet.spreadsheetDiv.style.width = newval + "px";
         resized = true;
     }
-
     return resized;
 
 }
