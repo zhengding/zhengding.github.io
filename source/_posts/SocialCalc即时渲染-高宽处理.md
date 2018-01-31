@@ -355,3 +355,38 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
 #### 2.3、editor
 
 ​	sheet编辑对象，存放参数、方法等
+
+### 3、滚动后重新渲染
+
+```javascript
+editor.ScheduleRender();
+```
+
+```
+SocialCalc.ScheduleRender = function (editor) {
+    // 多次调用，用最新一次的
+    if (editor.timeout) window.clearTimeout(editor.timeout); // in case called more than once, just use latest
+
+    SocialCalc.EditorSheetStatusCallback(null, "schedrender", null, editor);
+    SocialCalc.EditorStepInfo.editor = editor;
+    editor.timeout = window.setTimeout(SocialCalc.DoRenderStep, 1);
+}
+```
+
+```
+SocialCalc.DoRenderStep = function () {
+
+    var editor = SocialCalc.EditorStepInfo.editor;
+
+    editor.timeout = null;
+
+    editor.EditorRenderSheet();
+
+    SocialCalc.EditorSheetStatusCallback(null, "renderdone", null, editor);
+
+    SocialCalc.EditorSheetStatusCallback(null, "schedposcalc", null, editor);
+
+    editor.timeout = window.setTimeout(SocialCalc.DoPositionCalculations, 1);
+
+}
+```
