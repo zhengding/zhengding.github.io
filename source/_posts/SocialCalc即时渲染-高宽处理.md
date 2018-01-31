@@ -316,24 +316,28 @@ SocialCalc.ScrollRelative = function (editor, vertical, amount) {
 ##### 	2.2.4 调用ScrollRelativeBoth，处理横向、纵向滚动及渲染操作
 
 ```javascript
+// ScrollRelativeBoth(editor, vamount, hamount)
+//
+// 垂直、横向滚动通用渲染（包括处理行、列冻结）
+
 SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
     var context = editor.context;
 
     // vplen为rowpanes参数个数，无冻结为1，冻结为2，数据中第一个为冻结参数，第二个为非冻结参数
     var vplen = context.rowpanes.length;
     // 处理向上滚动到顶的情况
-    var vlimit = vplen > 1 ? context.rowpanes[vplen - 2].last + 1 : 1; // don't scroll past here 不要在这里滚动 行冻结
-    if (context.rowpanes[vplen - 1].first + vamount < vlimit) { // limit amount 限制数量
+    var vlimit = vplen > 1 ? context.rowpanes[vplen - 2].last + 1 : 1; // 不要在这里滚动 行冻结
+    if (context.rowpanes[vplen - 1].first + vamount < vlimit) { // 限制数量，滚动后的first小于vlimit
         vamount = (-context.rowpanes[vplen - 1].first) + vlimit;
     }
 
     var hplen = context.colpanes.length;
-    var hlimit = hplen > 1 ? context.colpanes[hplen - 2].last + 1 : 1; // don't scroll past here 不要在这里滚动 列冻结
-    if (context.colpanes[hplen - 1].first + hamount < hlimit) { // limit amount 限制数量
+    var hlimit = hplen > 1 ? context.colpanes[hplen - 2].last + 1 : 1; // 不要在这里滚动 列冻结
+    if (context.colpanes[hplen - 1].first + hamount < hlimit) { // 限制数量，滚动后的first小于vlimit
         hamount = (-context.colpanes[hplen - 1].first) + hlimit;
     }
 
-    if ((vamount == 1 || vamount == -1) && hamount == 0) { // special case quick scrolls 针对特别快速的滚动
+    if ((vamount == 1 || vamount == -1) && hamount == 0) { // 针对特别快速的滚动 special case quick scrolls
         if (vamount == 1) {
             editor.ScrollTableUpOneRow();
         }
@@ -368,31 +372,3 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
 editor.ScheduleRender();
 ```
 
-```
-SocialCalc.ScheduleRender = function (editor) {
-    // 多次调用，用最新一次的
-    if (editor.timeout) window.clearTimeout(editor.timeout); // in case called more than once, just use latest
-
-    SocialCalc.EditorSheetStatusCallback(null, "schedrender", null, editor);
-    SocialCalc.EditorStepInfo.editor = editor;
-    editor.timeout = window.setTimeout(SocialCalc.DoRenderStep, 1);
-}
-```
-
-```
-SocialCalc.DoRenderStep = function () {
-
-    var editor = SocialCalc.EditorStepInfo.editor;
-
-    editor.timeout = null;
-
-    editor.EditorRenderSheet();
-
-    SocialCalc.EditorSheetStatusCallback(null, "renderdone", null, editor);
-
-    SocialCalc.EditorSheetStatusCallback(null, "schedposcalc", null, editor);
-
-    editor.timeout = window.setTimeout(SocialCalc.DoPositionCalculations, 1);
-
-}
-```
