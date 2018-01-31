@@ -368,7 +368,5 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
 
 ### 3、滚动后重新渲染
 
-```javascript
-editor.ScheduleRender();
-```
+​	1、根据context.rowpanes、context.colpanes获取到冻结行、非冻结行、冻结列、非冻结列的信息，并从单元格数据集中获取对应的单元格数据渲染出来
 
