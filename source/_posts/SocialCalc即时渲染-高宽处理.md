@@ -69,7 +69,7 @@ SocialCalc.SizeSSDiv = function (spreadsheet) {
         pos.right += nodestyle.marginRight.slice(0, -2) - 0;
     }
 
-    //ding
+    //计算主页面高度
     newval = spreadsheet.requestedHeight ||
         sizes.height - (pos.top + pos.bottom + fudgefactorY) -
         (spreadsheet.requestedSpaceBelow || 0);
@@ -80,6 +80,7 @@ SocialCalc.SizeSSDiv = function (spreadsheet) {
         resized = true;
     }
 
+    //计算主页面宽度
     newval = spreadsheet.requestedWidth ||
         sizes.width - (pos.left + pos.right + fudgefactorX) || 700;
 
@@ -160,7 +161,7 @@ SocialCalc.FitToEditTable = function (editor) {
     // totalwidth 需要显示的表格宽度
     totalwidth = context.showRCHeaders ? context.rownamewidth - 0 : 0;
     //获取除了最后一个单元格的总宽度
-    console.log(context.colpanes.length)
+    
     for (colpane = 0; colpane < context.colpanes.length - 1; colpane++) { // Get width of all but last pane
         for (colnum = context.colpanes[colpane].first; colnum <= context.colpanes[colpane].last; colnum++) {
             // 获取该单元格name
