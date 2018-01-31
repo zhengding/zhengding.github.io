@@ -17,6 +17,12 @@ spreadsheet.InitializeSpreadsheetControl("tableeditor");
 ## 二、调用socialcalcspreadsheetcontrol中InitializeSpreadsheetControl方法
 
 ```javascript
+SocialCalc.SpreadsheetControl.prototype.InitializeSpreadsheetControl = function (node, height, width, spacebelow) {
+    return SocialCalc.InitializeSpreadsheetControl(this, node, height, width, spacebelow);
+};
+```
+
+```javascript
 SocialCalc.InitializeSpreadsheetControl = function (spreadsheet, node, height, width, spacebelow){}
 ```
 
