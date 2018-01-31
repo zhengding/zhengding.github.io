@@ -325,7 +325,7 @@ SocialCalc.ScrollRelativeBoth = function (editor, vamount, hamount) {
 
     // vplen为rowpanes参数个数，无冻结为1，冻结为2，数据中第一个为冻结参数，第二个为非冻结参数
     var vplen = context.rowpanes.length;
-    // 处理向上滚动到顶的情况
+    // 处理向上滚动到表格顶部或者冻结区域的情况
     var vlimit = vplen > 1 ? context.rowpanes[vplen - 2].last + 1 : 1; // 不要在这里滚动 行冻结
     if (context.rowpanes[vplen - 1].first + vamount < vlimit) { // 限制数量，滚动后的first小于vlimit
         vamount = (-context.rowpanes[vplen - 1].first) + vlimit;
