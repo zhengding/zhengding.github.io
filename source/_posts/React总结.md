@@ -1,12 +1,13 @@
 ---
 title: React总结
-data:  2017-12-7 10:05:01
+data: 2017-12-7 10:05:01
 tag:
 - React
 categories: 前端
 ---
 
 ## 做React需要会什么？
+
 react的功能其实很单一，主要负责渲染的功能，现有的框架，比如angular是一个大而全的框架，用了angular几乎就不需要用其他工具辅助配合，但是react不一样，他只负责ui渲染，想要做好一个项目，往往需要其他库和工具的配合，比如用redux来管理数据，react-router管理路由，react已经全面拥抱es6，所以es6也得掌握，webpack就算是不会配置也要会用，要想提高性能，需要按需加载，immutable.js也得用上，还有单元测试。。。。
 
 
@@ -185,7 +186,7 @@ react推崇的是单向数据流，自上而下进行数据的传递，但是由
 
 **2、subscribe：**
 > 监听state的变化——这个函数在store调用dispatch时会注册一个listener监听state变化，当我们需要知道state是否变化时可以调用，它返回一个函数，调用这个返回的函数可以注销监听。
-let unsubscribe = store.subscribe(() =\> {console.log('state发生了变化')})
+ et unsubscribe = store.subscribe(() =\> {console.log('state发生了变化')})
 
 **3、getState：**
 > 获取store中的state——当我们用action触发reducer改变了state时，需要再拿到新的state里的数据，毕竟数据才是我们想要的。getState主要在两个地方需要用到，一是在dispatch拿到action后store需要用它来获取state里的数据，并把这个数据传给reducer，这个过程是自动执行的，二是在我们利用subscribe监听到state发生变化后调用它来获取新的state数据，如果做到这一步，说明我们已经成功了。

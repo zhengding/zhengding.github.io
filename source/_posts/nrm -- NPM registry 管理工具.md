@@ -40,3 +40,8 @@ nrm use cnpm // switch to cnpm
 nrm home // go to a registry home page
 ```
 
+```
+npm config set https://registry.npm.taobao.org/
+npm config set registry http://registry.npmjs.org 
+```
+

@@ -4,6 +4,7 @@ data:  2018-01-25 10:39:01
 tag:
 - oracle
 categories: 数据库
+typora-copy-images-to: ipic
 ---
 
 **Oracle中用exp/imp命令参数详解**
@@ -14,3 +15,4 @@ categories: 数据库
 exp east/east@xe file=/root/east.dmp full=y
 ```
 
+!img-505031046-0007](https://ws4.sinaimg.cn/large/006tNc79gy1fouz90jpepj31ka13sx17.jpg)
