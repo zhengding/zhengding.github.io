@@ -1,3 +1,11 @@
+title: 快速掌握Dockerfile
+data:  2017-12-12 08:58:01
+tag:
+
+- Docker
+- Dockerfile
+  categories: Docker
+
 # 使用Verdaccio搭建npm仓库
 
 Verdaccio是一个轻量级的私有NPM的Registry（从[Sinopia](https://github.com/rlidwka/sinopia)fork过来的，sinopia最后一次更新是在几年前了）。最开始是打算使用cnpmjs这个来搭建私有的npm仓库但是搭建完成之后存在一些问题，所以使用了Sinopia，本文记录下来搭建的过程。
