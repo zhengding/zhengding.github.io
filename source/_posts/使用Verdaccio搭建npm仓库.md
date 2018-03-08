@@ -1,12 +1,11 @@
+```
 title: 快速掌握Dockerfile
-data:  2017-12-12 08:58:01
+data: 2017-12-12 08:58:01
 tag:
-
-​	- Docker
-
-​	- Dockerfile
-
+- Docker
+- Dockerfile
 categories: Docker
+```
 
 
 
