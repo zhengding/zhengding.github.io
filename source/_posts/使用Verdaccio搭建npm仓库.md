@@ -2,9 +2,9 @@ title: 快速掌握Dockerfile
 data:  2017-12-12 08:58:01
 tag:
 
-​	-Docker
+​	- Docker
 
-​	-Dockerfile
+​	- Dockerfile
 
 categories: Docker
 
