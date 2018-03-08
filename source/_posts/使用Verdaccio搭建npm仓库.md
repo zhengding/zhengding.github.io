@@ -2,9 +2,13 @@ title: 快速掌握Dockerfile
 data:  2017-12-12 08:58:01
 tag:
 
-- Docker
-- Dockerfile
-  categories: Docker
+​	-Docker
+
+​	-Dockerfile
+
+categories: Docker
+
+
 
 # 使用Verdaccio搭建npm仓库
 
