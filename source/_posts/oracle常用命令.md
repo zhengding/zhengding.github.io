@@ -15,4 +15,7 @@ typora-copy-images-to: ipic
 exp east/east@xe file=/root/east.dmp full=y
 ```
 
-!img-505031046-0007](https://ws4.sinaimg.cn/large/006tNc79gy1fouz90jpepj31ka13sx17.jpg)
+exp east/east@xe file=/root/east.dmp full=y
+exp east/east file=/root/east.dmp full=y
+
+imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y
