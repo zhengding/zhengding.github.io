@@ -153,4 +153,9 @@ docker cp src/. mycontainer:/target
 docker cp mycontainer:/src/. target
 ```
 
- 
+ 12、自动清理镜像容器
+
+```bash
+docker system prune
+```
+
