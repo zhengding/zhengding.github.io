@@ -159,3 +159,9 @@ docker cp mycontainer:/src/. target
 docker system prune
 ```
 
+13、查看当前容器资源占用i情况
+
+```bash
+docker stats
+```
+

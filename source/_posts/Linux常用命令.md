@@ -47,3 +47,10 @@ ifconfig | more
 ```
 
 然后按 j k 上下移动
+
+7、查看端口占用
+
+```bash
+netstat -tunlp 
+```
+
