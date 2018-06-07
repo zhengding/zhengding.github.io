@@ -24,7 +24,7 @@ imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y
 
 ## 2、创建表空间
 
-### 2.1先创建一个表空间，例如（临时表空间）
+#### 2.1先创建一个表空间，例如（临时表空间）
 
 create temporary tablespace fitech_temp 
 
@@ -54,7 +54,7 @@ next 50m maxsize 20480m
 
 extent management local;
 
-### 2.2创建用户并指定表空间
+#### 2.2创建用户并指定表空间
 
 （第一个east为用户名，第二个east为密码）
 
@@ -72,11 +72,17 @@ alter user east default tablespace fitech_data
 
 temporary tablespace fitech_temp;
 
-### 2.3给用户分配权限
+#### 2.3给用户分配权限
 
 grant connect,resource,dba to east;
 
-### 2.4使用east用户登录，查看数据库用户正常访问即可
+#### 2.4使用east用户登录，查看数据库用户正常访问即可
+
+### 3、查看数据库状态
+
+lsnrctl status 
+
+
 
 
 
