@@ -6,9 +6,9 @@ tag:
 categories: Git
 ---
 
-## 一、
+## 一、方法一（分别提交）
 
-## 1、添加远程地址，给地址命名来区分
+### 1、添加远程地址，给地址命名来区分
 
 ```bash
 git remote add oschina https://git.oschina.net/xxx/xxx.git
@@ -16,13 +16,13 @@ git remote add oschina https://git.oschina.net/xxx/xxx.git
 git remote add github https://github.com/xxx/xxx.git
 ```
 
-## 2、查看远程地址
+### 2、查看远程地址
 
 ```bash
 git remote -v
 ```
 
-## 3、然后push
+### 3、然后push
 
 ```bash
 git push -u oschina
@@ -32,7 +32,7 @@ git push -u github
 
 
 
-## 二、
+## 二、方法二（同时提交）
 
 假设你现在想要增加3个远程库地址，分别为 :
 
@@ -50,7 +50,7 @@ git push -u github
 这样就完成了添加多个地址到origin库中了， 
 以后只要使用`git push origin master` 就可以一次性push到3各库里面了(使用`git push`也可)
 
-## 原理解析
+### 原理解析
 
 `git remote set-url --add origin` 就是往当前git项目的**config文件**里增加一行记录 
 **config文件**打开方式有两种：
