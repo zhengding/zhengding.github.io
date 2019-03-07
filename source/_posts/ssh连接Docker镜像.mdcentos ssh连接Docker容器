@@ -1,0 +1,92 @@
+---
+title: centos ssh连接Docker容器
+data:  2019-3-7 14:51:01
+tag:
+- Docker
+- ssh
+categories: Docker
+---
+
+# [Docker启动一个Centos镜像](https://www.cnblogs.com/jing1617/p/9474545.html)
+
+[docker镜像的获取与使用](https://blog.csdn.net/smile_bestsun/article/details/53786070) 
+
+[docker中使用centos7镜像 ](https://blog.csdn.net/u012767761/article/details/78107870)
+
+接着上文，我们下载完成一个Centos镜像之后，开始启动
+
+\#运行命令
+
+```
+docker run -d -i -t <imageID> /bin/bash
+```
+
+这样就能启动一个一直停留在后台运行的Centos了。如果少了/bin/bash的话，Docker会生成一个Container但是马上就停止了，不会一致运行即使有了-d参数。
+
+然后我们可以进入我们这个Centos
+
+
+
+```
+docker attach <ContainerID>
+```
+
+
+
+
+
+进入Centos后，发现竟然没有ifconfig和ssh，网上例子很多参照着来
+
+1. ifconfig的安装，执行命令
+
+   ```
+   yum search ifconfig
+   ```
+
+
+
+![img](https://img-blog.csdn.net/20160618145947573?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+
+
+
+> \2. 安装ifconfig
+>
+> ```
+> yum install net-tools.x86_64
+> ```
+>
+> ![img](https://img-blog.csdn.net/20160618150427607?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+>
+> 
+
+好了，有了它终于可以知道自己的IP了和网络。现在还需要一个ssh让我们能方便的访问Centos
+
+
+
+接下来只要启动就可以了
+
+```
+/usr/sbin/sshd -D
+```
+
+接下来就是常用的命令了，将端口映射到宿主机，我这里就是VM分配的linux系统。
+
+\#退出，但不停止容器
+
+Ctrl+P+Q
+
+\#回到Docker下面，停止容器
+
+docker stop <容器ID>
+
+\#提交当前容器到镜像
+
+docker commit <容器ID> <NAME/VERSION>
+
+\#启动新容器，并且进行端口映射
+
+docker run -itd -p 50001:22 <刚才提交的镜像ID>  /bin/bash
+
+好了，这样我们在windows下利用ssh工具访问宿主机的IP端口就可以访问到容器了
+
+我这里就是192.168.99.100:50001
