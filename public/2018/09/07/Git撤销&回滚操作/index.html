@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Git,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="开发过程中，你肯定会遇到这样的场景： 场景一： 糟了，我刚把不想要的代码，commit到本地仓库中了，但是还没有做push操作！  场景二： 彻底完了，刚线上更新的代码出现问题了，需要还原这次提交的代码！  场景三： 刚才我发现之前的某次提交太愚蠢了，现在想要干掉它！  撤销上述场景一，在未进行git push前的所有操作，都是在“本地仓库”中执行的。我们暂且将“本地仓库”的代码还原操作叫做“撤销">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git撤销&amp;回滚操作">
+<meta property="og:url" content="http://ding-data.gitee.io/2018/09/07/Git撤销&回滚操作/index.html">
+<meta property="og:site_name" content="zhengding">
+<meta property="og:description" content="开发过程中，你肯定会遇到这样的场景： 场景一： 糟了，我刚把不想要的代码，commit到本地仓库中了，但是还没有做push操作！  场景二： 彻底完了，刚线上更新的代码出现问题了，需要还原这次提交的代码！  场景三： 刚才我发现之前的某次提交太愚蠢了，现在想要干掉它！  撤销上述场景一，在未进行git push前的所有操作，都是在“本地仓库”中执行的。我们暂且将“本地仓库”的代码还原操作叫做“撤销">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-24T02:10:25.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git撤销&amp;回滚操作">
+<meta name="twitter:description" content="开发过程中，你肯定会遇到这样的场景： 场景一： 糟了，我刚把不想要的代码，commit到本地仓库中了，但是还没有做push操作！  场景二： 彻底完了，刚线上更新的代码出现问题了，需要还原这次提交的代码！  场景三： 刚才我发现之前的某次提交太愚蠢了，现在想要干掉它！  撤销上述场景一，在未进行git push前的所有操作，都是在“本地仓库”中执行的。我们暂且将“本地仓库”的代码还原操作叫做“撤销">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ding-data.gitee.io/2018/09/07/Git撤销&回滚操作/">
+
+
+
+
+
+  <title>Git撤销&回滚操作 | zhengding</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhengding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/Git撤销&回滚操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Git撤销&回滚操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:40:14+08:00">
+                2018-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>开发过程中，你肯定会遇到这样的场景：</p>
+<h2 id="场景一："><a href="#场景一：" class="headerlink" title="场景一："></a>场景一：</h2><blockquote>
+<p>糟了，我刚把不想要的代码，commit到本地仓库中了，但是还没有做push操作！</p>
+</blockquote>
+<h2 id="场景二："><a href="#场景二：" class="headerlink" title="场景二："></a>场景二：</h2><blockquote>
+<p>彻底完了，刚线上更新的代码出现问题了，需要还原这次提交的代码！</p>
+</blockquote>
+<h2 id="场景三："><a href="#场景三：" class="headerlink" title="场景三："></a>场景三：</h2><blockquote>
+<p>刚才我发现之前的某次提交太愚蠢了，现在想要干掉它！</p>
+</blockquote>
+<h1 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h1><p>上述场景一，在未进行git push前的所有操作，都是在“本地仓库”中执行的。我们暂且将“本地仓库”的代码还原操作叫做“撤销”！</p>
+<h2 id="情况一：文件被修改了，但未执行git-add操作-working-tree内撤销"><a href="#情况一：文件被修改了，但未执行git-add操作-working-tree内撤销" class="headerlink" title="情况一：文件被修改了，但未执行git add操作(working tree内撤销)"></a>情况一：文件被修改了，但未执行git add操作(working tree内撤销)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout fileName</span><br><span class="line">git checkout .</span><br></pre></td></tr></table></figure>
+<h2 id="情况二：同时对多个文件执行了git-add操作，但本次只想提交其中一部分文件"><a href="#情况二：同时对多个文件执行了git-add操作，但本次只想提交其中一部分文件" class="headerlink" title="情况二：同时对多个文件执行了git add操作，但本次只想提交其中一部分文件"></a>情况二：同时对多个文件执行了git add操作，但本次只想提交其中一部分文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git add *</span><br><span class="line">$ git status</span><br><span class="line"><span class="comment"># 取消暂存</span></span><br><span class="line">$ git reset HEAD &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="情况三：文件执行了git-add操作，但想撤销对其的修改（index内回滚）"><a href="#情况三：文件执行了git-add操作，但想撤销对其的修改（index内回滚）" class="headerlink" title="情况三：文件执行了git add操作，但想撤销对其的修改（index内回滚）"></a>情况三：文件执行了git add操作，但想撤销对其的修改（index内回滚）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取消暂存</span></span><br><span class="line">git reset HEAD fileName</span><br><span class="line"><span class="comment"># 撤销修改</span></span><br><span class="line">git checkout fileName</span><br></pre></td></tr></table></figure>
+<h2 id="情况四：修改的文件已被git-commit，但想再次修改不再产生新的Commit"><a href="#情况四：修改的文件已被git-commit，但想再次修改不再产生新的Commit" class="headerlink" title="情况四：修改的文件已被git commit，但想再次修改不再产生新的Commit"></a>情况四：修改的文件已被git commit，但想再次修改不再产生新的Commit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改最后一次提交 </span></span><br><span class="line">$ git add sample.txt</span><br><span class="line">$ git commit --amend -m<span class="string">"说明"</span></span><br></pre></td></tr></table></figure>
+<h2 id="情况五：已在本地进行了多次git-commit操作，现在想撤销到其中某次Commit"><a href="#情况五：已在本地进行了多次git-commit操作，现在想撤销到其中某次Commit" class="headerlink" title="情况五：已在本地进行了多次git commit操作，现在想撤销到其中某次Commit"></a>情况五：已在本地进行了多次git commit操作，现在想撤销到其中某次Commit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [--hard|soft|mixed|merge|keep] [commit|HEAD]</span><br></pre></td></tr></table></figure>
+<h1 id="回滚"><a href="#回滚" class="headerlink" title="回滚"></a>回滚</h1><p>上述场景二，已进行git push，即已推送到“远程仓库”中。我们将已被提交到“远程仓库”的代码还原操作叫做“回滚”！注意：对远程仓库做回滚操作是有风险的，需提前做好备份和通知其他团队成员！<br>如果你每次更新线上，都会打tag，那恭喜你，你可以很快的处理上述场景二的情况</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;tag&gt;</span><br></pre></td></tr></table></figure>
+<p>如果你回到当前HEAD指向</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="情况一：撤销指定文件到指定版本"><a href="#情况一：撤销指定文件到指定版本" class="headerlink" title="情况一：撤销指定文件到指定版本"></a>情况一：撤销指定文件到指定版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看指定文件的历史版本</span></span><br><span class="line">git <span class="built_in">log</span> &lt;filename&gt;</span><br><span class="line"><span class="comment"># 回滚到指定commitID</span></span><br><span class="line">git checkout &lt;commitID&gt; &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="情况二：删除最后一次远程提交"><a href="#情况二：删除最后一次远程提交" class="headerlink" title="情况二：删除最后一次远程提交"></a>情况二：删除最后一次远程提交</h2><h3 id="方式一：使用revert"><a href="#方式一：使用revert" class="headerlink" title="方式一：使用revert"></a>方式一：使用revert</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h3 id="方式二：使用reset"><a href="#方式二：使用reset" class="headerlink" title="方式二：使用reset"></a>方式二：使用reset</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line">git push origin master -f</span><br></pre></td></tr></table></figure>
+<p>二者区别：</p>
+<ol>
+<li>revert是放弃指定提交的修改，但是会生成一次新的提交，需要填写提交注释，以前的历史记录都在；</li>
+<li>reset是指将HEAD指针指到指定提交，历史记录中不会出现放弃的提交记录。<h2 id="情况三：回滚某次提交"><a href="#情况三：回滚某次提交" class="headerlink" title="情况三：回滚某次提交"></a>情况三：回滚某次提交</h2></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到要回滚的commitID</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">git revert commitID</span><br></pre></td></tr></table></figure>
+<h3 id="删除某次提交"><a href="#删除某次提交" class="headerlink" title="删除某次提交"></a>删除某次提交</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline -n5</span><br><span class="line">		</span><br><span class="line">git rebase -i <span class="string">"commit id"</span>^</span><br></pre></td></tr></table></figure>
+<p>注意：需要注意最后的^号，意思是commit id的前一次提交</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i <span class="string">"5b3ba7a"</span>^</span><br></pre></td></tr></table></figure>
+<p>在编辑框中删除相关commit，如pick 5b3ba7a test2，然后保存退出（如果遇到冲突需要先解决冲突）！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master -f</span><br></pre></td></tr></table></figure>
+<p>通过上述操作，如果你想对历史多个commit进行处理或者，可以选择git rebase -i，只需删除对应的记录就好。rebase还可对 commit 消息进行编辑，以及合并多个commit。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Git/" rel="tag"># Git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/07/git reset revert 回退回滚取消提交返回上一版本/" rel="next" title="git reset revert 回退回滚取消提交返回上一版本">
+                <i class="fa fa-chevron-left"></i> git reset revert 回退回滚取消提交返回上一版本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/07/Linux之java环境变量配置/" rel="prev" title="Linux之Java环境变量配置">
+                Linux之Java环境变量配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description">This site is used to record notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#场景一："><span class="nav-number">1.</span> <span class="nav-text">场景一：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景二："><span class="nav-number">2.</span> <span class="nav-text">场景二：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景三："><span class="nav-number">3.</span> <span class="nav-text">场景三：</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#撤销"><span class="nav-number"></span> <span class="nav-text">撤销</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#情况一：文件被修改了，但未执行git-add操作-working-tree内撤销"><span class="nav-number">1.</span> <span class="nav-text">情况一：文件被修改了，但未执行git add操作(working tree内撤销)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#情况二：同时对多个文件执行了git-add操作，但本次只想提交其中一部分文件"><span class="nav-number">2.</span> <span class="nav-text">情况二：同时对多个文件执行了git add操作，但本次只想提交其中一部分文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#情况三：文件执行了git-add操作，但想撤销对其的修改（index内回滚）"><span class="nav-number">3.</span> <span class="nav-text">情况三：文件执行了git add操作，但想撤销对其的修改（index内回滚）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#情况四：修改的文件已被git-commit，但想再次修改不再产生新的Commit"><span class="nav-number">4.</span> <span class="nav-text">情况四：修改的文件已被git commit，但想再次修改不再产生新的Commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#情况五：已在本地进行了多次git-commit操作，现在想撤销到其中某次Commit"><span class="nav-number">5.</span> <span class="nav-text">情况五：已在本地进行了多次git commit操作，现在想撤销到其中某次Commit</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回滚"><span class="nav-number"></span> <span class="nav-text">回滚</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#情况一：撤销指定文件到指定版本"><span class="nav-number">1.</span> <span class="nav-text">情况一：撤销指定文件到指定版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#情况二：删除最后一次远程提交"><span class="nav-number">2.</span> <span class="nav-text">情况二：删除最后一次远程提交</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方式一：使用revert"><span class="nav-number">2.1.</span> <span class="nav-text">方式一：使用revert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式二：使用reset"><span class="nav-number">2.2.</span> <span class="nav-text">方式二：使用reset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#情况三：回滚某次提交"><span class="nav-number">3.</span> <span class="nav-text">情况三：回滚某次提交</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除某次提交"><span class="nav-number">3.1.</span> <span class="nav-text">删除某次提交</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
