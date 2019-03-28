@@ -1,6 +1,6 @@
 ---
 title: 把项目同时托管到github和oschina
-data:  2017-12-20 08:07:01
+data:  2019-3-28 08:07:01
 tag:
 -  Git
 categories: Git
