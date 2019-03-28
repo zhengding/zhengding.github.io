@@ -252,6 +252,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/28/说说 tabindex 的那些事儿/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/28/说说 tabindex 的那些事儿/" itemprop="url">说说 tabindex 的那些事儿</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T14:11:13+08:00">
+                2019-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.w3.org/html/wg/drafts/html/master/editing.html#attr-tabindex" target="_blank" rel="noopener">tabindex</a> 属性用于管理键盘焦点，决定元素是否能被选中，以及按下 <code>tab</code> 键过程中被选中的顺序，使用得当能够极大的提高应用的易用性，然而，不恰当地使用时可以键盘用户对应用的可用性。到底如何使用？设置为 <code>0</code> 会有什么效果？设置为 <code>-1</code> 会有什么效果？本文将为你揭晓。</p>
+<p>​    要理解为什么 <code>tabindex</code> 属性对可用性有如此大的影响，有必要知道一些键盘交互的方式。键盘用户通常会使用 <code>tab</code> 键将光标从一个可获取焦点的元素有序地移动到下一个元素。</p>
+<p>​    像链接和 <code>form</code> 表单元素默认都是<a href="http://www.w3.org/html/wg/drafts/html/master/dom.html#interactive-content-0" target="_blank" rel="noopener">可获取焦点</a>的，他们的默认焦点顺序取决于他们在源代码中出现的顺序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;label for=&quot;username&quot;&gt;Username:&lt;/label&gt;</span><br><span class="line">&lt;input type=&quot;text&quot; id=&quot;username&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;label for=&quot;password&quot;&gt;Password:&lt;/label&gt;</span><br><span class="line">&lt;input type=&quot;password&quot; id=&quot;password&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;submit&quot; value=&quot;Log in&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>​    按下 <code>tab</code> 键时将依次选中用户名输入框、密码输入框和登录按钮，这三个元素默认就是可获取焦点的，并且焦点顺序与其在源码中的顺序一致。也就是说，对此并不需要显示设置 <code>tabindex</code>属性，浏览器将有效地处理它们。</p>
+<h2 id="tabindex-0"><a href="#tabindex-0" class="headerlink" title="tabindex=0"></a>tabindex=0</h2><p>​    当 <code>tabindex</code> 设置为 <code>0</code> 时，元素的 tab 键序与其在源码中的顺序一致。默认情况下，如果元素本身是可获取焦点的就没有必要设置 <code>tabindex</code> 属性。但，如果你想让一个不能获取焦点的元素，比如 <code>&lt;span&gt;</code> 或 <code>&lt;div&gt;</code>，也被包含在 <code>tab</code> 键序列表中，那么设置 <code>tabindex = 0</code> 就可以使这些元素按其在源码中的顺序出现在 tab 键序中。</p>
+<p>值得一提的是，那些可获取焦点的元素使用起来比较方便，例如，当你使用 <code>&lt;button&gt;</code> 或 <code>&lt;input type=&quot;checkbox&quot;&gt;</code>，键盘焦点和交互由浏览器自动处理。当你使用其他元素来构建自定义组件时，你需要人为地提供键盘焦点和交互支持。</p>
+<h2 id="tabindex-1"><a href="#tabindex-1" class="headerlink" title="tabindex=-1"></a>tabindex=-1</h2><p>​    当 <code>tabindex</code> 被设置为像 <code>-1</code> 一样的负数时，该元素就变成可由代码获取焦点，但其本身并不在 tab 键序列表中。也就是说，在按下 <code>tab</code> 键时，该元素不能获取到焦点，但是可以通过代码来获取到焦点。</p>
+<p>​    请看下面例子，表单返回错误汇总信息时，将通过代码使其获取到焦点，并将其放置在表单的顶部，这样屏幕阅读器或屏幕放大器用户就能得到提示，以便他们能够纠正错误，同时对于键盘用户，这个元素并不会出现在 tab 键序中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div role=&quot;group&quot; id=&quot;errorSummary&quot; aria-labelledby=&quot;errorSummaryHeading&quot; tabindex=&quot;-1&quot;&gt;</span><br><span class="line">    &lt;h2 id=&quot;errorSummaryHeading&quot;&gt;Your information contains three errors&lt;/h2&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="tabindex-1-1"><a href="#tabindex-1-1" class="headerlink" title="tabindex=1+"></a>tabindex=1+</h2><p>​    当 <code>tabindex</code> 设置为一个正数时，情况就复杂了。它可以使一个元素不按页面顺序来获取焦点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;label for=&quot;username&quot;&gt;Username:&lt;/label&gt;</span><br><span class="line">&lt;input type=&quot;text&quot; id=&quot;username&quot; tabindex=&quot;3&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;label for=&quot;password&quot;&gt;Password:&lt;/label&gt;</span><br><span class="line">&lt;input type=&quot;password&quot; id=&quot;password&quot; tabindex=&quot;1&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;submit&quot; value=&quot;Log in&quot; tabindex=&quot;2&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>​    在上面例子中，视觉预期的 tab 顺序是：用户名输入框，密码输入框，最后是登陆按钮。然而，这里设置的 <code>tabindex</code> 属性，将使其变得不可预期，焦点移动顺序分别是：密码输入框，登陆按钮，最后才是用户名输入框。</p>
+<p>​    当你意识到密码输入框是表单中第一个能获取到焦点的元素时，事情也许已经变糟。不管在密码输入框之前有多少个可获取焦点的元素，<code>tabindex=1</code> 就意味着它将是页面上第一个可获得焦点的元素，而与视觉样式和源码顺序无关。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>tabindex</code> 属性很常用，它可以改善或破坏键盘用户对页面的可用性。使用该属性时，请谨记：</p>
+<ul>
+<li><code>tabindex=0</code> 可以使一个元素按自然顺序出现在 tab 键序中，同时，尽量使用默认可获取焦点的元素。</li>
+<li><code>tabindex=-1</code> 可以使一个元素可由代码获取到焦点，但其本身并不在 tab 键序中。</li>
+<li>避免设置 <code>tabindex=1+</code>。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/28/centos ssh连接Docker容器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -534,7 +695,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/11/20/测试/">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/11/20/JS中几种循环的区别与相同点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -553,7 +714,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/20/测试/" itemprop="url">JS中几种循环的区别与相同点</a></h1>
+                <a class="post-title-link" href="/2018/11/20/JS中几种循环的区别与相同点/" itemprop="url">JS中几种循环的区别与相同点</a></h1>
         
 
         <div class="post-meta">
@@ -1762,180 +1923,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/云平台通用操作手册/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/07/云平台通用操作手册/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:40:15+08:00">
-                2018-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>[TOC]</p>
-<h1 id="云平台通用操作手册"><a href="#云平台通用操作手册" class="headerlink" title="云平台通用操作手册"></a><strong>云平台通用操作手册</strong></h1><h2 id="云平台简介"><a href="#云平台简介" class="headerlink" title="云平台简介"></a><strong>云平台简介</strong></h2><p>云平台目前共以下4种管理平台</p>
-<table>
-<thead>
-<tr>
-<th>平台</th>
-<th>访问地址</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>云管理平台</td>
-<td>dc.fitech.tech:10012</td>
-<td>192.168.101.30:10012</td>
-</tr>
-<tr>
-<td>gitlab私库</td>
-<td>gitlab.fitech.tech:10002</td>
-<td>192.168.101.30:10002</td>
-</tr>
-<tr>
-<td>npm私库</td>
-<td>npm.fitech.tech:10005</td>
-<td>192.168.101.30:10005</td>
-</tr>
-<tr>
-<td>LDAP账号管理平台</td>
-<td></td>
-<td>192.168.101.30:8081/phpldapadmin</td>
-</tr>
-</tbody>
-</table>
-<h2 id="一、云管理平台"><a href="#一、云管理平台" class="headerlink" title="一、云管理平台"></a><strong>一、云管理平台</strong></h2><p>主要用于容器的创建及管理，可以实现服务发现和负载均衡等</p>
-<h2 id="二、gitlab私库"><a href="#二、gitlab私库" class="headerlink" title="二、gitlab私库"></a><strong>二、gitlab私库</strong></h2><p>1、配置ssh key</p>
-<p>2、编辑~/.ssh/config文件，添加</p>
-<p>Host gitlab.fitech.tech</p>
-<p>HostName gitlab.fitech.tech</p>
-<p>Port 10003</p>
-<p>Windows系统在C:/User/用户名/ssh/config</p>
-<p>如果没有config文件新增即可</p>
-<p>3、gitlab现有两种登录模式，一种gitlab注册账号登录，另一种LDAP创建的账号登录</p>
-<h2 id="三、npm私库"><a href="#三、npm私库" class="headerlink" title="三、npm私库"></a><strong>三、npm私库</strong></h2><p>使用步骤：</p>
-<p>1、</p>
-<p>2、npm包发布私库</p>
-<p>npm login</p>
-<p>username:fitech</p>
-<p>password:123123</p>
-<p>email:<a href="mailto:fitech@fitech.tech" target="_blank" rel="noopener">fitech@fitech.tech</a></p>
-<p>npm publish</p>
-<h2 id="四、LDAP账号管理平台"><a href="#四、LDAP账号管理平台" class="headerlink" title="四、LDAP账号管理平台"></a><strong>四、LDAP账号管理平台</strong></h2><p>主要用于云平台各个平台的统一账号管理，phpldapadmin的账户名cn=admin,dc=fitech,dc=fitech</p>
-<p>新增账号流程：</p>
-<p>1、选择Create new entry here</p>
-<p>2、选择Generic: User Account</p>
-<p>3、填写信息，选择Create Object</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1986,7 +1973,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2008,7 +1995,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

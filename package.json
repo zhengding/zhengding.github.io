@@ -6,8 +6,8 @@
     "version": "3.8.0"
   },
   "scripts": {
-    "commit": "hexo g && git add . && git commit -am 'zhengding' && git push",
-    "c": "git add . && git commit -am 'update blog' && git push"
+    "commit": "hexo g && hexo d && git add . && git commit -am 'zhengding' && git push",
+    "c": "hexo g && hexo d && git add . && git commit -am 'zhengding' && git push"
   },
   "dependencies": {
     "hexo": "^3.2.0",

@@ -252,6 +252,180 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/云平台通用操作手册/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/07/云平台通用操作手册/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:40:15+08:00">
+                2018-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[TOC]</p>
+<h1 id="云平台通用操作手册"><a href="#云平台通用操作手册" class="headerlink" title="云平台通用操作手册"></a><strong>云平台通用操作手册</strong></h1><h2 id="云平台简介"><a href="#云平台简介" class="headerlink" title="云平台简介"></a><strong>云平台简介</strong></h2><p>云平台目前共以下4种管理平台</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>访问地址</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>云管理平台</td>
+<td>dc.fitech.tech:10012</td>
+<td>192.168.101.30:10012</td>
+</tr>
+<tr>
+<td>gitlab私库</td>
+<td>gitlab.fitech.tech:10002</td>
+<td>192.168.101.30:10002</td>
+</tr>
+<tr>
+<td>npm私库</td>
+<td>npm.fitech.tech:10005</td>
+<td>192.168.101.30:10005</td>
+</tr>
+<tr>
+<td>LDAP账号管理平台</td>
+<td></td>
+<td>192.168.101.30:8081/phpldapadmin</td>
+</tr>
+</tbody>
+</table>
+<h2 id="一、云管理平台"><a href="#一、云管理平台" class="headerlink" title="一、云管理平台"></a><strong>一、云管理平台</strong></h2><p>主要用于容器的创建及管理，可以实现服务发现和负载均衡等</p>
+<h2 id="二、gitlab私库"><a href="#二、gitlab私库" class="headerlink" title="二、gitlab私库"></a><strong>二、gitlab私库</strong></h2><p>1、配置ssh key</p>
+<p>2、编辑~/.ssh/config文件，添加</p>
+<p>Host gitlab.fitech.tech</p>
+<p>HostName gitlab.fitech.tech</p>
+<p>Port 10003</p>
+<p>Windows系统在C:/User/用户名/ssh/config</p>
+<p>如果没有config文件新增即可</p>
+<p>3、gitlab现有两种登录模式，一种gitlab注册账号登录，另一种LDAP创建的账号登录</p>
+<h2 id="三、npm私库"><a href="#三、npm私库" class="headerlink" title="三、npm私库"></a><strong>三、npm私库</strong></h2><p>使用步骤：</p>
+<p>1、</p>
+<p>2、npm包发布私库</p>
+<p>npm login</p>
+<p>username:fitech</p>
+<p>password:123123</p>
+<p>email:<a href="mailto:fitech@fitech.tech" target="_blank" rel="noopener">fitech@fitech.tech</a></p>
+<p>npm publish</p>
+<h2 id="四、LDAP账号管理平台"><a href="#四、LDAP账号管理平台" class="headerlink" title="四、LDAP账号管理平台"></a><strong>四、LDAP账号管理平台</strong></h2><p>主要用于云平台各个平台的统一账号管理，phpldapadmin的账户名cn=admin,dc=fitech,dc=fitech</p>
+<p>新增账号流程：</p>
+<p>1、选择Create new entry here</p>
+<p>2、选择Generic: User Account</p>
+<p>3、填写信息，选择Create Object</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/[转]全文搜索引擎 Elasticsearch 入门教程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1887,175 +2061,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/oracle常用命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/07/oracle常用命令/" itemprop="url">oracle常用命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:40:14+08:00">
-                2018-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Oracle中用命令参数详解"><a href="#Oracle中用命令参数详解" class="headerlink" title="Oracle中用命令参数详解"></a><strong>Oracle中用命令参数详解</strong></h1><h2 id="1、exp-imp——导入、导出"><a href="#1、exp-imp——导入、导出" class="headerlink" title="1、exp/imp——导入、导出"></a>1、exp/imp——导入、导出</h2><p>【用 exp 数 据 导 出】：1  将数据库TEST完全导出,用户名system 密码manager 导出到D:\daochu.dmp中</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exp east/east@xe file=/root/east.dmp full=y</span><br></pre></td></tr></table></figure>
-<p>exp east/east@xe file=/root/east.dmp full=y<br>exp east/east file=/root/east.dmp full=y</p>
-<p>imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y</p>
-<h2 id="2、创建表空间"><a href="#2、创建表空间" class="headerlink" title="2、创建表空间"></a>2、创建表空间</h2><h4 id="2-1先创建一个表空间，例如（临时表空间）"><a href="#2-1先创建一个表空间，例如（临时表空间）" class="headerlink" title="2.1先创建一个表空间，例如（临时表空间）"></a>2.1先创建一个表空间，例如（临时表空间）</h4><p>create temporary tablespace fitech_temp </p>
-<p>tempfile ‘/u01/app/oracle/oradata/XE/fitech_temp.dbf’ </p>
-<p>size 50m  </p>
-<p>autoextend on  </p>
-<p>next 50m maxsize 20480m  </p>
-<p>extent management local;  </p>
-<p> （永久表空间）</p>
-<p>create tablespace fitech_data  </p>
-<p>logging  </p>
-<p>datafile ‘/u01/app/oracle/oradata/XE/fitech_data.dbf’ </p>
-<p>size 50m  </p>
-<p>autoextend on  </p>
-<p>next 50m maxsize 20480m  </p>
-<p>extent management local;</p>
-<h4 id="2-2创建用户并指定表空间"><a href="#2-2创建用户并指定表空间" class="headerlink" title="2.2创建用户并指定表空间"></a>2.2创建用户并指定表空间</h4><p>（第一个east为用户名，第二个east为密码）</p>
-<p>create user east identified by east </p>
-<p>default tablespace fitech_data  </p>
-<p>temporary tablespace fitech_temp;</p>
-<p>修改用户表空间</p>
-<p>alter user 用户名 default tablespace 表空间名字 ;–创建时候指定表空间</p>
-<p>alter user east default tablespace fitech_data  </p>
-<p>temporary tablespace fitech_temp;</p>
-<h4 id="2-3给用户分配权限"><a href="#2-3给用户分配权限" class="headerlink" title="2.3给用户分配权限"></a>2.3给用户分配权限</h4><p>grant connect,resource,dba to east;</p>
-<h4 id="2-4使用east用户登录，查看数据库用户正常访问即可"><a href="#2-4使用east用户登录，查看数据库用户正常访问即可" class="headerlink" title="2.4使用east用户登录，查看数据库用户正常访问即可"></a>2.4使用east用户登录，查看数据库用户正常访问即可</h4><h3 id="3、查看数据库状态"><a href="#3、查看数据库状态" class="headerlink" title="3、查看数据库状态"></a>3、查看数据库状态</h3><p>lsnrctl status </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2106,7 +2111,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2128,7 +2133,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
