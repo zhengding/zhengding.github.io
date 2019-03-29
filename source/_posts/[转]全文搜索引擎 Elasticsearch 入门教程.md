@@ -102,7 +102,7 @@ $ curl 'localhost:9200/_mapping?pretty=true'
 
 ```bash
 $ curl -X PUT 'localhost:9200/weather'
-	```
+```
 
 服务器返回一个 JSON 对象，里面的acknowledged字段表示操作成功。
 
@@ -266,7 +266,7 @@ $ curl 'localhost:9200/weather/beijing/abc?pretty=true'
 
 ```bash
 $ curl -X DELETE 'localhost:9200/accounts/person/1'
-	```
+```
 
 这里先不要删除这条记录，后面还要用到。
 ## 5.4 更新记录

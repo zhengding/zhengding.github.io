@@ -9,8 +9,6 @@ categories: 前端
 
 [tabindex](http://www.w3.org/html/wg/drafts/html/master/editing.html#attr-tabindex) 属性用于管理键盘焦点，决定元素是否能被选中，以及按下 `tab` 键过程中被选中的顺序，使用得当能够极大的提高应用的易用性，然而，不恰当地使用时可以键盘用户对应用的可用性。到底如何使用？设置为 `0` 会有什么效果？设置为 `-1` 会有什么效果？本文将为你揭晓。
 
-![ceshi](1.jpg)
-
 ​	要理解为什么 `tabindex` 属性对可用性有如此大的影响，有必要知道一些键盘交互的方式。键盘用户通常会使用 `tab` 键将光标从一个可获取焦点的元素有序地移动到下一个元素。
 
 ​	像链接和 `form` 表单元素默认都是[可获取焦点](http://www.w3.org/html/wg/drafts/html/master/dom.html#interactive-content-0)的，他们的默认焦点顺序取决于他们在源代码中出现的顺序。
