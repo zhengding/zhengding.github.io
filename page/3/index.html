@@ -1217,6 +1217,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/Mac系统安装PHP7教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/29/Mac系统安装PHP7教程/" itemprop="url">Mac系统安装PHP7教程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">
+                2019-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>安装教程：</p>
+<h2 id="1-首先我们需要安装Homebrew"><a href="#1-首先我们需要安装Homebrew" class="headerlink" title="1.首先我们需要安装Homebrew"></a>1.首先我们需要安装Homebrew</h2><p>一条命令完美安装：<a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">http://brew.sh/index_zh-cn.html</a></p>
+<h2 id="2-终端输入以下命令"><a href="#2-终端输入以下命令" class="headerlink" title="2.终端输入以下命令"></a>2.终端输入以下命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 创建目录,如果你没有创建过该目录</span><br><span class="line">sudo mkdir /usr/<span class="built_in">local</span>/var</span><br><span class="line">sudo chmod 777 /usr/<span class="built_in">local</span>/var</span><br><span class="line">//修改成你自己的用户名和组,如果你没有创建过该目录</span><br><span class="line">sudo mkdir /usr/<span class="built_in">local</span>/sbin/</span><br><span class="line">sudo chown -R &lt;username&gt;:&lt;group&gt; /usr/<span class="built_in">local</span>/sbin//由于我本身一直在使用5.6版本，故上述步骤省略，下面进入正题</span><br><span class="line">//添加PHP库</span><br><span class="line">brew tap homebrew/dupes</span><br><span class="line">brew tap homebrew/versions</span><br><span class="line">brew tap homebrew/homebrew-php</span><br><span class="line">//关闭老版本的PHP56或55或更早版本 进程</span><br><span class="line">brew unlink php56</span><br><span class="line">//开始安装PHP7</span><br><span class="line">brew install php70</span><br><span class="line">//开启PHP70进程</span><br><span class="line">brew link php70</span><br><span class="line">//输入命令，查看是否成功</span><br><span class="line">php -v</span><br><span class="line">//成功后显示下面信息</span><br><span class="line">PHP 7.0.8 (cli) (built: Jul 13 2016 15:19:21) ( NTS )</span><br><span class="line">Copyright (c) 1997-2016 The PHP Group</span><br><span class="line">Zend Engine v3.0.0, Copyright (c) 1998-2016 Zend Technologies</span><br></pre></td></tr></table></figure>
+<p>注：遇未生成libphp7.so</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php70 --with-apxs2  --with-apache --with-gmp --with-imap --with-tidy --with-debug</span><br></pre></td></tr></table></figure>
+<h2 id="3-配置Apache"><a href="#3-配置Apache" class="headerlink" title="3.配置Apache"></a>3.配置Apache</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/apache2/httpd.conf</span><br><span class="line">找到这行注释掉(大概在168行）</span><br><span class="line">Comment out the PHP5 module   </span><br><span class="line">LoadModule php5_module libexec/apache2/libphp5.so</span><br><span class="line"></span><br><span class="line">Enable PHP 7 module  </span><br><span class="line">LoadModule php7_module /usr/<span class="built_in">local</span>/opt/php70/libexec/apache2/libphp7.so  &lt;FilesMatch \.php$&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="4-重启Apache"><a href="#4-重启Apache" class="headerlink" title="4.重启Apache"></a>4.重启Apache</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apachectl restart</span><br></pre></td></tr></table></figure>
+<h2 id="5-到你的Apache的默认目录-Library-WebServer-Documents下面去增加一个info-php的文件"><a href="#5-到你的Apache的默认目录-Library-WebServer-Documents下面去增加一个info-php的文件" class="headerlink" title="5.到你的Apache的默认目录/Library/WebServer/Documents下面去增加一个info.php的文件"></a>5.到你的Apache的默认目录/Library/WebServer/Documents下面去增加一个info.php的文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php    </span><br><span class="line">phpinfo();    </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>最后到你的 <a href="http://localhost/info.php" target="_blank" rel="noopener">http://localhost/info.php</a> 去看看测试以下，如果看到相关的信息，就说明已经安装好了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/Mac配置Iterm2自动登录expect脚本/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1364,7 +1514,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/Mac系统安装PHP7教程/">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/Linux之java环境变量配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -1383,7 +1533,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/29/Mac系统安装PHP7教程/" itemprop="url">Mac系统安装PHP7教程</a></h1>
+                <a class="post-title-link" href="/2019/03/29/Linux之java环境变量配置/" itemprop="url">Linux之Java环境变量配置</a></h1>
         
 
         <div class="post-meta">
@@ -1418,8 +1568,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -1457,16 +1607,8 @@
       
         
           
-            <p>安装教程：</p>
-<h2 id="1-首先我们需要安装Homebrew"><a href="#1-首先我们需要安装Homebrew" class="headerlink" title="1.首先我们需要安装Homebrew"></a>1.首先我们需要安装Homebrew</h2><p>一条命令完美安装：<a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">http://brew.sh/index_zh-cn.html</a></p>
-<h2 id="2-终端输入以下命令"><a href="#2-终端输入以下命令" class="headerlink" title="2.终端输入以下命令"></a>2.终端输入以下命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 创建目录,如果你没有创建过该目录</span><br><span class="line">sudo mkdir /usr/<span class="built_in">local</span>/var</span><br><span class="line">sudo chmod 777 /usr/<span class="built_in">local</span>/var</span><br><span class="line">//修改成你自己的用户名和组,如果你没有创建过该目录</span><br><span class="line">sudo mkdir /usr/<span class="built_in">local</span>/sbin/</span><br><span class="line">sudo chown -R &lt;username&gt;:&lt;group&gt; /usr/<span class="built_in">local</span>/sbin//由于我本身一直在使用5.6版本，故上述步骤省略，下面进入正题</span><br><span class="line">//添加PHP库</span><br><span class="line">brew tap homebrew/dupes</span><br><span class="line">brew tap homebrew/versions</span><br><span class="line">brew tap homebrew/homebrew-php</span><br><span class="line">//关闭老版本的PHP56或55或更早版本 进程</span><br><span class="line">brew unlink php56</span><br><span class="line">//开始安装PHP7</span><br><span class="line">brew install php70</span><br><span class="line">//开启PHP70进程</span><br><span class="line">brew link php70</span><br><span class="line">//输入命令，查看是否成功</span><br><span class="line">php -v</span><br><span class="line">//成功后显示下面信息</span><br><span class="line">PHP 7.0.8 (cli) (built: Jul 13 2016 15:19:21) ( NTS )</span><br><span class="line">Copyright (c) 1997-2016 The PHP Group</span><br><span class="line">Zend Engine v3.0.0, Copyright (c) 1998-2016 Zend Technologies</span><br></pre></td></tr></table></figure>
-<p>注：遇未生成libphp7.so</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php70 --with-apxs2  --with-apache --with-gmp --with-imap --with-tidy --with-debug</span><br></pre></td></tr></table></figure>
-<h2 id="3-配置Apache"><a href="#3-配置Apache" class="headerlink" title="3.配置Apache"></a>3.配置Apache</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/apache2/httpd.conf</span><br><span class="line">找到这行注释掉(大概在168行）</span><br><span class="line">Comment out the PHP5 module   </span><br><span class="line">LoadModule php5_module libexec/apache2/libphp5.so</span><br><span class="line"></span><br><span class="line">Enable PHP 7 module  </span><br><span class="line">LoadModule php7_module /usr/<span class="built_in">local</span>/opt/php70/libexec/apache2/libphp7.so  &lt;FilesMatch \.php$&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="4-重启Apache"><a href="#4-重启Apache" class="headerlink" title="4.重启Apache"></a>4.重启Apache</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apachectl restart</span><br></pre></td></tr></table></figure>
-<h2 id="5-到你的Apache的默认目录-Library-WebServer-Documents下面去增加一个info-php的文件"><a href="#5-到你的Apache的默认目录-Library-WebServer-Documents下面去增加一个info-php的文件" class="headerlink" title="5.到你的Apache的默认目录/Library/WebServer/Documents下面去增加一个info.php的文件"></a>5.到你的Apache的默认目录/Library/WebServer/Documents下面去增加一个info.php的文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php    </span><br><span class="line">phpinfo();    </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>最后到你的 <a href="http://localhost/info.php" target="_blank" rel="noopener">http://localhost/info.php</a> 去看看测试以下，如果看到相关的信息，就说明已经安装好了。</p>
-
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/profile</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/fitech03/jdk1.8.0_161</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$JAVA_HOME</span>/jre</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JRE_HOME</span>/lib:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JRE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># source /etc/profile</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#/etc/environment</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/fitech03/jdk1.8.0_161</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JAVA_HOME</span>/jre/lib</span><br><span class="line"></span><br><span class="line"><span class="comment"># source /etc/environment</span></span><br></pre></td></tr></table></figure>
           
         
       
@@ -1670,7 +1812,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/Linux之java环境变量配置/">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/Kubernetes常用命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -1689,7 +1831,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/29/Linux之java环境变量配置/" itemprop="url">Linux之Java环境变量配置</a></h1>
+                <a class="post-title-link" href="/2019/03/29/Kubernetes常用命令/" itemprop="url">Kubernetes常用命令</a></h1>
         
 
         <div class="post-meta">
@@ -1763,221 +1905,7 @@
       
         
           
-            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/profile</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/fitech03/jdk1.8.0_161</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$JAVA_HOME</span>/jre</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JRE_HOME</span>/lib:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JRE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># source /etc/profile</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#/etc/environment</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/fitech03/jdk1.8.0_161</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JAVA_HOME</span>/jre/lib</span><br><span class="line"></span><br><span class="line"><span class="comment"># source /etc/environment</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/JS中几种循环的区别与相同点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/29/JS中几种循环的区别与相同点/" itemprop="url">JS中几种循环的区别与相同点</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">
-                2019-03-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="循环语句，用于重复执行某个操作，它有多种形式。"><a href="#循环语句，用于重复执行某个操作，它有多种形式。" class="headerlink" title="循环语句，用于重复执行某个操作，它有多种形式。"></a>循环语句，用于重复执行某个操作，它有多种形式。</h1><blockquote>
-<p>while循环</p>
-</blockquote>
-<p>while语句的循环条件是一个表达式（express），必须放在圆括号中。代码块部分，如果只有一条语句（statement），可以省略大括号，否则就必须加上大括号。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">while (expression)</span><br><span class="line">  statement;</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line"></span><br><span class="line">while (expression) statement;</span><br></pre></td></tr></table></figure>
-<p>下面写个例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while (i &lt; 100) &#123;</span><br><span class="line">  console.log(&apos;i当前为：&apos; + i);</span><br><span class="line">  i += 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的代码将循环100次，直到i等于100为止。</p>
-<p>下面的例子是一个无限循环，因为条件总是为真。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while (true) &#123;</span><br><span class="line">  console.log(&apos;Hello, world&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>for循环</p>
-</blockquote>
-<p>for语句是循环命令的另一种形式，可以指定循环的起点、终点和终止条件。它的格式如下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for (initialize; test; increment)</span><br><span class="line">  statement</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line"></span><br><span class="line">for (initialize; test; increment) &#123;</span><br><span class="line">  statement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>for语句后面的括号里面，有三个表达式。</p>
-<blockquote>
-<ul>
-<li>初始化表达式（initialize）：确定循环的初始值，只在循环开始时执行一次。</li>
-<li>测试表达式（test）：检查循环条件，只要为真就进行后续操作。</li>
-<li>递增表达式（increment）：完成后续操作，然后返回上一步，再一次检查循环条件。</li>
-</ul>
-</blockquote>
-<p>eg:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;</span><br><span class="line">for (var i = 0; i &lt; x; i++) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">&#125;</span><br><span class="line">// 0</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br></pre></td></tr></table></figure>
-<p>上面代码中，初始化表达式是var i = 0，即初始化一个变量i；测试表达式是i &lt; x，即只要i小于x，就会执行循环；递增表达式是i++，即每次循环结束后，i增大1。</p>
-<p>所有for循环，都可以改写成while循环。上面的例子改为while循环，代码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;</span><br><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while (i &lt; x) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">  i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>for语句的三个部分（initialize，test，increment），可以省略任何一个，也可以全部省略。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for ( ; ; )&#123;</span><br><span class="line">  console.log(&apos;Hello World&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码省略了for语句表达式的三个部分，结果就导致了一个无限循环。</p>
-<blockquote>
-<p>do…while循环</p>
-</blockquote>
-<p>do…while循环与while循环类似，唯一的区别就是先运行一次循环体，然后判断循环条件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">do</span><br><span class="line">  statement</span><br><span class="line">while (expression);</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line"></span><br><span class="line">do &#123;</span><br><span class="line">  statement</span><br><span class="line">&#125; while (expression);</span><br></pre></td></tr></table></figure>
-<p>不管条件是否为真，do..while循环至少运行一次，这是这种结构最大的特点。另外，while语句后面的分号不能省略。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;</span><br><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">do &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">  i++;</span><br><span class="line">&#125; while(i &lt; x);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>break语句和continue语句</p>
-<p>break语句和continue语句都具有跳转作用，可以让代码不按既有的顺序执行。</p>
-<p>break语句用于跳出代码块或循环。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while(i &lt; 100) &#123;</span><br><span class="line">  console.log(&apos;i当前为：&apos; + i);</span><br><span class="line">  i++;</span><br><span class="line">  if (i === 10) break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码只会执行10次循环，一旦i等于10，就会跳出循环。</p>
-<blockquote>
-<p>for循环也可以使用break语句跳出循环。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">  if (i === 3)</span><br><span class="line">    break;</span><br><span class="line">&#125;</span><br><span class="line">// 0</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br><span class="line">// 3</span><br></pre></td></tr></table></figure>
-<p>上面代码执行到i等于3，就会跳出循环</p>
-<blockquote>
-<p>continue语句用于立即终止本轮循环，返回循环结构的头部，开始下一轮循环。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while (i &lt; 100)&#123;</span><br><span class="line">  i++;</span><br><span class="line">  if (i%2 === 0) continue;</span><br><span class="line">  console.log(&apos;i当前为：&apos; + i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码只有在i为奇数时，才会输出i的值。如果i为偶数，则直接进入下一轮循环。</p>
-<blockquote>
-<p>如果存在多重循环，不带参数的break语句和continue语句都只针对最内层循环。</p>
-<p>标签（label）</p>
-</blockquote>
-<p>JavaScript语言允许，语句的前面有标签（label），相当于定位符，用于跳转到程序的任意位置，标签的格式如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">label:</span><br><span class="line">  statement</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>标签可以是任意的标识符，但是不能是保留字，语句部分可以是任意语句。</p>
-</blockquote>
-<p>标签通常与break语句和continue语句配合使用，跳出特定的循环。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">top:</span><br><span class="line">  for (var i = 0; i &lt; 3; i++)&#123;</span><br><span class="line">    for (var j = 0; j &lt; 3; j++)&#123;</span><br><span class="line">      if (i === 1 &amp;&amp; j === 1) break top;</span><br><span class="line">      console.log(&apos;i=&apos; + i + &apos;, j=&apos; + j);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">// i=0, j=0</span><br><span class="line">// i=0, j=1</span><br><span class="line">// i=0, j=2</span><br><span class="line">// i=1, j=0</span><br></pre></td></tr></table></figure>
-<p>上面代码为一个双重循环区块，break命令后面加上了top标签（注意，top不用加引号），满足条件时，直接跳出双层循环。如果break语句后面不使用标签，则只能跳出内层循环，进入下一次的外层循环。</p>
-<blockquote>
-<p>continue语句也可以与标签配合使用。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">top:</span><br><span class="line">  for (var i = 0; i &lt; 3; i++)&#123;</span><br><span class="line">    for (var j = 0; j &lt; 3; j++)&#123;</span><br><span class="line">      if (i === 1 &amp;&amp; j === 1) continue top;</span><br><span class="line">      console.log(&apos;i=&apos; + i + &apos;, j=&apos; + j);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">// i=0, j=0</span><br><span class="line">// i=0, j=1</span><br><span class="line">// i=0, j=2</span><br><span class="line">// i=1, j=0</span><br><span class="line">// i=2, j=0</span><br><span class="line">// i=2, j=1</span><br><span class="line">// i=2, j=2</span><br></pre></td></tr></table></figure>
-<p>上面代码中，continue命令后面有一个标签名，满足条件时，会跳过当前循环，直接进入下一轮外层循环。如果continue语句后面不使用标签，则只能进入下一轮的内层循环。</p>
-
           
         
       

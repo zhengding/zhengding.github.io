@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/Kubernetes常用命令/">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/JS中几种循环的区别与相同点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -271,7 +271,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/29/Kubernetes常用命令/" itemprop="url">Kubernetes常用命令</a></h1>
+                <a class="post-title-link" href="/2019/03/29/JS中几种循环的区别与相同点/" itemprop="url">JS中几种循环的区别与相同点</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -345,7 +345,79 @@
       
         
           
-            
+            <h1 id="循环语句，用于重复执行某个操作，它有多种形式。"><a href="#循环语句，用于重复执行某个操作，它有多种形式。" class="headerlink" title="循环语句，用于重复执行某个操作，它有多种形式。"></a>循环语句，用于重复执行某个操作，它有多种形式。</h1><blockquote>
+<p>while循环</p>
+</blockquote>
+<p>while语句的循环条件是一个表达式（express），必须放在圆括号中。代码块部分，如果只有一条语句（statement），可以省略大括号，否则就必须加上大括号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">while (expression)</span><br><span class="line">  statement;</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line"></span><br><span class="line">while (expression) statement;</span><br></pre></td></tr></table></figure>
+<p>下面写个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while (i &lt; 100) &#123;</span><br><span class="line">  console.log(&apos;i当前为：&apos; + i);</span><br><span class="line">  i += 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码将循环100次，直到i等于100为止。</p>
+<p>下面的例子是一个无限循环，因为条件总是为真。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while (true) &#123;</span><br><span class="line">  console.log(&apos;Hello, world&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>for循环</p>
+</blockquote>
+<p>for语句是循环命令的另一种形式，可以指定循环的起点、终点和终止条件。它的格式如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for (initialize; test; increment)</span><br><span class="line">  statement</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line"></span><br><span class="line">for (initialize; test; increment) &#123;</span><br><span class="line">  statement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>for语句后面的括号里面，有三个表达式。</p>
+<blockquote>
+<ul>
+<li>初始化表达式（initialize）：确定循环的初始值，只在循环开始时执行一次。</li>
+<li>测试表达式（test）：检查循环条件，只要为真就进行后续操作。</li>
+<li>递增表达式（increment）：完成后续操作，然后返回上一步，再一次检查循环条件。</li>
+</ul>
+</blockquote>
+<p>eg:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;</span><br><span class="line">for (var i = 0; i &lt; x; i++) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">&#125;</span><br><span class="line">// 0</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br></pre></td></tr></table></figure>
+<p>上面代码中，初始化表达式是var i = 0，即初始化一个变量i；测试表达式是i &lt; x，即只要i小于x，就会执行循环；递增表达式是i++，即每次循环结束后，i增大1。</p>
+<p>所有for循环，都可以改写成while循环。上面的例子改为while循环，代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;</span><br><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while (i &lt; x) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">  i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>for语句的三个部分（initialize，test，increment），可以省略任何一个，也可以全部省略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for ( ; ; )&#123;</span><br><span class="line">  console.log(&apos;Hello World&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码省略了for语句表达式的三个部分，结果就导致了一个无限循环。</p>
+<blockquote>
+<p>do…while循环</p>
+</blockquote>
+<p>do…while循环与while循环类似，唯一的区别就是先运行一次循环体，然后判断循环条件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">do</span><br><span class="line">  statement</span><br><span class="line">while (expression);</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line"></span><br><span class="line">do &#123;</span><br><span class="line">  statement</span><br><span class="line">&#125; while (expression);</span><br></pre></td></tr></table></figure>
+<p>不管条件是否为真，do..while循环至少运行一次，这是这种结构最大的特点。另外，while语句后面的分号不能省略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;</span><br><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">do &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">  i++;</span><br><span class="line">&#125; while(i &lt; x);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>break语句和continue语句</p>
+<p>break语句和continue语句都具有跳转作用，可以让代码不按既有的顺序执行。</p>
+<p>break语句用于跳出代码块或循环。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while(i &lt; 100) &#123;</span><br><span class="line">  console.log(&apos;i当前为：&apos; + i);</span><br><span class="line">  i++;</span><br><span class="line">  if (i === 10) break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码只会执行10次循环，一旦i等于10，就会跳出循环。</p>
+<blockquote>
+<p>for循环也可以使用break语句跳出循环。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">  if (i === 3)</span><br><span class="line">    break;</span><br><span class="line">&#125;</span><br><span class="line">// 0</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br><span class="line">// 3</span><br></pre></td></tr></table></figure>
+<p>上面代码执行到i等于3，就会跳出循环</p>
+<blockquote>
+<p>continue语句用于立即终止本轮循环，返回循环结构的头部，开始下一轮循环。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while (i &lt; 100)&#123;</span><br><span class="line">  i++;</span><br><span class="line">  if (i%2 === 0) continue;</span><br><span class="line">  console.log(&apos;i当前为：&apos; + i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码只有在i为奇数时，才会输出i的值。如果i为偶数，则直接进入下一轮循环。</p>
+<blockquote>
+<p>如果存在多重循环，不带参数的break语句和continue语句都只针对最内层循环。</p>
+<p>标签（label）</p>
+</blockquote>
+<p>JavaScript语言允许，语句的前面有标签（label），相当于定位符，用于跳转到程序的任意位置，标签的格式如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">label:</span><br><span class="line">  statement</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>标签可以是任意的标识符，但是不能是保留字，语句部分可以是任意语句。</p>
+</blockquote>
+<p>标签通常与break语句和continue语句配合使用，跳出特定的循环。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">top:</span><br><span class="line">  for (var i = 0; i &lt; 3; i++)&#123;</span><br><span class="line">    for (var j = 0; j &lt; 3; j++)&#123;</span><br><span class="line">      if (i === 1 &amp;&amp; j === 1) break top;</span><br><span class="line">      console.log(&apos;i=&apos; + i + &apos;, j=&apos; + j);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">// i=0, j=0</span><br><span class="line">// i=0, j=1</span><br><span class="line">// i=0, j=2</span><br><span class="line">// i=1, j=0</span><br></pre></td></tr></table></figure>
+<p>上面代码为一个双重循环区块，break命令后面加上了top标签（注意，top不用加引号），满足条件时，直接跳出双层循环。如果break语句后面不使用标签，则只能跳出内层循环，进入下一次的外层循环。</p>
+<blockquote>
+<p>continue语句也可以与标签配合使用。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">top:</span><br><span class="line">  for (var i = 0; i &lt; 3; i++)&#123;</span><br><span class="line">    for (var j = 0; j &lt; 3; j++)&#123;</span><br><span class="line">      if (i === 1 &amp;&amp; j === 1) continue top;</span><br><span class="line">      console.log(&apos;i=&apos; + i + &apos;, j=&apos; + j);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">// i=0, j=0</span><br><span class="line">// i=0, j=1</span><br><span class="line">// i=0, j=2</span><br><span class="line">// i=1, j=0</span><br><span class="line">// i=2, j=0</span><br><span class="line">// i=2, j=1</span><br><span class="line">// i=2, j=2</span><br></pre></td></tr></table></figure>
+<p>上面代码中，continue命令后面有一个标签名，满足条件时，会跳过当前循环，直接进入下一轮外层循环。如果continue语句后面不使用标签，则只能进入下一轮的内层循环。</p>
+
           
         
       
@@ -2147,7 +2219,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2017/11/20/git教程/">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2017/11/20/filter配置跨域访问/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -2166,7 +2238,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/20/git教程/" itemprop="url">git教程</a></h1>
+                <a class="post-title-link" href="/2017/11/20/filter配置跨域访问/" itemprop="url">filter配置跨域访问</a></h1>
         
 
         <div class="post-meta">
@@ -2201,8 +2273,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/干货/" itemprop="url" rel="index">
-                    <span itemprop="name">干货</span>
+                  <a href="/categories/后端/" itemprop="url" rel="index">
+                    <span itemprop="name">后端</span>
                   </a>
                 </span>
 
@@ -2240,352 +2312,8 @@
       
         
           
-            <h1 id="EAST项目部署常见问题"><a href="#EAST项目部署常见问题" class="headerlink" title="EAST项目部署常见问题"></a>EAST项目部署常见问题</h1><h2 id="项目启动报错"><a href="#项目启动报错" class="headerlink" title="项目启动报错"></a>项目启动报错</h2><ol>
-<li>保证服务器jdk版本为1.8以上</li>
-<li>首次部署仅将fitech.war,platform.war和libs.war放入服务器中间件中，防止日志太多，异常不容易排查</li>
-<li>查看服务器日志，发现connection异常，检查fitech中的数据库配置是否正确</li>
-</ol>
-<h2 id="用户登录异常"><a href="#用户登录异常" class="headerlink" title="用户登录异常"></a>用户登录异常</h2><ol>
-<li>检查数据脚本都正常执行了，可查看select * from sysuser是否有数据</li>
-<li>访问浏览器控制台，F12，登录一下看看是否有异常，如果是404，检查platform中的fitech.js是否修改成功</li>
-</ol>
-<h2 id="登录之后系统常见问题"><a href="#登录之后系统常见问题" class="headerlink" title="登录之后系统常见问题"></a>登录之后系统常见问题</h2><ol>
-<li>不要随意直接在数据库中修改数据，会导致页面显示有问题，如果实在想操作，请先询问产品开发</li>
-<li>系统配置中的制度配置导入时间比较久，耐心等待一会，重复导入可能会导致数据问题，查看是否成功，可在报文配置中查看数据表<br>\3. </li>
-</ol>
-<h2 id="ETL数据调度常见问题"><a href="#ETL数据调度常见问题" class="headerlink" title="ETL数据调度常见问题"></a>ETL数据调度常见问题</h2><blockquote>
-<p>新平台EAST需要配置3个作业才可以正常运行  </p>
-<ul>
-<li>数据补录作业</li>
-</ul>
-<ol>
-<li>数据补录系统待上报报文流程存储过程（east.create_bl_task|系统内置）</li>
-<li>数据补录系统流程开启任务（JAVA任务）</li>
-<li>EAST收据调度作业</li>
-<li>EAST待上报报文流程存储过程（east.proc_ledgerReport|系统内置）  </li>
-<li>数据拉取存储过程（客户现场人员编写）  </li>
-<li>EAST流程开启任务（JAVA任务）</li>
-<li>EAST报文生成作业</li>
-<li>EAST上报报文生成任务（JAVA任务）</li>
-</ol>
-</blockquote>
-<ol>
-<li>安装部署手册中的案例都是范例，请根据实际情况进行配置</li>
-<li>调度任务有没有成功执行，可以查看控制台日志是否执行成功</li>
-<li>数据库连接异常，可查看fitech-etl-1.0.war是否配置成功</li>
-<li>出现数组越界，可能是作业中的任务配置有问题，可截图发给开发排查问题</li>
-<li>ETL会根据配置频度来控制执行状态，例如日频度，则当天只能执行一次，如果想多次执行，则到数据调度监控中重新执行作业，或者执行SQL手动删除ETL调度任务 例如：</li>
-</ol>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select * from etl_job_monitor;</span><br><span class="line">select * from ETL_TASK_MONITOR;</span><br><span class="line"></span><br><span class="line">delete from ETL_JOB_MONITOR where yxrq = <span class="string">'20171020'</span>;</span><br><span class="line">delete from ETL_TASK_MONITOR where yxrq = <span class="string">'20171020'</span>;</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure>
-<h1 id="EAST项目部署手册"><a href="#EAST项目部署手册" class="headerlink" title="EAST项目部署手册"></a>EAST项目部署手册</h1><h2 id="服务器环境"><a href="#服务器环境" class="headerlink" title="服务器环境"></a>服务器环境</h2><ul>
-<li>数据库（如果是oracle需要安装oracle客户端，用作sqluldr2报文生成）</li>
-<li>jdk1.8以上</li>
-<li>服务器中间件（需要支持jdk1.8）</li>
-</ul>
-<h2 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h2><blockquote>
-<p>项目分成4个子服务，由于模块之间有相互调用，需要分先后启动，分别配置</p>
-</blockquote>
-<ul>
-<li>fitech.war<br><em>平台主服务,处理平台业务逻辑</em></li>
-<li>fitech-etl-1.0.war<br><em>ETL调度系统服务，处理数据抽取等调度任务</em></li>
-<li>platform.war<br><em>前端主服务</em></li>
-<li>libs.war<br><em>前端框架lib包</em></li>
-</ul>
-<h2 id="项目部署"><a href="#项目部署" class="headerlink" title="项目部署"></a>项目部署</h2><h4 id="主服务部署配置"><a href="#主服务部署配置" class="headerlink" title="主服务部署配置"></a>主服务部署配置</h4><ul>
-<li>将fitech.war放入服务中间件</li>
-<li>修改服务配置文件application-env.properties<br><img src="https://git.oschina.net/uploads/images/2017/0922/142804_a619079d_1102706.png" alt="配置文件所在位置" title="图片1.png"></li>
-<li>需要修改的配置<br><img src="https://git.oschina.net/uploads/images/2017/0922/142905_7ad5bb2f_1102706.png" alt="输入图片说明" title="图片2.png"> </li>
-</ul>
-<ol>
-<li>数据库配置，修改对应IP,端口和监听，以及用户名和密码</li>
-<li>initPassword是系统创建用户初始化密码的默认密码，根据需求修改</li>
-<li>template_path是系统模板存放路径，用于机构，用户等功能的模板下载</li>
-<li>ledgerRptFIle_tempPath和ledgerRptFIle_path是EAST生成报文存放的路径和临时文件生成的存放路径</li>
-<li>DBurl是sqluldr2报文生成数据链接配置</li>
-</ol>
-<h4 id="客户端部署配置"><a href="#客户端部署配置" class="headerlink" title="客户端部署配置"></a>客户端部署配置</h4><ul>
-<li>将platform.war和libs.war放入服务中间件</li>
-<li>修改配置文件fitech.js<br><img src="https://git.oschina.net/uploads/images/2017/0922/145015_b3e45198_1102706.png" alt="放置路径" title="图片3.png"><br><img src="https://git.oschina.net/uploads/images/2017/0922/145035_e6b445d0_1102706.png" alt="输入图片说明" title="图片4.png"></li>
-</ul>
-<ol>
-<li>pathcs是配置ETL调度系统地址</li>
-<li>path是配置主服务地址(包括服务项目名)</li>
-</ol>
-<h4 id="创建数据库表"><a href="#创建数据库表" class="headerlink" title="创建数据库表"></a>创建数据库表</h4><ul>
-<li><em>启动服务，主服务会自动创建系统表</em> </li>
-<li><a href="https://gitee.com/mpmpal_cr/document/attach_files/download?i=96428&amp;u=http://files.git.oschina.net/group1/M00/01/F4/PaAvDFnExYiAZBwYAAbJgGShKGQ898.rar?token=2fc273a040d2eabf77c760f50eff721b&amp;ts=1506067947&amp;attname=%E6%96%B0%E5%B9%B3%E5%8F%B0%E8%84%9A%E6%9C%AC.rar" target="_blank" rel="noopener">下载脚本</a></li>
-<li>执行初始化数据  </li>
-<li>EAST3.0初始化脚本.sql（初始化条线，角色等基础信息）</li>
-<li>EAST脱敏函数.sql（初始化脱敏函数，复制该脚本中的函数依次执行）  </li>
-<li>EAST脱敏公式.sql（初始化脱敏公式）</li>
-<li>拉链表存储过程.sql（初始化拉链表存储过程，复制该脚本中的存储过程依次执行）</li>
-<li>ETL初始化脚本.sql（初始化ETL基础数据）</li>
-<li>ETL存储过程.sql（ETL存储过程）</li>
-<li>ETD指标建表语句.sql（根据需求执行，免费的10个指标）</li>
-<li>ETD初始化数据.sql（根据需求执行，免费的10个指标）</li>
-<li>数据补录系统存储过程.sql（数据补录系统存储过程）</li>
-<li>数据补录初始化脚本.sql（数据补录系统初始化脚本）</li>
-<li>初始化EAST3.0校验公式（validata_rule05.sql脚本中有N个变量，根据提示进行输入。输入&amp;&amp;+变量,如：&amp;&amp;CHANGE）</li>
-<li>将template文件夹下的excel放到application-env.properties配置文件下的template_path路径下，用于模板下载</li>
-</ul>
-<h4 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h4><ul>
-<li>启动服务器中间件</li>
-<li>打开浏览器访问<a href="http://IP:port/platform" target="_blank" rel="noopener">http://IP:port/platform</a></li>
-<li>访问成功，点击登录使用superadmin登录，密码123456进行登录</li>
-</ul>
-<h4 id="配置业务制度"><a href="#配置业务制度" class="headerlink" title="配置业务制度"></a>配置业务制度</h4><ul>
-<li>进入系统配置》制度管理<br><img src="https://git.oschina.net/uploads/images/2017/0922/173322_c8830ec5_1102706.png" alt="输入图片说明" title="5.png"></li>
-<li>进入银监标准化业务条线》手工配置<br><img src="https://git.oschina.net/uploads/images/2017/0922/173652_6afc04b1_1102706.png" alt="输入图片说明" title="6.png"></li>
-<li>新增一个制度<br><img src="https://git.oschina.net/uploads/images/2017/0922/173722_7a2ae350_1102706.png" alt="输入图片说明" title="7.png"></li>
-<li>点击批量载入，选择系统导入文件夹下的EASTtemplate0530.xlsx和fields.xlsx，点击确定，待导入完成后，可生成EAST的58张数据表<br><img src="https://git.oschina.net/uploads/images/2017/0922/173755_dfcbb075_1102706.png" alt="输入图片说明" title="8.png"></li>
-<li>进入报文配置功能，查看报文是否生成成功，如果成功可进入操作手册进行机构，用户，角色等业务配置</li>
-</ul>
-<h4 id="数据配置"><a href="#数据配置" class="headerlink" title="数据配置"></a>数据配置</h4><ul>
-<li>系统需要现场实施人员根据客户现场情况创建机构，角色和用户信息</li>
-<li>机构信息配置</li>
-<li>角色信息配置</li>
-<li>用户信息配置</li>
-<li>流程信息配置（重要，ETL数据调度流程需要此步骤）<br>   <a href="https://gitee.com/mpmpal_cr/document/attach_files/download?i=98255&amp;u=http://files.git.oschina.net/group1/M00/02/09/PaAvDFnbQGuALm5OAGF7R5HNSdg735.doc?token=a118c827b961e80c623f752ed78eb4d8&amp;ts=1507541099&amp;attname=PD-%E7%A7%91%E8%9E%8D%E7%BB%BC%E5%90%88%E7%BB%9F%E8%AE%A1%E5%B9%B3%E5%8F%B0%E4%BA%A7%E5%93%81-%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C_V1.0_20170928.doc" target="_blank" rel="noopener">详见用户操作手册</a></li>
-</ul>
-<h4 id="配置ETL调度任务"><a href="#配置ETL调度任务" class="headerlink" title="配置ETL调度任务"></a>配置ETL调度任务</h4><ul>
-<li>进入业务条线 》 数据调度<br><img src="https://git.oschina.net/uploads/images/2017/0925/095221_0b8c5fd0_1102706.png" alt="数据调度" title="9.png"></li>
-<li>进入‘作业分类’菜单，新建一个‘作业分类’，用于管理系统调度作业</li>
-<li>进入‘作业管理’菜单，在新建的作业分类下创建调度作业，用于数据调度；例如：<br><img src="https://git.oschina.net/uploads/images/2017/0925/100741_ab5c641f_1102706.png" alt="输入图片说明" title="10.png"></li>
-</ul>
-<ol>
-<li>新增作业；例如：<br><img src="https://git.oschina.net/uploads/images/2017/0925/101135_d4af3a5b_1102706.png" alt="输入图片说明" title="11.png"><blockquote>
-<p>选择当前调度作业 <em>目前仅支持shell脚本和存储过程</em><br>配置作业频度之后，只有满足当前配置的启动条件，调度作业才会启动 <em>shell和存储过程必须要有回调true/false</em>  </p>
-</blockquote>
-</li>
-</ol>
-<ul>
-<li>进入‘任务管理’菜单，用于配置调度作业所需要的任务；例如：<br><img src="https://git.oschina.net/uploads/images/2017/0925/113253_f27a4429_1102706.png" alt="输入图片说明" title="12.png">  </li>
-<li>选择任务类型新建任务<br>1.新建procedure存储过程任务；例如：<br><img src="https://git.oschina.net/uploads/images/2017/0925/142839_6cf3572f_1102706.png" alt="输入图片说明" title="13.png"><br><em>所有的存储过程必须要有回调函数true/false;例如：</em></li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">create <span class="keyword">or</span> replace procedure testproc(term <span class="keyword">in</span> VARCHAR2, result OUT varchar)</span><br><span class="line">as</span><br><span class="line">  CURSOR c1 IS</span><br><span class="line">select l.id, t.tablename, i.institutionid</span><br><span class="line">      from ledgerreport l</span><br><span class="line">      left join ledgerrpttemplate t</span><br><span class="line">        on l.ledgerreporttemplate_id = t.id</span><br><span class="line">      left join institution i</span><br><span class="line">        on l.institution_id = i.id</span><br><span class="line">     where l.submitstatetype = <span class="string">'2'</span></span><br><span class="line">       <span class="keyword">and</span> l.term = term</span><br><span class="line">       <span class="keyword">and</span>  i.institutionid=<span class="string">'3011'</span>;</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">FOR acct IN c1 LOOP</span><br><span class="line">   update test.t_gx_ygb set reportid = acct.id</span><br><span class="line"></span><br><span class="line"> where nbjgh = <span class="string">'3011'</span>;</span><br><span class="line">  insert into yjbzh.t_gx_ygb</span><br><span class="line">    select SEQ_FITECH.nextval id,REPORTID,CJRQ,GWBH,YGZT,YXJGMC,ZW,YXJGDM,SFZH,XM,JRXKZH,SSBM,WDH,LXDH,GH,NBJGH,SYNCABLE from test.t_gx_ygb;</span><br><span class="line">    <span class="keyword">END</span> LOOP;</span><br><span class="line">  commit;</span><br><span class="line">  result <span class="symbol">:</span>= <span class="string">'true'</span>;</span><br><span class="line">exception</span><br><span class="line">  <span class="keyword">when</span> storage_error <span class="keyword">then</span></span><br><span class="line">    result <span class="symbol">:</span>= <span class="string">'false'</span>;</span><br><span class="line">  <span class="keyword">when</span> others <span class="keyword">then</span></span><br><span class="line">    result <span class="symbol">:</span>= <span class="string">'false'</span>;</span><br><span class="line"><span class="keyword">end</span> testproc;</span><br></pre></td></tr></table></figure>
-<p>2.新加java调度任务；例如：<br><img src="https://git.oschina.net/uploads/images/2017/0925/144829_27d05efd_1102706.png" alt="输入图片说明" title="14.png"></p>
-<blockquote>
-<p>新平台EAST需要配置3个作业才可以正常运行  </p>
-<ul>
-<li>数据补录作业</li>
-</ul>
-<ol>
-<li>数据补录系统待上报报文流程存储过程（east.create_bl_task|系统内置）</li>
-<li>数据补录系统流程开启任务（JAVA任务）</li>
-<li>EAST收据调度作业</li>
-<li>EAST待上报报文流程存储过程（east.proc_ledgerReport|系统内置）  </li>
-<li>数据拉取存储过程（客户现场人员编写）  </li>
-<li>EAST流程开启任务（JAVA任务）</li>
-<li>EAST报文生成作业</li>
-<li>EAST上报报文生成任务（JAVA任务）</li>
-</ol>
-</blockquote>
-<p><em>作业任务为Java任务的实例如下</em></p>
-<ul>
-<li><p>EAST流程开启任务（POST请求）<br>  ```ruby<br>类名：com.fitechsoft.util.HttpRequest<br>方法名：sendPost<br>URL：<a href="http://IP:端口/项目名/task/startProcess/" target="_blank" rel="noopener">http://IP:端口/项目名/task/startProcess/</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- EAST上报报文生成任务（GET请求）  </span><br><span class="line">```ruby</span><br><span class="line">类名：com.fitechsoft.util.HttpRequest</span><br><span class="line">方法名：sendGet</span><br><span class="line">URL：http://IP:端口/项目名/ledgerReportFile/reportFileGenerated/create</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>数据补录系统流程开启任务（POST请求）</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">类名：com.fitechsoft.util.HttpRequest</span><br><span class="line">方法名：sendPost</span><br><span class="line"><span class="symbol">URL:</span><span class="symbol">http:</span>/<span class="regexp">/IP:端口/</span>项目名/accountTask/startProcess/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>进入‘作业管理’ 将任务管理中创建的任务配置到作业中</p>
-</li>
-<li>选择你要维护的作业，点击作业维护<br><img src="https://git.oschina.net/uploads/images/2017/0925/151904_7d519dcc_1102706.png" alt="输入图片说明" title="15.png"></li>
-</ul>
-<ol start="2">
-<li>添加新步骤，将任务配置到作业管理中<br><img src="https://git.oschina.net/uploads/images/2017/0925/151948_2459f713_1102706.png" alt="输入图片说明" title="16.png"></li>
-</ol>
-<h4 id="部署ETL调度任务"><a href="#部署ETL调度任务" class="headerlink" title="部署ETL调度任务"></a>部署ETL调度任务</h4><ul>
-<li>将fitech-etl-1.0.war放入应用服务器中间件中</li>
-<li>修改ETL系统配置<br><img src="https://git.oschina.net/uploads/images/2017/0925/153251_aa9e251f_1102706.png" alt="输入图片说明" title="17.png"></li>
-<li>config.properties 修改ETL调度任务配置数据库<br><img src="https://git.oschina.net/uploads/images/2017/0925/155627_3d96691e_1102706.png" alt="输入图片说明" title="18.png"></li>
-<li>config1.properties 修改ETL调度任务存储过程数据表配置<br><img src="https://git.oschina.net/uploads/images/2017/0925/155636_08b12be3_1102706.png" alt="输入图片说明" title="19.png"></li>
-<li>启动服务，控制台正常启动即可，操作员登录系统，查看代办任务是否有数据，有数据即可<h1 id="Home"><a href="#Home" class="headerlink" title="Home"></a>Home</h1></li>
-</ul>
-<ol>
-<li><a href="https://gitee.com/mpmpal_cr/document/wikis/pages?title=%E6%96%B0%E5%B9%B3%E5%8F%B0activiti%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E&amp;parent=" target="_blank" rel="noopener">新平台activiti参数说明</a></li>
-<li><a href="https://gitee.com/mpmpal_cr/document/wikis/pages?title=git%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B&amp;parent=" target="_blank" rel="noopener">git安装教程</a></li>
-<li><a href="https://gitee.com/mpmpal_cr/document/wikis/pages?title=%E6%96%B0%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C&amp;parent=" target="_blank" rel="noopener">新平台开发手册</a><h1 id="git安装教程"><a href="#git安装教程" class="headerlink" title="git安装教程"></a>git安装教程</h1><h3 id="安装介质"><a href="#安装介质" class="headerlink" title="安装介质"></a>安装介质</h3></li>
-</ol>
-<ul>
-<li>Git-1.9.5-preview20150319.exe</li>
-<li>TortoiseGit-1.8.14.0-64bit.msi</li>
-<li>Tor4toiseGit-LanguagePack-1.8.14.0-64bit-zh_CN.msi<br>  <a href="http://gitee.com/mpmpal_cr/document/attach_files/download?i=102945&amp;u=http://files.git.oschina.net/group1/M00/02/3F/PaAvDFn_1fiAEkFDAocAFD5NBjw242.rar?token=3d3e93341027b8450a17c0d4f33afc20&amp;ts=1509938681&amp;attname=Git%2CTortoiseGit%E5%AE%89%E8%A3%85.rar" target="_blank" rel="noopener">下载</a></li>
-</ul>
-<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><ol>
-<li>配置SSH密钥<br><img src="https://git.oschina.net/uploads/images/2017/0830/143511_7e9c1265_1102706.png" alt="配置SSH密钥" title="clipboard.png"></li>
-<li>找到生成的git授权KEY,路径默认生成在 <em>C:\Users\rui.ssh</em><br><img src="https://git.oschina.net/uploads/images/2017/0830/143750_9390d834_1102706.png" alt="git授权KEY" title="clipboard.png"></li>
-<li>配置TortoiseGit<br><img src="https://git.oschina.net/uploads/images/2017/0830/143856_de604f92_1102706.png" alt="输入图片说明" title="clipboard.png"><br><img src="https://git.oschina.net/uploads/images/2017/0830/144125_814b18db_1102706.png" alt="输入图片说明" title="clipboard.png"><br><img src="https://git.oschina.net/uploads/images/2017/0830/144156_8ca52887_1102706.png" alt="输入图片说明" title="clipboard.png"></li>
-</ol>
-<h3 id="常用语法"><a href="#常用语法" class="headerlink" title="常用语法"></a>常用语法</h3><ul>
-<li><p>查看当前git仓库获取和提交服务地址</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看所有分支</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建分支</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除分支</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>切换分支</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建并切换</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看工作区修改文件</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看修改内容</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加修改到缓存区</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add ***</span><br><span class="line">git add -A</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>版本提交</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">"branch test"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>合并分支dev到当前分支</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>指定定远程版本更新到本地指定版本</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git pull &lt;远程主机名&gt; &lt;远程分支名&gt;<span class="symbol">:&lt;</span>本地分支名&gt;</span><br><span class="line">git pull origin <span class="symbol">dev:</span>master</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将当前分支提交到远程分支</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push &lt;远程主机名&gt; &lt;远程分支名&gt;</span><br><span class="line">git push origin dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>切换git地址</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. git remote rm origin</span><br><span class="line"><span class="number">2</span>. git remote add origin git@github.<span class="symbol">com:</span>yuquan0821/demo.git</span><br><span class="line"><span class="number">3</span>. git push origin</span><br></pre></td></tr></table></figure>
-<p><strong>GIT教程</strong> </p>
-</li>
-<li><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">网络教程</a></li>
-</ul>
-<h1 id="oracle数据导出工具sqluldr2配置"><a href="#oracle数据导出工具sqluldr2配置" class="headerlink" title="oracle数据导出工具sqluldr2配置"></a>oracle数据导出工具sqluldr2配置</h1><h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><ol>
-<li>由于sqluldr2是基于oracle客户端的一个插件，则需要在平台服务端安装oracle_client</li>
-<li>下载sqluldr2.bin（根据操作系统自行判定版本）到$ORACLE_HOME的bin目录，重命名为sqluldr2.bin</li>
-<li><p>修改oracle安装$HOME目录下.bash_profile 增加如下环境变量</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$ORACLE_HOME/<span class="symbol">bin:</span>$ORACLE_HOME/<span class="symbol">lib:</span>/<span class="symbol">lib:</span>/usr/lib</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行 sqluldr2.bin 执行成功即可</p>
-<h1 id="新平台activiti参数说明"><a href="#新平台activiti参数说明" class="headerlink" title="新平台activiti参数说明"></a>新平台activiti参数说明</h1><h3 id="activiti配置"><a href="#activiti配置" class="headerlink" title="activiti配置"></a>activiti配置</h3></li>
-<li>新建bpmn流程</li>
-<li>绘制流程图，具体画法网上有</li>
-<li>设置流程参数<ul>
-<li>配置流程图ID ; name ; namespaces属性（自定义）;<br><img src="https://git.oschina.net/uploads/images/2017/0809/141007_8649cc82_1102706.png" alt="输入图片说明" title="1.png"></li>
-<li>配置启动监听（该监听为自定义，平台已经初始化一个，无特殊需求可直接使用）<br><img src="https://git.oschina.net/uploads/images/2017/0809/141102_62ed4ba4_1102706.png" alt="输入图片说明" title="2.png"></li>
-<li>配置任务节点属性<ol>
-<li>配置ID和name(此ID有特殊用处)<br><img src="https://git.oschina.net/uploads/images/2017/0809/141225_c541dcca_1102706.png" alt="输入图片说明" title="3.png"></li>
-<li>配置指派角色和督办角色，<ul>
-<li>变量规则：${任务节点ID_assignee};${任务节点ID_supervise}<br><img src="https://git.oschina.net/uploads/images/2017/0809/141253_9b67ac6b_1102706.png" alt="输入图片说明" title="4.png"></li>
-</ul>
-</li>
-<li>设置任务节点参数<ul>
-<li>argname: 路由KEY，固定为input</li>
-<li>argvalues: 页面按钮参数，几个路由跳转几个参数，可自定义</li>
-<li>handleEntry 当前任务节点页面路由地址</li>
-<li>completeEntry 暂时为空，预留</li>
-<li>isAssign:是否支持任务转派， ${任务节点ID_isAssign}<br><img src="https://git.oschina.net/uploads/images/2017/0809/141342_3d544a50_1102706.png" alt="输入图片说明" title="5.png"></li>
-</ul>
-</li>
-<li>路由扭转控制参数<ul>
-<li>设定页面跳转路由参数${input==’refuse’}</li>
-<li>说明 input:为步骤三中argname 的参数，无明显需求暂统一定义为input</li>
-<li>说明’refuse’ 为步骤三中argvalues参数中定义的value，指定下一节点跳转<br><img src="https://git.oschina.net/uploads/images/2017/0809/141411_478f2512_1102706.png" alt="输入图片说明" title="6.png"><h1 id="新平台开发手册"><a href="#新平台开发手册" class="headerlink" title="新平台开发手册"></a>新平台开发手册</h1><h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3></li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>开发工具IDE：IntelliJ IDEA/Eclipse</li>
-<li>数据库：mysql/oracle</li>
-<li>JDK:1.8</li>
-<li>版本管理工具：GIT</li>
-<li>项目管理工具：MAVEN</li>
-</ul>
-<h3 id="开发规范"><a href="#开发规范" class="headerlink" title="开发规范"></a>开发规范</h3><ul>
-<li>项目包名:com.fitech.功能名.项目名</li>
-<li><p>项目类名:</p>
-<ul>
-<li>领域模型：根据领域模型实际意义创建（能用英文标识的必须使用英文，无法使用英文标识的用拼音首字母创建类名，首字母必须大写)</li>
-<li>持久化层：领域模型名+Repository</li>
-<li>业务层：<ol>
-<li>接口：领域模型名+Service</li>
-<li>实现：领域模型名+ServiceImpl</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>注释:</p>
-</li>
-<li>类名注释：当前类的中文描述+作者<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/152051_747dcf5e_1102706.png" alt="类名注释" title="图片1.png"></li>
-<li>接口名注释：当前接口作用+入参说明+出参说明<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/152154_1cf6e0b1_1102706.png" alt="接口注释" title="图片2.png"></li>
-<li>业务代码注释：每10行必须有至少有一个注释，业务复杂的3行内要有注释，判断条件（if）必须有注释</li>
-<li>预留接口，预留逻辑必须使用//TODO进行标记，并且加上备</li>
-<li><p>如果修改业务逻辑代码，在修改处添加备注，标识修改原因，修改时间和修改人<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/152322_a4b7aeb4_1102706.png" alt="修改说明" title="图片3.png"></p>
-</li>
-<li><p>测试用例</p>
-</li>
-<li>每个模块有独立的测试用例配置文件，放置位置在<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/152917_14e372ff_1102706.png" alt="测试用例配置文件" title="QQ截图20170830152553.png"></li>
-<li><p>每个业务逻辑添加单元测试，测试通过再提交代码<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/152948_01102b7d_1102706.png" alt="测试用例" title="图片4.png"></p>
-</li>
-<li><p>GIT代码管理</p>
-</li>
-<li>仓库中默认版本master，是我们开发版本</li>
-<li>本地更新后，创建本地开发版本dev   (git checkout -b dev)</li>
-<li>本地开发完成并测试通过后提交本地仓库</li>
-<li>切换版本到master （git checkout master）</li>
-<li>更新最新的开发版本</li>
-<li>合并DEV版本到master （git merge dev）</li>
-<li>确定无冲突之后提交远程仓库</li>
-</ul>
-<h3 id="技术说明"><a href="#技术说明" class="headerlink" title="技术说明"></a>技术说明</h3><ul>
-<li>domain说明<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/154423_a15e4a4c_1102706.png" alt="domain" title="图片5.png"></li>
-<li>添加注释@entity</li>
-<li>主体继承FBSubject,客体继承FBObject</li>
-<li>每个字段属性添加@Description(“角色名称”)注解，方便后期功能扩充</li>
-<li>service说明<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/160045_4a882daf_1102706.png" alt="service" title="图片6.png"></li>
-<li>添加@Service注解，加入spring容器管理</li>
-<li>添加@ServiceTrace注解，系统会自动管理service接口日志，记录到logback<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/160703_aa9ffc2f_1102706.png" alt="输入图片说明" title="图片7.png"></li>
-<li>接口的增删改操作需要捕获reporsitory发生的异常，然后throw出appException异常，这个是自定义异常，统一处理系统异常，记录logback,可自定义入参，第一个是异常码，可自定义，第二个是系统异常，可自定义;</li>
-<li>对于一个服务接口有2个及以上“增”“删”“改”操作的，需要添加事务@Transactional</li>
-<li>controller说明<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/162413_b14e447d_1102706.png" alt="controller" title="图片8.png"></li>
-<li>添加控制层上添加@RequestMapping ，定位当前接口位置，便于后期权限控制<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/163109_0c571fe1_1102706.png" alt="输入图片说明" title="图片9.png"></li>
-<li>controller回调GenericResult\&lt;?>封装回调函数，里面有当前请求是否成功，成功状态，异常状态，异常码，数据集对象等，系统回封装成json返回前端;</li>
-<li>controller中需要记录用户的操作日志，可以只对增删改操作记录，查询根据具体情况记录，addOperateLog第一个为日志信息，自定义，第二个是请求上下文对象，系统需要根据请求上下文获取登录用户信息和IP等;</li>
-<li>操作日志需要在finally中记录，防止系统异常没有记录;</li>
-<li>war 说明<br><img src="https://git.oschina.net/uploads/images/2017/0830/163455_5036a5e5_1102706.png" alt="war " title="图片10.png"></li>
-</ul>
-<ol>
-<li>Activiti.cfg.xml：activiti流程引擎配置</li>
-<li>applicationContext-jpa.xml：配置持久化层springdata配置</li>
-<li>applicationContext.xml：spring相关配置</li>
-<li>Security.cfg.xml：权限框架springsecutity相关配置</li>
-<li>secutityAcl.cfg.xml：数据权限acl相关配置</li>
-<li>Spring-mvc.xml</li>
-<li>Springbatch-content</li>
-<li>Application-evn.properties:数据源配置及其他的一些参数配置</li>
-<li>Logback.xml：配置系统日志，<blockquote>
-<p>注：可根据具体需求进行配置修改</p>
-</blockquote>
-<h3 id="开发注意事项"><a href="#开发注意事项" class="headerlink" title="开发注意事项"></a>开发注意事项</h3></li>
-<li>clean install -Dmaven.test.skip=true 模块编译</li>
-<li>jetty:run 项目执行<h3 id="数据库版本切换"><a href="#数据库版本切换" class="headerlink" title="数据库版本切换"></a>数据库版本切换</h3></li>
-</ol>
-<ul>
-<li>目前系统支持mysql和Oracle数据库，由于制度报文生成接口是由不同数据库语法编写所以在切换数据库的同时要修改对应的数据库方言配置</li>
-<li>修改pom.xml<br>  <img src="https://git.oschina.net/uploads/images/2017/0830/164510_7b159611_1102706.png" alt="输入图片说明" title="图片11.png"><br><strong>目前0.0.1-SNAPSHOT版本对应mysql;0.0.2-SNAPSHOT版本对应oracle</strong></li>
-</ul>
-<ol start="2">
-<li>修改配置文件applicationContext-jpa.xml，改为数据库所对应的接口实现类<br> <img src="https://git.oschina.net/uploads/images/2017/0830/164601_eb23eff4_1102706.png" alt="输入图片说明" title="图片12.png"></li>
-<li>如果需要新加SQL实现函数，则在对应的系统模块中添加，例如<br> <img src="https://git.oschina.net/uploads/images/2017/0830/164642_efb5c1a0_1102706.png" alt="输入图片说明" title="图片13.png"><br> 实现自己的业务逻辑即可，然后在applicationContext-jpa.xml添加相应配置加入spring管理容器</li>
-</ol>
-
+            <h2 id="Java代码："><a href="#Java代码：" class="headerlink" title="Java代码："></a>Java代码：</h2><h3 id="CommonInterceptor-java"><a href="#CommonInterceptor-java" class="headerlink" title="CommonInterceptor.java"></a>CommonInterceptor.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; excludedUrls;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getExcludedUrls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setExcludedUrls</span><span class="params">(List&lt;String&gt; excludedUrls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.excludedUrls = excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在业务处理器处理请求之前被调用 如果返回false</span></span><br><span class="line"><span class="comment">     * 从当前的拦截器往回执行所有拦截器的afterCompletion(),</span></span><br><span class="line"><span class="comment">     * 再退出拦截器链, 如果返回true 执行下一个拦截器,</span></span><br><span class="line"><span class="comment">     * 直到所有的拦截器都执行完毕 再执行被拦截的Controller</span></span><br><span class="line"><span class="comment">     * 然后进入拦截器链,</span></span><br><span class="line"><span class="comment">     * 从最后一个拦截器往回执行所有的postHandle()</span></span><br><span class="line"><span class="comment">     * 接着再从最后一个拦截器往回执行所有的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"3600"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,Content-Encoding"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在业务处理器处理请求执行完成后,生成视图之前执行的动作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在DispatcherServlet完全处理完请求后被调用</span></span><br><span class="line"><span class="comment">     * 当有拦截器抛出异常时,</span></span><br><span class="line"><span class="comment">     * 会从当前拦截器往回执行所有的拦截器的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handler</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ServletContextConfig-java"><a href="#ServletContextConfig-java" class="headerlink" title="ServletContextConfig.java"></a>ServletContextConfig.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; excludedUrls;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getExcludedUrls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setExcludedUrls</span><span class="params">(List&lt;String&gt; excludedUrls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.excludedUrls = excludedUrls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在业务处理器处理请求之前被调用 如果返回false</span></span><br><span class="line"><span class="comment">     * 从当前的拦截器往回执行所有拦截器的afterCompletion(),</span></span><br><span class="line"><span class="comment">     * 再退出拦截器链, 如果返回true 执行下一个拦截器,</span></span><br><span class="line"><span class="comment">     * 直到所有的拦截器都执行完毕 再执行被拦截的Controller</span></span><br><span class="line"><span class="comment">     * 然后进入拦截器链,</span></span><br><span class="line"><span class="comment">     * 从最后一个拦截器往回执行所有的postHandle()</span></span><br><span class="line"><span class="comment">     * 接着再从最后一个拦截器往回执行所有的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"3600"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,Content-Encoding"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在业务处理器处理请求执行完成后,生成视图之前执行的动作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在DispatcherServlet完全处理完请求后被调用</span></span><br><span class="line"><span class="comment">     * 当有拦截器抛出异常时,</span></span><br><span class="line"><span class="comment">     * 会从当前拦截器往回执行所有的拦截器的afterCompletion()</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handler</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
