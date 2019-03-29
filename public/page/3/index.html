@@ -252,6 +252,519 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/nexus 上搭建npm本地服务器-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/07/nexus 上搭建npm本地服务器-1/" itemprop="url">nexus 上搭建npm本地服务器-1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="http://img.blog.csdn.net/20160901070831124" alt="这里写图片描述"><br>Nexus作为私库管理最为流行的工具之一，用于包的管理和Docker镜像管理的私库管理场景中非常常用，但同时也可以用于NPM私库等的管理。</p>
+<h1 id="Why-Nexus-3"><a href="#Why-Nexus-3" class="headerlink" title="Why Nexus 3"></a>Why Nexus 3</h1><p>这里整理了为什么使用Nexus 3的一些理由，在做选型的时候可以做一个简单参照。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>为什么使用Nexus 3</td>
+<td><a href="http://blog.csdn.net/liumiaocn/article/details/62050525" target="_blank" rel="noopener">http://blog.csdn.net/liumiaocn/article/details/62050525</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="docker版本"><a href="#docker版本" class="headerlink" title="docker版本"></a>docker版本</h1><p>本次使用的docker的版本为17.09.0-ce，但是并不限于此版本，其他版本未作验证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# docker version</span><br><span class="line">Client:</span><br><span class="line"> Version:      17.09.0-ce</span><br><span class="line"> API version:  1.32</span><br><span class="line"> Go version:   go1.8.3</span><br><span class="line"> Git commit:   afdb6d4</span><br><span class="line"> Built:        Tue Sep 26 22:39:28 2017</span><br><span class="line"> OS/Arch:      linux/amd64</span><br><span class="line"></span><br><span class="line">Server:</span><br><span class="line"> Version:      17.09.0-ce</span><br><span class="line"> API version:  1.32 (minimum version 1.12)</span><br><span class="line"> Go version:   go1.8.3</span><br><span class="line"> Git commit:   afdb6d4</span><br><span class="line"> Built:        Tue Sep 26 22:45:38 2017</span><br><span class="line"> OS/Arch:      linux/amd64</span><br><span class="line"> Experimental: false</span><br><span class="line">[root@angular ~]#123456789101112131415161718</span><br></pre></td></tr></table></figure>
+<h1 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# docker pull liumiaocn/nexus</span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from liumiaocn/nexus</span><br><span class="line">d9aaf4d82f24: Pull complete </span><br><span class="line">1bf6f9237306: Pull complete </span><br><span class="line">2cb68a4c7b1e: Pull complete </span><br><span class="line">a81c750844e6: Pull complete </span><br><span class="line">ea509a1d48c2: Pull complete </span><br><span class="line">24d48f5e8202: Pull complete </span><br><span class="line">Digest: sha256:3480d50b7ddfb72fe77ce55c7b5ce0a9aa7b6cfa90886a8f8ddc4a2401f1b7c9</span><br><span class="line">Status: Downloaded newer image for liumiaocn/nexus:latest</span><br><span class="line">[root@angular ~]#123456789101112</span><br></pre></td></tr></table></figure>
+<h1 id="启动Nexus"><a href="#启动Nexus" class="headerlink" title="启动Nexus"></a>启动Nexus</h1><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nexus UI</td>
+<td>8081</td>
+</tr>
+<tr>
+<td>private repo</td>
+<td>8082</td>
+</tr>
+<tr>
+<td>proxy repo</td>
+<td>8083</td>
+</tr>
+<tr>
+<td>URL</td>
+<td><a href="http://192.168.163.151:8081/" target="_blank" rel="noopener">http://192.168.163.151:8081/</a></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# docker run -d -p 8081:8081 -p 8082:8082 -p 8083:8083 --name nexus liumiaocn/nexus</span><br><span class="line">d5807c07c10c1f55d4ea85e774529dd6c0daf8833d1e505d4c1f09db00491e87</span><br><span class="line">[root@angular ~]#123</span><br></pre></td></tr></table></figure>
+<h1 id="logon"><a href="#logon" class="headerlink" title="logon"></a>logon</h1><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL</td>
+<td><a href="http://192.168.163.151:8081/" target="_blank" rel="noopener">http://192.168.163.151:8081/</a></td>
+</tr>
+<tr>
+<td>用户名称</td>
+<td>admin</td>
+</tr>
+<tr>
+<td>用户密码</td>
+<td>admin123</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://img.blog.csdn.net/20171115053834013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>登陆之后<br><img src="http://img.blog.csdn.net/20171115053933763?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h1 id="仓库类型"><a href="#仓库类型" class="headerlink" title="仓库类型"></a>仓库类型</h1><p>具体仓库类型主要分为hosted/proxy/group三种。具体含义如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hosted</td>
+<td>本地存储，提供本地私库功能</td>
+</tr>
+<tr>
+<td>proxy</td>
+<td>提供代理其他仓库的类型</td>
+</tr>
+<tr>
+<td>group</td>
+<td>组类型，可以组合多个仓库为一个地址提供服务</td>
+</tr>
+</tbody>
+</table>
+<h1 id="创建blob"><a href="#创建blob" class="headerlink" title="创建blob"></a>创建blob</h1><p>创建一个blob用于存放npm相关数据。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>File</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>npm-repo-blob</td>
+</tr>
+<tr>
+<td>PATH</td>
+<td>/nexus-data/blobs/npm-repo-blob</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://img.blog.csdn.net/20171115054652616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>建议实际项目中各个仓库根据具体情况决定是否要分别创建blob进行对应，此处进行演示就通篇使用一个blob</p>
+<h1 id="创建priavete仓库"><a href="#创建priavete仓库" class="headerlink" title="创建priavete仓库"></a>创建priavete仓库</h1><p>创建一个Hosted的仓库作为private仓库，用于管理非npm社区的第三方包或者自己开发的内容。具体设定信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>npm(hosted)</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>npm-repo-hosted</td>
+</tr>
+<tr>
+<td>Blob store</td>
+<td>npm-repo-blob</td>
+</tr>
+</tbody>
+</table>
+<p>其余Default设定即可<br><img src="http://img.blog.csdn.net/20171115054813826?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h1 id="创建proxy仓库"><a href="#创建proxy仓库" class="headerlink" title="创建proxy仓库"></a>创建proxy仓库</h1><p>创建一个proxy仓库，具体设定信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>npm(proxy)</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>npm-repo-proxy</td>
+</tr>
+<tr>
+<td>Remote Storage</td>
+<td><a href="https://registry.npmjs.org/" target="_blank" rel="noopener">https://registry.npmjs.org</a></td>
+</tr>
+<tr>
+<td>Blob store</td>
+<td>npm-repo-blob</td>
+</tr>
+</tbody>
+</table>
+<p>其余Default设定即可</p>
+<p><img src="http://img.blog.csdn.net/20171115055458607?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>注意：此处的Remote Storage即为可以连接的npm的registry的地址，需要保证正确，并且当前机器能够访问到，比如可以使用curl确认：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# curl https://registry.npmjs.org</span><br><span class="line">&#123;&quot;db_name&quot;:&quot;registry&quot;,&quot;doc_count&quot;:715000,&quot;doc_del_count&quot;:344,&quot;update_seq&quot;:8090315,&quot;purge_seq&quot;:0,&quot;compact_running&quot;:false,&quot;disk_size&quot;:5368389766,&quot;data_size&quot;:3541008450,&quot;instance_start_time&quot;:&quot;1510668164237911&quot;,&quot;disk_format_version&quot;:6,&quot;committed_update_seq&quot;:8090315&#125;[root@angular ~]# 12</span><br></pre></td></tr></table></figure>
+<p>注意此处，可以还设定与社区相关的账号和密码等信息进行进一步连接。</p>
+<h1 id="创建group仓库"><a href="#创建group仓库" class="headerlink" title="创建group仓库"></a>创建group仓库</h1><p>创建一个group仓库，具体设定信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>npm(group)</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>npm-repo-group</td>
+</tr>
+<tr>
+<td>Blob store</td>
+<td>npm-repo-blob</td>
+</tr>
+<tr>
+<td>Member repositories</td>
+<td>npm-repo-hosted</td>
+</tr>
+<tr>
+<td>Member repositories</td>
+<td>npm-repo-proxy</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://img.blog.csdn.net/20171115060119415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h1 id="本地npm设定"><a href="#本地npm设定" class="headerlink" title="本地npm设定"></a>本地npm设定</h1><h2 id="验证用npm版本"><a href="#验证用npm版本" class="headerlink" title="验证用npm版本"></a>验证用npm版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm -v</span><br><span class="line">5.5.1</span><br><span class="line">[root@angular ~]# node -v</span><br><span class="line">v9.1.0</span><br><span class="line">[root@angular ~]# 12345</span><br></pre></td></tr></table></figure>
+<p>具体安装可以参看：<a href="http://blog.csdn.net/liumiaocn/article/details/78510679" target="_blank" rel="noopener">http://blog.csdn.net/liumiaocn/article/details/78510679</a></p>
+<h2 id="设定-npmrc"><a href="#设定-npmrc" class="headerlink" title="设定.npmrc"></a>设定.npmrc</h2><p>可以使用如下命令，也可直接修改.npmrc文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm config set registry http://192.168.163.151:8081/repository/npm-repo-proxy/</span><br><span class="line">[root@angular ~]#12</span><br></pre></td></tr></table></figure>
+<p>确认.npmrc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# cat ~/.npmrc</span><br><span class="line">registry=http://192.168.163.151:8081/repository/npm-repo-proxy/</span><br><span class="line">[root@angular ~]# 123</span><br></pre></td></tr></table></figure>
+<h1 id="确认"><a href="#确认" class="headerlink" title="确认"></a>确认</h1><p>至此，Nexus的设定准备基本就绪，可以确认结果了。</p>
+<h2 id="事前确认"><a href="#事前确认" class="headerlink" title="事前确认"></a>事前确认</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm list -g gulp</span><br><span class="line">/usr/local/npm/node/lib</span><br><span class="line">└── (empty)</span><br><span class="line"></span><br><span class="line">[root@angular ~]# 12345</span><br></pre></td></tr></table></figure>
+<h2 id="安装gulp"><a href="#安装gulp" class="headerlink" title="安装gulp"></a>安装gulp</h2><p>打开loglevel将其设定为info，在安装的过程中可以看到npm http fetch与新创建的proxy仓库的交互，因为其会将相关的依赖下载到本地nexus的npm私库中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm -loglevel info install -g gulp</span><br><span class="line">npm info it worked if it ends with ok</span><br><span class="line">npm info using npm@5.5.1</span><br><span class="line">npm info using node@v9.1.0</span><br><span class="line">...</span><br><span class="line">npm http fetch GET 200 http://192.168.163.151:8081/repository/npm-repo-proxy/gulplog/-/gulplog-1.0.0.tgz 4439ms</span><br><span class="line">...</span><br><span class="line">/usr/local/npm/node/bin/gulp -&gt; /usr/local/npm/node/lib/node_modules/gulp/bin/gulp.js</span><br><span class="line">...</span><br><span class="line">npm info lifecycle gulp@3.9.1~postinstall: gulp@3.9.1</span><br><span class="line">+ gulp@3.9.1</span><br><span class="line">added 186 packages in 143.59s</span><br><span class="line">npm info ok </span><br><span class="line">[root@angular ~]# </span><br><span class="line">123456789101112131415</span><br></pre></td></tr></table></figure>
+<h2 id="结果确认"><a href="#结果确认" class="headerlink" title="结果确认"></a>结果确认</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm list -g gulp</span><br><span class="line">/usr/local/npm/node/lib</span><br><span class="line">└── gulp@3.9.1 </span><br><span class="line"></span><br><span class="line">[root@angular ~]# 12345</span><br></pre></td></tr></table></figure>
+<h2 id="group仓库确认"><a href="#group仓库确认" class="headerlink" title="group仓库确认"></a>group仓库确认</h2><p>gulp 3.9.1已经通过group仓库可以看到<br><img src="http://img.blog.csdn.net/20171115062230237?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="proxy仓库确认"><a href="#proxy仓库确认" class="headerlink" title="proxy仓库确认"></a>proxy仓库确认</h2><p>gulp 3.9.1已经通过proxy仓库可以看到</p>
+<p><img src="http://img.blog.csdn.net/20171115062251031?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这篇文章简单介绍了如何使用nexus3进行npm私库设定和使用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/git reset revert 回退回滚取消提交返回上一版本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/07/git reset revert 回退回滚取消提交返回上一版本/" itemprop="url">git reset revert 回退回滚取消提交返回上一版本</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>总有一天你会遇到下面的问题.<br>(1)改完代码匆忙提交,上线发现有问题,怎么办? 赶紧回滚.<br>(2)改完代码测试也没有问题,但是上线发现你的修改影响了之前运行正常的代码报错,必须回滚.</p>
+<p>这些开发中很常见的问题,所以git的取消提交,回退甚至返回上一版本都是特别重要的.<br>大致分为下面2种情况:  </p>
+<p>1.没有push<br>这种情况发生在你的本地代码仓库,可能你add ,commit 以后发现代码有点问题,准备取消提交,用到下面命令<br>reset<br>git reset <a href>–soft | –mixed | –hard
+</a><br>上面常见三种类型  </p>
+<p>–mixed<br>会保留源码,只是将git commit和index 信息回退到了某个版本.<br>git reset 默认是 –mixed 模式<br>git reset –mixed  等价于  git reset  </p>
+<p>–soft<br>保留源码,只回退到commit 信息到某个版本.不涉及index的回退,如果还需要提交,直接commit即可.</p>
+<p>–hard<br>源码也会回退到某个版本,commit和index 都回回退到某个版本.(注意,这种方式是改变本地代码仓库源码)<br>当然有人在push代码以后,也使用 reset –hard \&lt;commit…> 回退代码到某个版本之前,但是这样会有一个问题,你线上的代码没有变,线上commit,index都没有变,当你把本地代码修改完提交的时候你会发现权是冲突…..<br>所以,这种情况你要使用下面的方式</p>
+<p>2.已经push<br>对于已经把代码push到线上仓库,你回退本地代码其实也想同时回退线上代码,回滚到某个指定的版本,线上,线下代码保持一致.你要用到下面的命令</p>
+<p>revert<br>git revert用于反转提交,执行evert命令时要求工作树必须是干净的.<br>git revert用一个新提交来消除一个历史提交所做的任何修改.<br>revert 之后你的本地代码会回滚到指定的历史版本,这时你再 git push 既可以把线上的代码更新.(这里不会像reset造成冲突的问题)</p>
+<p>revert 使用,需要先找到你想回滚版本唯一的commit标识代码,可以用 git log 或者在adgit搭建的web环境历史提交记录里查看.<br>git revert c011eb3c20ba6fb38cc94fe5a8dda366a3990c61<br>通常,前几位即可<br>git revert c011eb3</p>
+<p>git revert是用一次新的commit来回滚之前的commit，git reset是直接删除指定的commit<br>看似达到的效果是一样的,其实完全不同.<br>第一:<br>上面我们说的如果你已经push到线上代码库, reset 删除指定commit以后,你git push可能导致一大堆冲突.但是revert 并不会.<br>第二:<br>如果在日后现有分支和历史分支需要合并的时候,reset 恢复部分的代码依然会出现在历史分支里.但是revert 方向提交的commit 并不会出现在历史分支里.<br>第三:<br>reset 是在正常的commit历史中,删除了指定的commit,这时 HEAD 是向后移动了,而 revert 是在正常的commit历史中再commit一次,只不过是反向提交,他的 HEAD 是一直向前的.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/componentWillReceiveProps详解（this.props）状态改变检测机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1771,303 +2284,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/Mac配置Iterm2自动登录expect脚本/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/07/Mac配置Iterm2自动登录expect脚本/" itemprop="url">Mac配置Iterm2自动登录expect脚本</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
-                2019-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/干货/" itemprop="url" rel="index">
-                    <span itemprop="name">干货</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、新增文件auto_login.sh</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#/usr/bin/expect</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> timeout 30</span><br><span class="line">spawn ssh -p [lindex <span class="variable">$argv</span> 0] [lindex <span class="variable">$argv</span> 1]@[lindex <span class="variable">$argv</span> 2]</span><br><span class="line">expect &#123;</span><br><span class="line">        <span class="string">"(yes/no)?"</span></span><br><span class="line">        &#123;send <span class="string">"yes\n"</span>;exp_continue&#125;</span><br><span class="line">        <span class="string">"password:"</span></span><br><span class="line">        &#123;send <span class="string">"[lindex <span class="variable">$argv</span> 3]\n"</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
-<p>2、将auto_login.sh移到/usr/local/bin</p>
-<p>设置权限755</p>
-<p>3、iterm2配置Login Shell</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_ssh.sh 22 fitech01 192.168.101.30 12345678</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/Mac系统安装PHP7教程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/07/Mac系统安装PHP7教程/" itemprop="url">Mac系统安装PHP7教程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
-                2019-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>安装教程：</p>
-<h2 id="1-首先我们需要安装Homebrew"><a href="#1-首先我们需要安装Homebrew" class="headerlink" title="1.首先我们需要安装Homebrew"></a>1.首先我们需要安装Homebrew</h2><p>一条命令完美安装：<a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">http://brew.sh/index_zh-cn.html</a></p>
-<h2 id="2-终端输入以下命令"><a href="#2-终端输入以下命令" class="headerlink" title="2.终端输入以下命令"></a>2.终端输入以下命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 创建目录,如果你没有创建过该目录</span><br><span class="line">sudo mkdir /usr/<span class="built_in">local</span>/var</span><br><span class="line">sudo chmod 777 /usr/<span class="built_in">local</span>/var</span><br><span class="line">//修改成你自己的用户名和组,如果你没有创建过该目录</span><br><span class="line">sudo mkdir /usr/<span class="built_in">local</span>/sbin/</span><br><span class="line">sudo chown -R &lt;username&gt;:&lt;group&gt; /usr/<span class="built_in">local</span>/sbin//由于我本身一直在使用5.6版本，故上述步骤省略，下面进入正题</span><br><span class="line">//添加PHP库</span><br><span class="line">brew tap homebrew/dupes</span><br><span class="line">brew tap homebrew/versions</span><br><span class="line">brew tap homebrew/homebrew-php</span><br><span class="line">//关闭老版本的PHP56或55或更早版本 进程</span><br><span class="line">brew unlink php56</span><br><span class="line">//开始安装PHP7</span><br><span class="line">brew install php70</span><br><span class="line">//开启PHP70进程</span><br><span class="line">brew link php70</span><br><span class="line">//输入命令，查看是否成功</span><br><span class="line">php -v</span><br><span class="line">//成功后显示下面信息</span><br><span class="line">PHP 7.0.8 (cli) (built: Jul 13 2016 15:19:21) ( NTS )</span><br><span class="line">Copyright (c) 1997-2016 The PHP Group</span><br><span class="line">Zend Engine v3.0.0, Copyright (c) 1998-2016 Zend Technologies</span><br></pre></td></tr></table></figure>
-<p>注：遇未生成libphp7.so</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php70 --with-apxs2  --with-apache --with-gmp --with-imap --with-tidy --with-debug</span><br></pre></td></tr></table></figure>
-<h2 id="3-配置Apache"><a href="#3-配置Apache" class="headerlink" title="3.配置Apache"></a>3.配置Apache</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/apache2/httpd.conf</span><br><span class="line">找到这行注释掉(大概在168行）</span><br><span class="line">Comment out the PHP5 module   </span><br><span class="line">LoadModule php5_module libexec/apache2/libphp5.so</span><br><span class="line"></span><br><span class="line">Enable PHP 7 module  </span><br><span class="line">LoadModule php7_module /usr/<span class="built_in">local</span>/opt/php70/libexec/apache2/libphp7.so  &lt;FilesMatch \.php$&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="4-重启Apache"><a href="#4-重启Apache" class="headerlink" title="4.重启Apache"></a>4.重启Apache</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apachectl restart</span><br></pre></td></tr></table></figure>
-<h2 id="5-到你的Apache的默认目录-Library-WebServer-Documents下面去增加一个info-php的文件"><a href="#5-到你的Apache的默认目录-Library-WebServer-Documents下面去增加一个info-php的文件" class="headerlink" title="5.到你的Apache的默认目录/Library/WebServer/Documents下面去增加一个info.php的文件"></a>5.到你的Apache的默认目录/Library/WebServer/Documents下面去增加一个info.php的文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php    </span><br><span class="line">phpinfo();    </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>最后到你的 <a href="http://localhost/info.php" target="_blank" rel="noopener">http://localhost/info.php</a> 去看看测试以下，如果看到相关的信息，就说明已经安装好了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2118,7 +2334,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
