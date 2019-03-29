@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="npm,nexus,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Nexus作为私库管理最为流行的工具之一，用于包的管理和Docker镜像管理的私库管理场景中非常常用，但同时也可以用于NPM私库等的管理。 Why Nexus 3这里整理了为什么使用Nexus 3的一些理由，在做选型的时候可以做一个简单参照。    项目 详细     为什么使用Nexus 3 http://blog.csdn.net/liumiaocn/article/details/62050">
+<meta name="keywords" content="npm,nexus">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nexus 上搭建npm本地服务器-1">
+<meta property="og:url" content="http://ding-data.gitee.io/2019/03/07/nexus 上搭建npm本地服务器-1/index.html">
+<meta property="og:site_name" content="zhengding">
+<meta property="og:description" content="Nexus作为私库管理最为流行的工具之一，用于包的管理和Docker镜像管理的私库管理场景中非常常用，但同时也可以用于NPM私库等的管理。 Why Nexus 3这里整理了为什么使用Nexus 3的一些理由，在做选型的时候可以做一个简单参照。    项目 详细     为什么使用Nexus 3 http://blog.csdn.net/liumiaocn/article/details/62050">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20160901070831124">
+<meta property="og:image" content="http://img.blog.csdn.net/20171115053834013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171115053933763?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171115054652616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171115054813826?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171115055458607?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171115060119415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171115062230237?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171115062251031?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2019-03-07T06:48:48.854Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nexus 上搭建npm本地服务器-1">
+<meta name="twitter:description" content="Nexus作为私库管理最为流行的工具之一，用于包的管理和Docker镜像管理的私库管理场景中非常常用，但同时也可以用于NPM私库等的管理。 Why Nexus 3这里整理了为什么使用Nexus 3的一些理由，在做选型的时候可以做一个简单参照。    项目 详细     为什么使用Nexus 3 http://blog.csdn.net/liumiaocn/article/details/62050">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160901070831124">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ding-data.gitee.io/2019/03/07/nexus 上搭建npm本地服务器-1/">
+
+
+
+
+
+  <title>nexus 上搭建npm本地服务器-1 | zhengding</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhengding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/nexus 上搭建npm本地服务器-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">nexus 上搭建npm本地服务器-1</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://img.blog.csdn.net/20160901070831124" alt="这里写图片描述"><br>Nexus作为私库管理最为流行的工具之一，用于包的管理和Docker镜像管理的私库管理场景中非常常用，但同时也可以用于NPM私库等的管理。</p>
+<h1 id="Why-Nexus-3"><a href="#Why-Nexus-3" class="headerlink" title="Why Nexus 3"></a>Why Nexus 3</h1><p>这里整理了为什么使用Nexus 3的一些理由，在做选型的时候可以做一个简单参照。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>为什么使用Nexus 3</td>
+<td><a href="http://blog.csdn.net/liumiaocn/article/details/62050525" target="_blank" rel="noopener">http://blog.csdn.net/liumiaocn/article/details/62050525</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="docker版本"><a href="#docker版本" class="headerlink" title="docker版本"></a>docker版本</h1><p>本次使用的docker的版本为17.09.0-ce，但是并不限于此版本，其他版本未作验证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# docker version</span><br><span class="line">Client:</span><br><span class="line"> Version:      17.09.0-ce</span><br><span class="line"> API version:  1.32</span><br><span class="line"> Go version:   go1.8.3</span><br><span class="line"> Git commit:   afdb6d4</span><br><span class="line"> Built:        Tue Sep 26 22:39:28 2017</span><br><span class="line"> OS/Arch:      linux/amd64</span><br><span class="line"></span><br><span class="line">Server:</span><br><span class="line"> Version:      17.09.0-ce</span><br><span class="line"> API version:  1.32 (minimum version 1.12)</span><br><span class="line"> Go version:   go1.8.3</span><br><span class="line"> Git commit:   afdb6d4</span><br><span class="line"> Built:        Tue Sep 26 22:45:38 2017</span><br><span class="line"> OS/Arch:      linux/amd64</span><br><span class="line"> Experimental: false</span><br><span class="line">[root@angular ~]#123456789101112131415161718</span><br></pre></td></tr></table></figure>
+<h1 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# docker pull liumiaocn/nexus</span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from liumiaocn/nexus</span><br><span class="line">d9aaf4d82f24: Pull complete </span><br><span class="line">1bf6f9237306: Pull complete </span><br><span class="line">2cb68a4c7b1e: Pull complete </span><br><span class="line">a81c750844e6: Pull complete </span><br><span class="line">ea509a1d48c2: Pull complete </span><br><span class="line">24d48f5e8202: Pull complete </span><br><span class="line">Digest: sha256:3480d50b7ddfb72fe77ce55c7b5ce0a9aa7b6cfa90886a8f8ddc4a2401f1b7c9</span><br><span class="line">Status: Downloaded newer image for liumiaocn/nexus:latest</span><br><span class="line">[root@angular ~]#123456789101112</span><br></pre></td></tr></table></figure>
+<h1 id="启动Nexus"><a href="#启动Nexus" class="headerlink" title="启动Nexus"></a>启动Nexus</h1><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nexus UI</td>
+<td>8081</td>
+</tr>
+<tr>
+<td>private repo</td>
+<td>8082</td>
+</tr>
+<tr>
+<td>proxy repo</td>
+<td>8083</td>
+</tr>
+<tr>
+<td>URL</td>
+<td><a href="http://192.168.163.151:8081/" target="_blank" rel="noopener">http://192.168.163.151:8081/</a></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# docker run -d -p 8081:8081 -p 8082:8082 -p 8083:8083 --name nexus liumiaocn/nexus</span><br><span class="line">d5807c07c10c1f55d4ea85e774529dd6c0daf8833d1e505d4c1f09db00491e87</span><br><span class="line">[root@angular ~]#123</span><br></pre></td></tr></table></figure>
+<h1 id="logon"><a href="#logon" class="headerlink" title="logon"></a>logon</h1><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL</td>
+<td><a href="http://192.168.163.151:8081/" target="_blank" rel="noopener">http://192.168.163.151:8081/</a></td>
+</tr>
+<tr>
+<td>用户名称</td>
+<td>admin</td>
+</tr>
+<tr>
+<td>用户密码</td>
+<td>admin123</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://img.blog.csdn.net/20171115053834013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>登陆之后<br><img src="http://img.blog.csdn.net/20171115053933763?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h1 id="仓库类型"><a href="#仓库类型" class="headerlink" title="仓库类型"></a>仓库类型</h1><p>具体仓库类型主要分为hosted/proxy/group三种。具体含义如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hosted</td>
+<td>本地存储，提供本地私库功能</td>
+</tr>
+<tr>
+<td>proxy</td>
+<td>提供代理其他仓库的类型</td>
+</tr>
+<tr>
+<td>group</td>
+<td>组类型，可以组合多个仓库为一个地址提供服务</td>
+</tr>
+</tbody>
+</table>
+<h1 id="创建blob"><a href="#创建blob" class="headerlink" title="创建blob"></a>创建blob</h1><p>创建一个blob用于存放npm相关数据。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>File</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>npm-repo-blob</td>
+</tr>
+<tr>
+<td>PATH</td>
+<td>/nexus-data/blobs/npm-repo-blob</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://img.blog.csdn.net/20171115054652616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>建议实际项目中各个仓库根据具体情况决定是否要分别创建blob进行对应，此处进行演示就通篇使用一个blob</p>
+<h1 id="创建priavete仓库"><a href="#创建priavete仓库" class="headerlink" title="创建priavete仓库"></a>创建priavete仓库</h1><p>创建一个Hosted的仓库作为private仓库，用于管理非npm社区的第三方包或者自己开发的内容。具体设定信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>npm(hosted)</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>npm-repo-hosted</td>
+</tr>
+<tr>
+<td>Blob store</td>
+<td>npm-repo-blob</td>
+</tr>
+</tbody>
+</table>
+<p>其余Default设定即可<br><img src="http://img.blog.csdn.net/20171115054813826?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h1 id="创建proxy仓库"><a href="#创建proxy仓库" class="headerlink" title="创建proxy仓库"></a>创建proxy仓库</h1><p>创建一个proxy仓库，具体设定信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>npm(proxy)</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>npm-repo-proxy</td>
+</tr>
+<tr>
+<td>Remote Storage</td>
+<td><a href="https://registry.npmjs.org/" target="_blank" rel="noopener">https://registry.npmjs.org</a></td>
+</tr>
+<tr>
+<td>Blob store</td>
+<td>npm-repo-blob</td>
+</tr>
+</tbody>
+</table>
+<p>其余Default设定即可</p>
+<p><img src="http://img.blog.csdn.net/20171115055458607?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>注意：此处的Remote Storage即为可以连接的npm的registry的地址，需要保证正确，并且当前机器能够访问到，比如可以使用curl确认：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# curl https://registry.npmjs.org</span><br><span class="line">&#123;&quot;db_name&quot;:&quot;registry&quot;,&quot;doc_count&quot;:715000,&quot;doc_del_count&quot;:344,&quot;update_seq&quot;:8090315,&quot;purge_seq&quot;:0,&quot;compact_running&quot;:false,&quot;disk_size&quot;:5368389766,&quot;data_size&quot;:3541008450,&quot;instance_start_time&quot;:&quot;1510668164237911&quot;,&quot;disk_format_version&quot;:6,&quot;committed_update_seq&quot;:8090315&#125;[root@angular ~]# 12</span><br></pre></td></tr></table></figure>
+<p>注意此处，可以还设定与社区相关的账号和密码等信息进行进一步连接。</p>
+<h1 id="创建group仓库"><a href="#创建group仓库" class="headerlink" title="创建group仓库"></a>创建group仓库</h1><p>创建一个group仓库，具体设定信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>npm(group)</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>npm-repo-group</td>
+</tr>
+<tr>
+<td>Blob store</td>
+<td>npm-repo-blob</td>
+</tr>
+<tr>
+<td>Member repositories</td>
+<td>npm-repo-hosted</td>
+</tr>
+<tr>
+<td>Member repositories</td>
+<td>npm-repo-proxy</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://img.blog.csdn.net/20171115060119415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h1 id="本地npm设定"><a href="#本地npm设定" class="headerlink" title="本地npm设定"></a>本地npm设定</h1><h2 id="验证用npm版本"><a href="#验证用npm版本" class="headerlink" title="验证用npm版本"></a>验证用npm版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm -v</span><br><span class="line">5.5.1</span><br><span class="line">[root@angular ~]# node -v</span><br><span class="line">v9.1.0</span><br><span class="line">[root@angular ~]# 12345</span><br></pre></td></tr></table></figure>
+<p>具体安装可以参看：<a href="http://blog.csdn.net/liumiaocn/article/details/78510679" target="_blank" rel="noopener">http://blog.csdn.net/liumiaocn/article/details/78510679</a></p>
+<h2 id="设定-npmrc"><a href="#设定-npmrc" class="headerlink" title="设定.npmrc"></a>设定.npmrc</h2><p>可以使用如下命令，也可直接修改.npmrc文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm config set registry http://192.168.163.151:8081/repository/npm-repo-proxy/</span><br><span class="line">[root@angular ~]#12</span><br></pre></td></tr></table></figure>
+<p>确认.npmrc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# cat ~/.npmrc</span><br><span class="line">registry=http://192.168.163.151:8081/repository/npm-repo-proxy/</span><br><span class="line">[root@angular ~]# 123</span><br></pre></td></tr></table></figure>
+<h1 id="确认"><a href="#确认" class="headerlink" title="确认"></a>确认</h1><p>至此，Nexus的设定准备基本就绪，可以确认结果了。</p>
+<h2 id="事前确认"><a href="#事前确认" class="headerlink" title="事前确认"></a>事前确认</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm list -g gulp</span><br><span class="line">/usr/local/npm/node/lib</span><br><span class="line">└── (empty)</span><br><span class="line"></span><br><span class="line">[root@angular ~]# 12345</span><br></pre></td></tr></table></figure>
+<h2 id="安装gulp"><a href="#安装gulp" class="headerlink" title="安装gulp"></a>安装gulp</h2><p>打开loglevel将其设定为info，在安装的过程中可以看到npm http fetch与新创建的proxy仓库的交互，因为其会将相关的依赖下载到本地nexus的npm私库中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm -loglevel info install -g gulp</span><br><span class="line">npm info it worked if it ends with ok</span><br><span class="line">npm info using npm@5.5.1</span><br><span class="line">npm info using node@v9.1.0</span><br><span class="line">...</span><br><span class="line">npm http fetch GET 200 http://192.168.163.151:8081/repository/npm-repo-proxy/gulplog/-/gulplog-1.0.0.tgz 4439ms</span><br><span class="line">...</span><br><span class="line">/usr/local/npm/node/bin/gulp -&gt; /usr/local/npm/node/lib/node_modules/gulp/bin/gulp.js</span><br><span class="line">...</span><br><span class="line">npm info lifecycle gulp@3.9.1~postinstall: gulp@3.9.1</span><br><span class="line">+ gulp@3.9.1</span><br><span class="line">added 186 packages in 143.59s</span><br><span class="line">npm info ok </span><br><span class="line">[root@angular ~]# </span><br><span class="line">123456789101112131415</span><br></pre></td></tr></table></figure>
+<h2 id="结果确认"><a href="#结果确认" class="headerlink" title="结果确认"></a>结果确认</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm list -g gulp</span><br><span class="line">/usr/local/npm/node/lib</span><br><span class="line">└── gulp@3.9.1 </span><br><span class="line"></span><br><span class="line">[root@angular ~]# 12345</span><br></pre></td></tr></table></figure>
+<h2 id="group仓库确认"><a href="#group仓库确认" class="headerlink" title="group仓库确认"></a>group仓库确认</h2><p>gulp 3.9.1已经通过group仓库可以看到<br><img src="http://img.blog.csdn.net/20171115062230237?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="proxy仓库确认"><a href="#proxy仓库确认" class="headerlink" title="proxy仓库确认"></a>proxy仓库确认</h2><p>gulp 3.9.1已经通过proxy仓库可以看到</p>
+<p><img src="http://img.blog.csdn.net/20171115062251031?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这篇文章简单介绍了如何使用nexus3进行npm私库设定和使用。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/npm/" rel="tag"># npm</a>
+          
+            <a href="/tags/nexus/" rel="tag"># nexus</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/07/git reset revert 回退回滚取消提交返回上一版本/" rel="next" title="git reset revert 回退回滚取消提交返回上一版本">
+                <i class="fa fa-chevron-left"></i> git reset revert 回退回滚取消提交返回上一版本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/07/nexus 上搭建npm本地服务器-2/" rel="prev" title="nexus 上搭建npm本地服务器-2">
+                nexus 上搭建npm本地服务器-2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description">This site is used to record notes</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Why-Nexus-3"><span class="nav-number">1.</span> <span class="nav-text">Why Nexus 3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker版本"><span class="nav-number">2.</span> <span class="nav-text">docker版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载镜像"><span class="nav-number">3.</span> <span class="nav-text">下载镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动Nexus"><span class="nav-number">4.</span> <span class="nav-text">启动Nexus</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#logon"><span class="nav-number">5.</span> <span class="nav-text">logon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#仓库类型"><span class="nav-number">6.</span> <span class="nav-text">仓库类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建blob"><span class="nav-number">7.</span> <span class="nav-text">创建blob</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建priavete仓库"><span class="nav-number">8.</span> <span class="nav-text">创建priavete仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建proxy仓库"><span class="nav-number">9.</span> <span class="nav-text">创建proxy仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建group仓库"><span class="nav-number">10.</span> <span class="nav-text">创建group仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本地npm设定"><span class="nav-number">11.</span> <span class="nav-text">本地npm设定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#验证用npm版本"><span class="nav-number">11.1.</span> <span class="nav-text">验证用npm版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设定-npmrc"><span class="nav-number">11.2.</span> <span class="nav-text">设定.npmrc</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#确认"><span class="nav-number">12.</span> <span class="nav-text">确认</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事前确认"><span class="nav-number">12.1.</span> <span class="nav-text">事前确认</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装gulp"><span class="nav-number">12.2.</span> <span class="nav-text">安装gulp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果确认"><span class="nav-number">12.3.</span> <span class="nav-text">结果确认</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#group仓库确认"><span class="nav-number">12.4.</span> <span class="nav-text">group仓库确认</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy仓库确认"><span class="nav-number">12.5.</span> <span class="nav-text">proxy仓库确认</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">13.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

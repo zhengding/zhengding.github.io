@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/28/post-name/">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/29/ssh直接登录docker容器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -271,7 +271,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/28/post-name/" itemprop="url">post_name</a></h1>
+                <a class="post-title-link" href="/2019/03/29/ssh直接登录docker容器/" itemprop="url">直接登录docker容器</a></h1>
         
 
         <div class="post-meta">
@@ -283,8 +283,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T17:25:30+08:00">
-                2019-03-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T09:58:15+08:00">
+                2019-03-29
               </time>
             
 
@@ -293,6 +293,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -323,7 +345,47 @@
       
         
           
-            
+            <p>docker容器，我们想直接通过ssh链接docker容器，而不是通过宿主机进入的方式</p>
+<p>首先，先了解一下docker，<a href="http://www.fecshop.com/topic/591" target="_blank" rel="noopener">docker 命令</a></p>
+<p>启动docker，进入docker容器</p>
+<p>1.如果是守护态容器，可以通过下面的方式进入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 42d099e3fdca /bin/bash （3c0498ea5254是CONTAINER ID）</span><br></pre></td></tr></table></figure>
+<p>2.进入docker后，使用passwd密码来修改密码（如提示没有这个命令行使用<code>yum install passwd</code>安装）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br><span class="line">    xxx密码</span><br><span class="line">    xxx确认密码</span><br></pre></td></tr></table></figure>
+<p>3.安装Openssh（docker 容器中执行）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install openssh-server</span><br><span class="line">$ sudo yum -y install openssh-clients</span><br></pre></td></tr></table></figure>
+<p>修改SSH配置文件以下选项，去掉#注释，将四个选项启用：</p>
+<p>vi /etc/ssh/sshd_config</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RSAAuthentication yes #启用 RSA 认证</span><br><span class="line">PubkeyAuthentication yes #启用公钥私钥配对认证方式</span><br><span class="line">AuthorizedKeysFile .ssh/authorized_keys #公钥文件路径（和上面生成的文件同）</span><br><span class="line">PermitRootLogin yes #root能使用ssh登录</span><br></pre></td></tr></table></figure>
+<p>重启ssh服务，并设置开机启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service sshd restart</span><br><span class="line">$ chkconfig sshd on</span><br></pre></td></tr></table></figure>
+<p>4.退出容器并保存更改</p>
+<p>使用exit命令或者ctrl+C来退出当前运行的容器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@ffe81683c404 /]# exit</span><br></pre></td></tr></table></figure>
+<p>注意：上面<code>ffe81683c404</code>是容器的ID，退出后用于保存的唯一ID。</p>
+<p>当结束后，我们使用 exit 来退出</p>
+<p>现在我们的容器已经被我们改变了，使用 <code>docker commit</code> 命令，将当前的容器生成镜像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker commit -m &apos;install openssh&apos; -a &apos;Docker Newbee&apos; ffe81683c404  centos6-jdk7:ssh</span><br><span class="line">4f177bd27a9ff0f6dc2a830403925b5360bfe0b93d476f7fc3231110e7f71b1c</span><br></pre></td></tr></table></figure>
+<p><code>-m</code>:来指定提交的说明信息，跟我们使用的版本控制工具一样</p>
+<p><code>-a</code> 可以指定更新的用户信息</p>
+<p><code>ffe81683c404</code>： 创建镜像的容器的ID，就是上面的容器id，也就是我们刚才进入的容器id</p>
+<p><code>centos6-jdk7:ssh</code>: 目标镜像的仓库名和 tag 信息，冒号前面部分是生成的镜像的仓库名字，冒号后面是镜像tag</p>
+<p>创建成功后会返回这个镜像的 ID 信息，查看镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<p>5.启动新的容器并打通22端口</p>
+<p>将新的镜像启动，并将docker服务器的50001端口映射到容器的22端口上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 2222:22 centos6-jdk7:ssh /usr/sbin/sshd -D</span><br></pre></td></tr></table></figure>
+<p>然后用xshell连接，</p>
+<p><code>ip</code>: 为宿主主机的ip，而不是docker容器的ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">端口`:就是上面的`2222</span><br></pre></td></tr></table></figure>
+<p><code>用户名</code>： root</p>
+<p><code>密码</code>： 就是上面password部分设置的密码</p>
+<p>即可连接成功</p>
+<p>6.关掉该容器</p>
+<p>在宿主机通过 <code>docker stop 容器id</code> 即可关闭</p>
+<p>启动容器 <code>docker start 容器id</code></p>
+<p>启动后，就可以用xshell进行连接。</p>
+
           
         
       
@@ -402,7 +464,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T14:11:13+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T17:36:26+08:00">
                 2019-03-28
               </time>
             
@@ -532,7 +594,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/28/centos ssh连接Docker容器/">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/28/JS中几种循环的区别与相同点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -551,7 +613,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/28/centos ssh连接Docker容器/" itemprop="url">centos ssh连接Docker容器</a></h1>
+                <a class="post-title-link" href="/2019/03/28/JS中几种循环的区别与相同点/" itemprop="url">JS中几种循环的区别与相同点</a></h1>
         
 
         <div class="post-meta">
@@ -563,290 +625,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T13:58:16+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T17:36:26+08:00">
                 2019-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/02/21/Kubernetes常用命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/21/Kubernetes常用命令/" itemprop="url">Kubernetes常用命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-21T13:29:35+08:00">
-                2019-02-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/11/20/JS中几种循环的区别与相同点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/20/JS中几种循环的区别与相同点/" itemprop="url">JS中几种循环的区别与相同点</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-20T18:20:30+08:00">
-                2018-11-20
               </time>
             
 
@@ -1027,7 +807,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/解决 mac （windows）终端上代理的难题/">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/28/Kubernetes常用命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -1046,7 +826,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/07/解决 mac （windows）终端上代理的难题/" itemprop="url">解决 mac （windows）终端上代理的难题</a></h1>
+                <a class="post-title-link" href="/2019/03/28/Kubernetes常用命令/" itemprop="url">Kubernetes常用命令</a></h1>
         
 
         <div class="post-meta">
@@ -1058,8 +838,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:40:15+08:00">
-                2018-09-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T17:36:26+08:00">
+                2019-03-28
               </time>
             
 
@@ -1081,8 +861,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/干货/" itemprop="url" rel="index">
-                    <span itemprop="name">干货</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -1120,16 +900,7 @@
       
         
           
-            <p>买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况<br>情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦<br>情况2：同事在安装 brew 的过程中，需要下载 github 上的repository，于是遭受了和上面一样的痛苦<br>不仅仅如此，为了解决类似的麻烦，很多人使用了 cnpm（淘宝出的代替 npm 的工具），或者更换各种包仓库的地址为国内镜像的地址，归根到底为一个原因，终端里的命令：诸如 wget，curl，git ，npm 等等，不好设置代理翻墙。<br>经过本人的探索，找出了一条解决之道，先不说麻不麻烦，总归是解决了长久以来困扰自己的问题<br>你所需要的，要有一个 ss 帐号，mac 上安装 shadowsocksX，已设置本地代理：socks5：127.0.0.1：1080<br>还需要另外一个神器：proxifier<br>举个例子，在终端里 git clone 一个repository，究竟是什么程序发起了网络请求，我现在可以直接告诉你答案，是 git-remote-https，请求 github.com:443，使用proxifier，就可以做到这一点，定位到是什么程序，请求的 host 以及 port，并且给它设置代理<br>下面这张图就是proxifier的庐山真面目了<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4oengilkbc1djbb48m7e1hbnm.png" alt><br>上面的日志给出了详细的解释<br>当我在终端里敲下 npm install xxx，对应的就是 node 请求 registry.npmjs.org:443<br>当我在webstorm中设置 github 帐户的时候，对应的是 webstorm，请求 api.github.com:443<br>当我在 git clone repository的时候，对应的是git-remote-https 请求 github.com:443<br>第一步：你得在shadowsocksX中开启 socks5 的本地代理，这是最重要的前提<br>第二步：在proxifier使用第一步设置的代理，如下图所示<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4ofiiia5821397ea0phm6rn13.png" alt><br>第三步：设置代理规则<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4og01u91alg1ggk1mh51omdurr1g.png" alt><br>解释一下我所设置的规则：<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4og4c2k2i6j8b1jdjd03has1t.png" alt><br>规则匹配的顺序是从上往下的   </p>
-<ol>
-<li>生效的第一条规则是shadowsocksX，因为我们的代理就是靠这个程序的，所以不能让它自己代理自己，否则proxifier 会报无限循环，动作选 direct   </li>
-<li>规则 github，这里也并没有指定程序git-remote-https，因为 像 webstorm等 GUI 之流，也会访问 github：443的请求，所以不指定程序，只限制 主机和端口，应用范围就不限于终端了   </li>
-<li>规则 node，解决 npm install 的代理，可以不用 cnpm 了   </li>
-<li>规则 brew，解决终端下使用 brew 安装 package 的代理   </li>
-<li>规则 google-analytics，，解决终端下使用 brew 安装 package 的代理   </li>
-<li>规则 default，不能删除，当匹配不到任何规则的时候，使用该规则<br>任何一个连接请求，从上往下匹配，匹配到了，就会停止<br>以上就是我摸索出来的方法，如果 ss 速度快的话，相信我，你会开心死的<br>一言以蔽之，如果你在终端中发起了网络请求速度很慢的话，可以先把 default 规则，设置为socks5代理（只有设置为代理，日志才会记录），然后分析一下请求的 host：port，然后就可以添加规则了，这样的话，就做到只给部分请求走代理，如果你觉得这样很麻烦，<br>也可以简单粗暴的，将 default 规则设置为 socks5代理，其余的规则全部禁用，那就是全部的请求走代理<br>ps：shadowsocks和proxifier windows 下也有，按照道理，windows 下也可用，我自己未测试过</li>
-</ol>
-
+            
           
         
       
@@ -1177,7 +948,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/搭建ShadowSocks/">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/搭建ShadowSocks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -1196,7 +967,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/07/搭建ShadowSocks/" itemprop="url">搭建ShadowSocks</a></h1>
+                <a class="post-title-link" href="/2019/03/07/搭建ShadowSocks/" itemprop="url">搭建ShadowSocks</a></h1>
         
 
         <div class="post-meta">
@@ -1208,8 +979,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:40:15+08:00">
-                2018-09-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
+                2019-03-07
               </time>
             
 
@@ -1327,7 +1098,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/把项目同时托管到github和oschina/">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/解决 mac （windows）终端上代理的难题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -1346,7 +1117,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/07/把项目同时托管到github和oschina/" itemprop="url">把项目同时托管到github和oschina</a></h1>
+                <a class="post-title-link" href="/2019/03/07/解决 mac （windows）终端上代理的难题/" itemprop="url">解决 mac （windows）终端上代理的难题</a></h1>
         
 
         <div class="post-meta">
@@ -1358,8 +1129,158 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:40:15+08:00">
-                2018-09-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/干货/" itemprop="url" rel="index">
+                    <span itemprop="name">干货</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况<br>情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦<br>情况2：同事在安装 brew 的过程中，需要下载 github 上的repository，于是遭受了和上面一样的痛苦<br>不仅仅如此，为了解决类似的麻烦，很多人使用了 cnpm（淘宝出的代替 npm 的工具），或者更换各种包仓库的地址为国内镜像的地址，归根到底为一个原因，终端里的命令：诸如 wget，curl，git ，npm 等等，不好设置代理翻墙。<br>经过本人的探索，找出了一条解决之道，先不说麻不麻烦，总归是解决了长久以来困扰自己的问题<br>你所需要的，要有一个 ss 帐号，mac 上安装 shadowsocksX，已设置本地代理：socks5：127.0.0.1：1080<br>还需要另外一个神器：proxifier<br>举个例子，在终端里 git clone 一个repository，究竟是什么程序发起了网络请求，我现在可以直接告诉你答案，是 git-remote-https，请求 github.com:443，使用proxifier，就可以做到这一点，定位到是什么程序，请求的 host 以及 port，并且给它设置代理<br>下面这张图就是proxifier的庐山真面目了<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4oengilkbc1djbb48m7e1hbnm.png" alt><br>上面的日志给出了详细的解释<br>当我在终端里敲下 npm install xxx，对应的就是 node 请求 registry.npmjs.org:443<br>当我在webstorm中设置 github 帐户的时候，对应的是 webstorm，请求 api.github.com:443<br>当我在 git clone repository的时候，对应的是git-remote-https 请求 github.com:443<br>第一步：你得在shadowsocksX中开启 socks5 的本地代理，这是最重要的前提<br>第二步：在proxifier使用第一步设置的代理，如下图所示<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4ofiiia5821397ea0phm6rn13.png" alt><br>第三步：设置代理规则<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4og01u91alg1ggk1mh51omdurr1g.png" alt><br>解释一下我所设置的规则：<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4og4c2k2i6j8b1jdjd03has1t.png" alt><br>规则匹配的顺序是从上往下的   </p>
+<ol>
+<li>生效的第一条规则是shadowsocksX，因为我们的代理就是靠这个程序的，所以不能让它自己代理自己，否则proxifier 会报无限循环，动作选 direct   </li>
+<li>规则 github，这里也并没有指定程序git-remote-https，因为 像 webstorm等 GUI 之流，也会访问 github：443的请求，所以不指定程序，只限制 主机和端口，应用范围就不限于终端了   </li>
+<li>规则 node，解决 npm install 的代理，可以不用 cnpm 了   </li>
+<li>规则 brew，解决终端下使用 brew 安装 package 的代理   </li>
+<li>规则 google-analytics，，解决终端下使用 brew 安装 package 的代理   </li>
+<li>规则 default，不能删除，当匹配不到任何规则的时候，使用该规则<br>任何一个连接请求，从上往下匹配，匹配到了，就会停止<br>以上就是我摸索出来的方法，如果 ss 速度快的话，相信我，你会开心死的<br>一言以蔽之，如果你在终端中发起了网络请求速度很慢的话，可以先把 default 规则，设置为socks5代理（只有设置为代理，日志才会记录），然后分析一下请求的 host：port，然后就可以添加规则了，这样的话，就做到只给部分请求走代理，如果你觉得这样很麻烦，<br>也可以简单粗暴的，将 default 规则设置为 socks5代理，其余的规则全部禁用，那就是全部的请求走代理<br>ps：shadowsocks和proxifier windows 下也有，按照道理，windows 下也可用，我自己未测试过</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/把项目同时托管到github和oschina/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/07/把项目同时托管到github和oschina/" itemprop="url">把项目同时托管到github和oschina</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
+                2019-03-07
               </time>
             
 
@@ -1483,7 +1404,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/快速掌握dockerfile/">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/快速掌握dockerfile/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -1502,7 +1423,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/07/快速掌握dockerfile/" itemprop="url">快速掌握Dockerfile</a></h1>
+                <a class="post-title-link" href="/2019/03/07/快速掌握dockerfile/" itemprop="url">快速掌握Dockerfile</a></h1>
         
 
         <div class="post-meta">
@@ -1514,8 +1435,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:40:15+08:00">
-                2018-09-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
+                2019-03-07
               </time>
             
 
@@ -1732,7 +1653,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2018/09/07/常用软件/">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/常用软件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -1751,7 +1672,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/07/常用软件/" itemprop="url">常用软件</a></h1>
+                <a class="post-title-link" href="/2019/03/07/常用软件/" itemprop="url">常用软件</a></h1>
         
 
         <div class="post-meta">
@@ -1763,8 +1684,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:40:15+08:00">
-                2018-09-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
+                2019-03-07
               </time>
             
 
@@ -1867,6 +1788,181 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ding-data.gitee.io/2019/03/07/使用Verdaccio搭建npm仓库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/07/使用Verdaccio搭建npm仓库/" itemprop="url">快速掌握Dockerfile</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:48:48+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="使用Verdaccio搭建npm仓库"><a href="#使用Verdaccio搭建npm仓库" class="headerlink" title="使用Verdaccio搭建npm仓库"></a>使用Verdaccio搭建npm仓库</h1><p>Verdaccio是一个轻量级的私有NPM的Registry（从<a href="https://github.com/rlidwka/sinopia" target="_blank" rel="noopener">Sinopia</a>fork过来的，sinopia最后一次更新是在几年前了）。最开始是打算使用cnpmjs这个来搭建私有的npm仓库但是搭建完成之后存在一些问题，所以使用了Sinopia，本文记录下来搭建的过程。</p>
+<p><img src="http://blog.devzeng.com/images/verdaccio/logo.png" alt="verdaccio"></p>
+<h3 id="直接安装"><a href="#直接安装" class="headerlink" title="直接安装"></a>直接安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install verdaccio -g</span><br></pre></td></tr></table></figure>
+<p>安装完成之后直接执行命令即可完成启动：</p>
+<p><code>verdaccio</code></p>
+<p>对于服务器上面部署可以使用pm2</p>
+<p>更多关于PM2的用法的可以参考：<code>https://wohugb.gitbooks.io/pm2</code></p>
+<h3 id="使用Docker安装"><a href="#使用Docker安装" class="headerlink" title="使用Docker安装"></a>使用Docker安装</h3><p>由于之前搭建Nexus的时候安装了Docker的环境，刚好verdaccio支持Docker，所以直接使用Docker来安装了。</p>
+<h4 id="1、创建配置文件"><a href="#1、创建配置文件" class="headerlink" title="1、创建配置文件"></a>1、创建配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /home/docker</span><br><span class="line">git clone https://github.com/verdaccio/docker-examples</span><br><span class="line">mv docker-local-storage-volume /home/docker/verdaccio</span><br></pre></td></tr></table></figure>
+<h4 id="2、修改配置文件"><a href="#2、修改配置文件" class="headerlink" title="2、修改配置文件"></a>2、修改配置文件</h4><p>（1）修改<code>conf/config.yaml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 使用淘宝的cnpmjs镜像，加速</span><br><span class="line">uplinks:</span><br><span class="line">  npmjs:</span><br><span class="line">    url: https://registry.npm.taobao.org/</span><br></pre></td></tr></table></figure>
+<p>（2）修改<code>conf/htpasswd</code></p>
+<p>到<code>http://tool.oschina.net/htpasswd</code>生成需要的账号密码</p>
+<p>（3）删除<code>storage</code>下面的文件</p>
+<h4 id="3、创建并运行容器"><a href="#3、创建并运行容器" class="headerlink" title="3、创建并运行容器"></a>3、创建并运行容器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name verdaccio -d -v /home/docker/verdaccio:/verdaccio -p 4873:4873 verdaccio/verdaccio:latest</span><br></pre></td></tr></table></figure>
+<p>通过<code>docker logs verdaccio</code>查看日志发现存在权限问题，是由于使用了挂载的数据卷和容器内部的权限不一致的问题，需要修改下权限：</p>
+<p>（1）进入容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it verdaccio sh</span><br></pre></td></tr></table></figure>
+<p>（2）查看用户ID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whoami &amp; id</span><br></pre></td></tr></table></figure>
+<p>（3）修改文件夹权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R 200 verdaccio</span><br></pre></td></tr></table></figure>
+<h3 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h3><p>启动容器之后访问<code>http://localhost:4873</code>出现如下界面表示安装成功：</p>
+<p><img src="http://blog.devzeng.com/images/verdaccio/demo.png" alt="verdaccio"></p>
+<p>（1）配置使用私有的镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm set registry http://localhost:4873</span><br></pre></td></tr></table></figure>
+<p>（2）登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm adduser --registry http://localhost:4873</span><br></pre></td></tr></table></figure>
+<p>（3）发布</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm publish --registry http://localhost:4873</span><br></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>1、<a href="http://www.verdaccio.org/" target="_blank" rel="noopener">verdaccio官网</a></p>
+<p>2、<a href="https://github.com/Pines-Cheng/blog/issues/1" target="_blank" rel="noopener">使用Sinopia搭建私有的npm仓库</a></p>
+<p>3、<a href="http://blog.csdn.net/kinginblue/article/details/73527832" target="_blank" rel="noopener">CentOS6.x 安装 Docker 和 Docker Compose</a></p>
+<p>4、<a href="https://yq.aliyun.com/articles/53990" target="_blank" rel="noopener">谈谈 Docker Volume 之权限管理（一）</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1917,7 +2013,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1939,7 +2035,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
