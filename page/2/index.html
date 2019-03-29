@@ -746,153 +746,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/nrm常用命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/29/nrm常用命令/" itemprop="url">npm常用命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">
-                2019-03-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一、常用命令"><a href="#一、常用命令" class="headerlink" title="一、常用命令"></a>一、常用命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看包信息</span></span><br><span class="line">npm list -g gulp  </span><br><span class="line"><span class="comment">#安装并查看安装信息</span></span><br><span class="line">npm -loglevel info install -g gulp  </span><br><span class="line"><span class="comment">#发布到https://registry.npmjs.org/</span></span><br><span class="line">npm --registry https://registry.npmjs.org/ publish  </span><br><span class="line"><span class="comment">#设置npm库</span></span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org/</span><br><span class="line">npm config <span class="built_in">set</span> registry http://registry.npmjs.org </span><br><span class="line"><span class="comment">#查看当前npm库</span></span><br><span class="line">cat ~/.npmrc</span><br><span class="line"><span class="comment">#登录</span></span><br><span class="line">npm adduser –-registry http://192.168.101.30:10005/repository/npm-repo-hosted/</span><br></pre></td></tr></table></figure>
-<h1 id="二、nrm的使用"><a href="#二、nrm的使用" class="headerlink" title="二、nrm的使用"></a>二、nrm的使用</h1><p>开发的npm registry 管理工具 nrm,  能够查看和切换当前使用的registry, 最近NPM经常 down 掉, 这个还是很有用的哈哈</p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g nrm</span><br></pre></td></tr></table></figure>
-<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ nrm ls</span><br><span class="line">* npm ---- https://registry.npmjs.org/</span><br><span class="line">  cnpm --- http://r.cnpmjs.org/</span><br><span class="line">  eu ----- http://registry.npmjs.eu/</span><br><span class="line">  au ----- http://registry.npmjs.org.au/</span><br><span class="line">  sl ----- http://npm.strongloop.com/</span><br><span class="line">  nj ----- https://registry.nodejitsu.com/</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nrm use cnpm //switch registry to cnpm</span><br><span class="line">	Registry has been <span class="built_in">set</span> to: http://r.cnpmjs.org/</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cmd</span><br><span class="line">nrm <span class="built_in">help</span> // show <span class="built_in">help</span></span><br><span class="line">nrm list // show all registries</span><br><span class="line">nrm use cnpm // switch to cnpm</span><br><span class="line">nrm home // go to a registry home page</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/oracle常用命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1014,6 +867,153 @@
 <p>temporary tablespace fitech_temp;</p>
 <h4 id="2-3给用户分配权限"><a href="#2-3给用户分配权限" class="headerlink" title="2.3给用户分配权限"></a>2.3给用户分配权限</h4><p>grant connect,resource,dba to east;</p>
 <h4 id="2-4使用east用户登录，查看数据库用户正常访问即可"><a href="#2-4使用east用户登录，查看数据库用户正常访问即可" class="headerlink" title="2.4使用east用户登录，查看数据库用户正常访问即可"></a>2.4使用east用户登录，查看数据库用户正常访问即可</h4><h3 id="3、查看数据库状态"><a href="#3、查看数据库状态" class="headerlink" title="3、查看数据库状态"></a>3、查看数据库状态</h3><p>lsnrctl status </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/nrm常用命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/29/nrm常用命令/" itemprop="url">npm常用命令</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">
+                2019-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一、常用命令"><a href="#一、常用命令" class="headerlink" title="一、常用命令"></a>一、常用命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看包信息</span></span><br><span class="line">npm list -g gulp  </span><br><span class="line"><span class="comment">#安装并查看安装信息</span></span><br><span class="line">npm -loglevel info install -g gulp  </span><br><span class="line"><span class="comment">#发布到https://registry.npmjs.org/</span></span><br><span class="line">npm --registry https://registry.npmjs.org/ publish  </span><br><span class="line"><span class="comment">#设置npm库</span></span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org/</span><br><span class="line">npm config <span class="built_in">set</span> registry http://registry.npmjs.org </span><br><span class="line"><span class="comment">#查看当前npm库</span></span><br><span class="line">cat ~/.npmrc</span><br><span class="line"><span class="comment">#登录</span></span><br><span class="line">npm adduser –-registry http://192.168.101.30:10005/repository/npm-repo-hosted/</span><br></pre></td></tr></table></figure>
+<h1 id="二、nrm的使用"><a href="#二、nrm的使用" class="headerlink" title="二、nrm的使用"></a>二、nrm的使用</h1><p>开发的npm registry 管理工具 nrm,  能够查看和切换当前使用的registry, 最近NPM经常 down 掉, 这个还是很有用的哈哈</p>
+<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g nrm</span><br></pre></td></tr></table></figure>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ nrm ls</span><br><span class="line">* npm ---- https://registry.npmjs.org/</span><br><span class="line">  cnpm --- http://r.cnpmjs.org/</span><br><span class="line">  eu ----- http://registry.npmjs.eu/</span><br><span class="line">  au ----- http://registry.npmjs.org.au/</span><br><span class="line">  sl ----- http://npm.strongloop.com/</span><br><span class="line">  nj ----- https://registry.nodejitsu.com/</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nrm use cnpm //switch registry to cnpm</span><br><span class="line">	Registry has been <span class="built_in">set</span> to: http://r.cnpmjs.org/</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cmd</span><br><span class="line">nrm <span class="built_in">help</span> // show <span class="built_in">help</span></span><br><span class="line">nrm list // show all registries</span><br><span class="line">nrm use cnpm // switch to cnpm</span><br><span class="line">nrm home // go to a registry home page</span><br></pre></td></tr></table></figure>
 
           
         
