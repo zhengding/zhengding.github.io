@@ -104,15 +104,15 @@
 <meta property="og:site_name" content="zhengding">
 <meta property="og:description" content="买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦情况2：同事在安装 brew 的过程中，需要下载 gith">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://zhengding.github.io/2019/03/29/images/解决mac(windows">
-<meta property="og:image" content="http://zhengding.github.io/2019/03/29/images/解决mac(windows">
-<meta property="og:image" content="http://zhengding.github.io/2019/03/29/images/解决mac(windows">
-<meta property="og:image" content="http://zhengding.github.io/2019/03/29/images/解决mac(windows">
+<meta property="og:image" content="http://zhengding.github.io/2019/03/29/解决%20mac%20（windows）终端上代理的难题/images/解决mac(windows">
+<meta property="og:image" content="http://zhengding.github.io/2019/03/29/解决%20mac%20（windows）终端上代理的难题/images/解决mac(windows">
+<meta property="og:image" content="http://zhengding.github.io/2019/03/29/解决%20mac%20（windows）终端上代理的难题/images/解决mac(windows">
+<meta property="og:image" content="http://zhengding.github.io/2019/03/29/解决%20mac%20（windows）终端上代理的难题/images/解决mac(windows">
 <meta property="og:updated_time" content="2019-04-01T05:46:27.291Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决mac（windows）终端上代理的难题">
 <meta name="twitter:description" content="买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦情况2：同事在安装 brew 的过程中，需要下载 gith">
-<meta name="twitter:image" content="http://zhengding.github.io/2019/03/29/images/解决mac(windows">
+<meta name="twitter:image" content="http://zhengding.github.io/2019/03/29/解决%20mac%20（windows）终端上代理的难题/images/解决mac(windows">
 
 
 
@@ -469,7 +469,7 @@
       
 
       
-        <p>买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况<br>情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦<br>情况2：同事在安装 brew 的过程中，需要下载 github 上的repository，于是遭受了和上面一样的痛苦<br>不仅仅如此，为了解决类似的麻烦，很多人使用了 cnpm（淘宝出的代替 npm 的工具），或者更换各种包仓库的地址为国内镜像的地址，归根到底为一个原因，终端里的命令：诸如 wget，curl，git ，npm 等等，不好设置代理翻墙。<br>经过本人的探索，找出了一条解决之道，先不说麻不麻烦，总归是解决了长久以来困扰自己的问题<br>你所需要的，要有一个 ss 帐号，mac 上安装 shadowsocksX，已设置本地代理：socks5：127.0.0.1：1080<br>还需要另外一个神器：proxifier<br>举个例子，在终端里 git clone 一个repository，究竟是什么程序发起了网络请求，我现在可以直接告诉你答案，是 git-remote-https，请求 github.com:443，使用proxifier，就可以做到这一点，定位到是什么程序，请求的 host 以及 port，并且给它设置代理<br>下面这张图就是proxifier的庐山真面目了<br><img src="../images/解决mac(windows" alt="image_1b4oengilkbc1djbb48m7e1hbnm.png-370.8kB">终端上代理的难题/image_1b4oengilkbc1djbb48m7e1hbnm.png)<br>上面的日志给出了详细的解释<br>当我在终端里敲下 npm install xxx，对应的就是 node 请求 registry.npmjs.org:443<br>当我在webstorm中设置 github 帐户的时候，对应的是 webstorm，请求 api.github.com:443<br>当我在 git clone repository的时候，对应的是git-remote-https 请求 github.com:443<br>第一步：你得在shadowsocksX中开启 socks5 的本地代理，这是最重要的前提<br>第二步：在proxifier使用第一步设置的代理，如下图所示<br><img src="../images/解决mac(windows" alt="image_1b4ofiiia5821397ea0phm6rn13.png-261.8kB">终端上代理的难题/image_1b4ofiiia5821397ea0phm6rn13.png)<br>第三步：设置代理规则<br><img src="../images/解决mac(windows" alt="image_1b4og01u91alg1ggk1mh51omdurr1g.png-479.7kB">终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g.png)<br>解释一下我所设置的规则：<br><img src="../images/解决mac(windows" alt="image_1b4og01u91alg1ggk1mh51omdurr1g.png-479.7kB">终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g-1554097364886.png)<br>规则匹配的顺序是从上往下的   </p>
+        <p>买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况<br>情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦<br>情况2：同事在安装 brew 的过程中，需要下载 github 上的repository，于是遭受了和上面一样的痛苦<br>不仅仅如此，为了解决类似的麻烦，很多人使用了 cnpm（淘宝出的代替 npm 的工具），或者更换各种包仓库的地址为国内镜像的地址，归根到底为一个原因，终端里的命令：诸如 wget，curl，git ，npm 等等，不好设置代理翻墙。<br>经过本人的探索，找出了一条解决之道，先不说麻不麻烦，总归是解决了长久以来困扰自己的问题<br>你所需要的，要有一个 ss 帐号，mac 上安装 shadowsocksX，已设置本地代理：socks5：127.0.0.1：1080<br>还需要另外一个神器：proxifier<br>举个例子，在终端里 git clone 一个repository，究竟是什么程序发起了网络请求，我现在可以直接告诉你答案，是 git-remote-https，请求 github.com:443，使用proxifier，就可以做到这一点，定位到是什么程序，请求的 host 以及 port，并且给它设置代理<br>下面这张图就是proxifier的庐山真面目了<br><img src="/2019/03/29/解决 mac （windows）终端上代理的难题/images/解决mac(windows" alt="image_1b4oengilkbc1djbb48m7e1hbnm.png-370.8kB">终端上代理的难题/image_1b4oengilkbc1djbb48m7e1hbnm.png)<br>上面的日志给出了详细的解释<br>当我在终端里敲下 npm install xxx，对应的就是 node 请求 registry.npmjs.org:443<br>当我在webstorm中设置 github 帐户的时候，对应的是 webstorm，请求 api.github.com:443<br>当我在 git clone repository的时候，对应的是git-remote-https 请求 github.com:443<br>第一步：你得在shadowsocksX中开启 socks5 的本地代理，这是最重要的前提<br>第二步：在proxifier使用第一步设置的代理，如下图所示<br><img src="/2019/03/29/解决 mac （windows）终端上代理的难题/images/解决mac(windows" alt="image_1b4ofiiia5821397ea0phm6rn13.png-261.8kB">终端上代理的难题/image_1b4ofiiia5821397ea0phm6rn13.png)<br>第三步：设置代理规则<br><img src="/2019/03/29/解决 mac （windows）终端上代理的难题/images/解决mac(windows" alt="image_1b4og01u91alg1ggk1mh51omdurr1g.png-479.7kB">终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g.png)<br>解释一下我所设置的规则：<br><img src="/2019/03/29/解决 mac （windows）终端上代理的难题/images/解决mac(windows" alt="image_1b4og01u91alg1ggk1mh51omdurr1g.png-479.7kB">终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g-1554097364886.png)<br>规则匹配的顺序是从上往下的   </p>
 <ol>
 <li>生效的第一条规则是shadowsocksX，因为我们的代理就是靠这个程序的，所以不能让它自己代理自己，否则proxifier 会报无限循环，动作选 direct   </li>
 <li>规则 github，这里也并没有指定程序git-remote-https，因为 像 webstorm等 GUI 之流，也会访问 github：443的请求，所以不指定程序，只限制 主机和端口，应用范围就不限于终端了   </li>
@@ -514,8 +514,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/29/把项目同时托管到github和oschina/" rel="next" title="把项目同时托管到github和oschina">
-                <i class="fa fa-chevron-left"></i> 把项目同时托管到github和oschina
+              <a href="/2019/03/29/搭建ShadowSocks/" rel="next" title="搭建ShadowSocks">
+                <i class="fa fa-chevron-left"></i> 搭建ShadowSocks
               </a>
             
           </div>
@@ -524,8 +524,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/29/搭建ShadowSocks/" rel="prev" title="搭建ShadowSocks">
-                搭建ShadowSocks <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/29/说说 tabindex的那些事儿/" rel="prev" title="说说 tabindex 的那些事儿">
+                说说 tabindex 的那些事儿 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

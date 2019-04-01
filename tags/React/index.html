@@ -99,7 +99,7 @@
   <meta name="description" content="This site is used to record notes">
 <meta property="og:type" content="website">
 <meta property="og:title" content="zhengding">
-<meta property="og:url" content="http://zhengding.github.io/tags/React/index.html">
+<meta property="og:url" content="http://zhengding.github.io/tags/react/index.html">
 <meta property="og:site_name" content="zhengding">
 <meta property="og:description" content="This site is used to record notes">
 <meta property="og:locale" content="zh-CN">
@@ -112,7 +112,7 @@
 
 
 
-  <link rel="canonical" href="http://zhengding.github.io/tags/React/">
+  <link rel="canonical" href="http://zhengding.github.io/tags/react/">
 
 
 
@@ -122,7 +122,7 @@
   };
 </script>
 
-  <title>标签: React | zhengding</title>
+  <title>标签: react | zhengding</title>
   
 
 
@@ -360,7 +360,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>React<small>标签</small>
+        <h1>react<small>标签</small>
         </h1>
       </div>
 
@@ -372,35 +372,9 @@
 
       <h2 class="post-title">
         
-          <a class="post-title-link" href="/2019/03/29/componentWillReceiveProps详解（this.props）状态改变检测机制/" itemprop="url">
+          <a class="post-title-link" href="/2019/03/29/react引入antd/" itemprop="url">
             
-              <span itemprop="name">componentWillReceiveProps详解（this.props）状态改变检测机制</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-29T11:19:41+08:00" content="2019-03-29">
-          03-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/29/React总结/" itemprop="url">
-            
-              <span itemprop="name">React总结</span>
+              <span itemprop="name">react引入antd</span>
             
           </a>
         
@@ -1064,6 +1038,64 @@
           proceedsearch();
         }
       });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+});
     }
 
     // handle and trigger popup window;
