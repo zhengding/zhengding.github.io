@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[React渲染机制解析]]></title>
+    <url>%2F2019%2F04%2F01%2FReact%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6%E8%A7%A3%E6%9E%90%2F</url>
+    <content type="text"><![CDATA[React渲染过程我们都知道使用React可以使得网页的性能有很大的提高，本文具体探究它是通过什么样的渲染机制做到的。 在页面一开始打开的时候，React会调用render函数构建一棵Dom树，在state/props发生改变的时候，render函数会被再次调用渲染出另外一棵树，接着，React会用对两棵树进行对比，找到需要更新的地方批量改动。 Diff 算法这个过程中，比较两棵Dom tree高效找出需要更新的地方是很重要的。React基于两个假设： 两个相同的组件产生类似的DOM结构，不同组件产生不同DOM结构 对于同一层次的一组子节点，它们可以通过唯一的id区分 发明了一种叫Diff的算法，它极大的优化了这个比较的过程，将算法复杂度从O(n^3)降低到O(n)。 同时，基于第一点假设，我们可以推论出，Diff算法只会对同层的节点进行比较。如图，它只会对颜色相同的节点进行比较。 也就是说如果父节点不同，React将不会在去对比子节点。因为不同的组件DOM结构会不相同，所以就没有必要在去对比子节点了。这也提高了对比的效率。 下面，我们具体看下Diff算法是怎么做的，这里分为两种情况考虑 节点类型不同 节点类型相同，但是属性不同 不同节点类型对于不同的节点类型，react会基于第一条假设，直接删去旧的节点，新建一个新的节点。 比如： 1234567&lt;A&gt; &lt;C/&gt;&lt;/A&gt;// 由shape1到shape2&lt;B&gt; &lt;C/&gt;&lt;/B&gt; React会直接删掉A节点（包括它所有的子节点）,然后新建一个B节点插入。 为了验证这一点，我打印出了从shape1到shape2节点的生命周期，gitbub链接：https://github.com/hhhuangqio… 感兴趣的可以自己跑一跑代码~ 1234567891011121314151617Shape1 :A is created A renderC is createdC renderC componentDidMountA componentDidMountShape2 :A componentWillUnmountC componentWillUnmountB is createdB renderC is createdC renderC componentDidMountB componentDidMount 由此可以看出，A与其子节点C会被直接删除，然后重新建一个B，C插入。 相同节点类型当对比相同的节点类型比较简单，react会对比它们的属性，只改变需要改变的属性 比如： 123&lt;div className=&quot;before&quot; title=&quot;stuff&quot; /&gt;&lt;div className=&quot;after&quot; title=&quot;stuff&quot; /&gt; 这两个div中，react会只更新className的值 123&lt;div style=&#123;&#123;color: &apos;red&apos;, fontWeight: &apos;bold&apos;&#125;&#125; /&gt;&lt;div style=&#123;&#123;color: &apos;green&apos;, fontWeight: &apos;bold&apos;&#125;&#125; /&gt; 这两个div中，react只会去更新color的值 列表比较12345678910&lt;div&gt; &lt;A /&gt; &lt;B /&gt;&lt;/div&gt;// 列表一到列表二&lt;div&gt; &lt;A /&gt; &lt;C /&gt; &lt;B /&gt;&lt;/div&gt; 从列表一到列表二，只是在中间插入了一个C，但是如果没有key的时候，react会把B删去，新建一个C放在B的位置，然后重新建一个节点B放在尾部。 你说什么就是什么咯？！不信的话，我们还是跑一边代码，看看生命周期验证一下 123456789101112131415161718列表一：A is createdA renderB is createdB renderA componentDidMountB componentDidMount列表二：A renderB componentWillUnmountC is createdC renderB is createdB renderA componentDidUpdateC componentDidMountB componentDidMount 当节点很多的时候，这样做是非常低效的，所以我们需要给每个节点配一个key，让react可以识别出来哪些节点是一样的，不需要重新创建。配上key之后，在跑一遍代码看看， 1234567A renderC is createdC renderB renderA componentDidUpdateC componentDidMountB componentDidUpdate 果然，配上key之后，列表二的生命周期就如我所愿，只在指定的位置创建C节点插入。这里要注意的一点是，key值必须是稳定（所以我们不能用Math.random()去创建key），可预测，并且唯一的。 小结React整个的渲染机制就是在state/props发生改变的时候，重新渲染所有的节点，构造出新的虚拟Dom tree跟原来的Dom tree用Diff算法进行比较，得到需要更新的地方在批量造作在真实的Dom上，由于这样做就减少了对Dom的频繁操作，从而提升的性能。]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[hexo博客图片问题]]></title>
     <url>%2F2019%2F04%2F01%2Fhexo%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[开始用hexo搭建博客，开始的时候觉得还不错。用着用着感觉图片是一个问题。最开始的时候用七牛来存储图片。 图片似乎有了解决方案。某次写博客的时候觉得图片多了真是太麻烦了。每次要把图片先上传到七牛的服务器然后再使用。这使我一度出于放弃的边缘，差点用回博客园或者CSND。后面试着搜索了下本地方式引用。发现了CodeFalling/hexo-asset-image的插件来加载本地图片。使用方法 1.首先确认_config.yml 中有 post_asset_folder:true。 Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder 当您设置post_asset_folder为true参数后，在建立文件时，Hexo 会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。 2.在hexo的目录下执行 1$ npm install https://github.com/CodeFalling/hexo-asset-image --save （需要等待一段时间）。 3.完成安装后用hexo新建文章的时候会发现_posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。结构如下： 12345本地图片测试├── apppicker.jpg├── logo.jpg└── rules.jpg本地图片测试.md 这样的目录结构（目录名和文章名一致），只要使用 ![logo](本地图片测试/logo.jpg) 就可以插入图片。其中[]里面不写文字则没有图片标题。 生成的结构为 12345public/2016/3/9/本地图片测试├── apppicker.jpg├── index.html├── logo.jpg└── rules.jpg 同时，生成的 html 是 1&lt;img src="/2016/3/9/本地图片测试/logo.jpg" alt="logo"&gt; 而不是愚蠢的 1&lt;img src="本地图片测试/logo.jpg" alt="logo"&gt; 注意: 通过常规的 markdown 语法和相对路径来引用图片和其它资源可能会导致它们在存档页或者主页上显示不正确。在Hexo2时代，社区创建了很多插件来解决这个问题。但是，随着Hexo3的发布，许多新的标签插件被加入到了核心代码中。这使得你可以更简单地在文章中引用你的资源。 比如说：当你打开文章资源文件夹功能后，你把一个 example.jpg图片放在了你的资源文件夹中，如果通过使用相对路径的常规 markdown 语法 [](/example.jpg)，它将 不会 出现在首页上。（但是它会在文章中按你期待的方式工作） 正确的引用图片方式是使用下列的标签插件而不是markdown]]></content>
@@ -45,9 +56,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[搭建ShadowSocks]]></title>
-    <url>%2F2019%2F03%2F29%2F%E6%90%AD%E5%BB%BAShadowSocks%2F</url>
-    <content type="text"><![CDATA[VPS安装ShadowSocks推荐看秋水逸冰的《Shadowsocks 一键安装脚本（四合一）》的安装教程。运行以下命令: 123wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.shchmod +x shadowsocks-all.sh./shadowsocks-all.sh 2&gt;&amp;1 | tee shadowsocks-all.log 选择脚本（Python、R、Go、libev），任选一个： 123456Which Shadowsocks server you'd select:1.Shadowsocks-Python2.ShadowsocksR3.Shadowsocks-Go4.Shadowsocks-libevPlease enter a number (default 1): 笔者选择Shadowsocks-Go，输入3……然后，输入密码和端口，笔者直接回车用默认： 1234567891011121314You choose = Shadowsocks-GoPlease enter password for Shadowsocks-Go(default password: teddysun.com):password = teddysun.comPlease enter a port for Shadowsocks-Go [1-65535](default port: 8989):port = 8989Press any key to start...or Press Ctrl+C to cancel 安装成功后，命令行出现： 12345678Congratulations, Shadowsocks-Go server install completed!Your Server IP : 45.32.73.59Your Server Port : 8989Your Password : teddysun.comYour Encryption Method: aes-256-cfbWelcome to visit: https://teddysun.com/486.htmlEnjoy it! （如果安装失败，请尝试其他脚本）]]></content>
+    <title><![CDATA[解决mac（windows）终端上代理的难题]]></title>
+    <url>%2F2019%2F03%2F29%2F%E8%A7%A3%E5%86%B3%20mac%20%EF%BC%88windows%EF%BC%89%E7%BB%88%E7%AB%AF%E4%B8%8A%E4%BB%A3%E7%90%86%E7%9A%84%E9%9A%BE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦情况2：同事在安装 brew 的过程中，需要下载 github 上的repository，于是遭受了和上面一样的痛苦不仅仅如此，为了解决类似的麻烦，很多人使用了 cnpm（淘宝出的代替 npm 的工具），或者更换各种包仓库的地址为国内镜像的地址，归根到底为一个原因，终端里的命令：诸如 wget，curl，git ，npm 等等，不好设置代理翻墙。经过本人的探索，找出了一条解决之道，先不说麻不麻烦，总归是解决了长久以来困扰自己的问题你所需要的，要有一个 ss 帐号，mac 上安装 shadowsocksX，已设置本地代理：socks5：127.0.0.1：1080还需要另外一个神器：proxifier举个例子，在终端里 git clone 一个repository，究竟是什么程序发起了网络请求，我现在可以直接告诉你答案，是 git-remote-https，请求 github.com:443，使用proxifier，就可以做到这一点，定位到是什么程序，请求的 host 以及 port，并且给它设置代理下面这张图就是proxifier的庐山真面目了终端上代理的难题/image_1b4oengilkbc1djbb48m7e1hbnm.png)上面的日志给出了详细的解释当我在终端里敲下 npm install xxx，对应的就是 node 请求 registry.npmjs.org:443当我在webstorm中设置 github 帐户的时候，对应的是 webstorm，请求 api.github.com:443当我在 git clone repository的时候，对应的是git-remote-https 请求 github.com:443第一步：你得在shadowsocksX中开启 socks5 的本地代理，这是最重要的前提第二步：在proxifier使用第一步设置的代理，如下图所示终端上代理的难题/image_1b4ofiiia5821397ea0phm6rn13.png)第三步：设置代理规则终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g.png)解释一下我所设置的规则：终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g-1554097364886.png)规则匹配的顺序是从上往下的 生效的第一条规则是shadowsocksX，因为我们的代理就是靠这个程序的，所以不能让它自己代理自己，否则proxifier 会报无限循环，动作选 direct 规则 github，这里也并没有指定程序git-remote-https，因为 像 webstorm等 GUI 之流，也会访问 github：443的请求，所以不指定程序，只限制 主机和端口，应用范围就不限于终端了 规则 node，解决 npm install 的代理，可以不用 cnpm 了 规则 brew，解决终端下使用 brew 安装 package 的代理 规则 google-analytics，，解决终端下使用 brew 安装 package 的代理 规则 default，不能删除，当匹配不到任何规则的时候，使用该规则任何一个连接请求，从上往下匹配，匹配到了，就会停止以上就是我摸索出来的方法，如果 ss 速度快的话，相信我，你会开心死的一言以蔽之，如果你在终端中发起了网络请求速度很慢的话，可以先把 default 规则，设置为socks5代理（只有设置为代理，日志才会记录），然后分析一下请求的 host：port，然后就可以添加规则了，这样的话，就做到只给部分请求走代理，如果你觉得这样很麻烦，也可以简单粗暴的，将 default 规则设置为 socks5代理，其余的规则全部禁用，那就是全部的请求走代理ps：shadowsocks和proxifier windows 下也有，按照道理，windows 下也可用，我自己未测试过]]></content>
       <categories>
         <category>干货</category>
       </categories>
@@ -56,9 +67,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[解决mac（windows）终端上代理的难题]]></title>
-    <url>%2F2019%2F03%2F29%2F%E8%A7%A3%E5%86%B3%20mac%20%EF%BC%88windows%EF%BC%89%E7%BB%88%E7%AB%AF%E4%B8%8A%E4%BB%A3%E7%90%86%E7%9A%84%E9%9A%BE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦情况2：同事在安装 brew 的过程中，需要下载 github 上的repository，于是遭受了和上面一样的痛苦不仅仅如此，为了解决类似的麻烦，很多人使用了 cnpm（淘宝出的代替 npm 的工具），或者更换各种包仓库的地址为国内镜像的地址，归根到底为一个原因，终端里的命令：诸如 wget，curl，git ，npm 等等，不好设置代理翻墙。经过本人的探索，找出了一条解决之道，先不说麻不麻烦，总归是解决了长久以来困扰自己的问题你所需要的，要有一个 ss 帐号，mac 上安装 shadowsocksX，已设置本地代理：socks5：127.0.0.1：1080还需要另外一个神器：proxifier举个例子，在终端里 git clone 一个repository，究竟是什么程序发起了网络请求，我现在可以直接告诉你答案，是 git-remote-https，请求 github.com:443，使用proxifier，就可以做到这一点，定位到是什么程序，请求的 host 以及 port，并且给它设置代理下面这张图就是proxifier的庐山真面目了终端上代理的难题/image_1b4oengilkbc1djbb48m7e1hbnm.png)上面的日志给出了详细的解释当我在终端里敲下 npm install xxx，对应的就是 node 请求 registry.npmjs.org:443当我在webstorm中设置 github 帐户的时候，对应的是 webstorm，请求 api.github.com:443当我在 git clone repository的时候，对应的是git-remote-https 请求 github.com:443第一步：你得在shadowsocksX中开启 socks5 的本地代理，这是最重要的前提第二步：在proxifier使用第一步设置的代理，如下图所示终端上代理的难题/image_1b4ofiiia5821397ea0phm6rn13.png)第三步：设置代理规则终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g.png)解释一下我所设置的规则：终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g-1554097364886.png)规则匹配的顺序是从上往下的 生效的第一条规则是shadowsocksX，因为我们的代理就是靠这个程序的，所以不能让它自己代理自己，否则proxifier 会报无限循环，动作选 direct 规则 github，这里也并没有指定程序git-remote-https，因为 像 webstorm等 GUI 之流，也会访问 github：443的请求，所以不指定程序，只限制 主机和端口，应用范围就不限于终端了 规则 node，解决 npm install 的代理，可以不用 cnpm 了 规则 brew，解决终端下使用 brew 安装 package 的代理 规则 google-analytics，，解决终端下使用 brew 安装 package 的代理 规则 default，不能删除，当匹配不到任何规则的时候，使用该规则任何一个连接请求，从上往下匹配，匹配到了，就会停止以上就是我摸索出来的方法，如果 ss 速度快的话，相信我，你会开心死的一言以蔽之，如果你在终端中发起了网络请求速度很慢的话，可以先把 default 规则，设置为socks5代理（只有设置为代理，日志才会记录），然后分析一下请求的 host：port，然后就可以添加规则了，这样的话，就做到只给部分请求走代理，如果你觉得这样很麻烦，也可以简单粗暴的，将 default 规则设置为 socks5代理，其余的规则全部禁用，那就是全部的请求走代理ps：shadowsocks和proxifier windows 下也有，按照道理，windows 下也可用，我自己未测试过]]></content>
+    <title><![CDATA[搭建ShadowSocks]]></title>
+    <url>%2F2019%2F03%2F29%2F%E6%90%AD%E5%BB%BAShadowSocks%2F</url>
+    <content type="text"><![CDATA[VPS安装ShadowSocks推荐看秋水逸冰的《Shadowsocks 一键安装脚本（四合一）》的安装教程。运行以下命令: 123wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.shchmod +x shadowsocks-all.sh./shadowsocks-all.sh 2&gt;&amp;1 | tee shadowsocks-all.log 选择脚本（Python、R、Go、libev），任选一个： 123456Which Shadowsocks server you'd select:1.Shadowsocks-Python2.ShadowsocksR3.Shadowsocks-Go4.Shadowsocks-libevPlease enter a number (default 1): 笔者选择Shadowsocks-Go，输入3……然后，输入密码和端口，笔者直接回车用默认： 1234567891011121314You choose = Shadowsocks-GoPlease enter password for Shadowsocks-Go(default password: teddysun.com):password = teddysun.comPlease enter a port for Shadowsocks-Go [1-65535](default port: 8989):port = 8989Press any key to start...or Press Ctrl+C to cancel 安装成功后，命令行出现： 12345678Congratulations, Shadowsocks-Go server install completed!Your Server IP : 45.32.73.59Your Server Port : 8989Your Password : teddysun.comYour Encryption Method: aes-256-cfbWelcome to visit: https://teddysun.com/486.htmlEnjoy it! （如果安装失败，请尝试其他脚本）]]></content>
       <categories>
         <category>干货</category>
       </categories>
@@ -170,17 +181,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[oracle常用命令]]></title>
-    <url>%2F2019%2F03%2F29%2Foracle%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
-    <content type="text"><![CDATA[Oracle中用命令参数详解1、exp/imp——导入、导出【用 exp 数 据 导 出】：1 将数据库TEST完全导出,用户名system 密码manager 导出到D:\daochu.dmp中 1exp east/east@xe file=/root/east.dmp full=y exp east/east@xe file=/root/east.dmp full=yexp east/east file=/root/east.dmp full=y imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y 2、创建表空间2.1先创建一个表空间，例如（临时表空间）create temporary tablespace fitech_temp tempfile ‘/u01/app/oracle/oradata/XE/fitech_temp.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; （永久表空间） create tablespace fitech_data logging datafile ‘/u01/app/oracle/oradata/XE/fitech_data.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; 2.2创建用户并指定表空间（第一个east为用户名，第二个east为密码） create user east identified by east default tablespace fitech_data temporary tablespace fitech_temp; 修改用户表空间 alter user 用户名 default tablespace 表空间名字 ;–创建时候指定表空间 alter user east default tablespace fitech_data temporary tablespace fitech_temp; 2.3给用户分配权限grant connect,resource,dba to east; 2.4使用east用户登录，查看数据库用户正常访问即可3、查看数据库状态lsnrctl status]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>oracle</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[npm常用命令]]></title>
     <url>%2F2019%2F03%2F29%2Fnrm%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
     <content type="text"><![CDATA[一、常用命令12345678910111213#查看包信息npm list -g gulp #安装并查看安装信息npm -loglevel info install -g gulp #发布到https://registry.npmjs.org/npm --registry https://registry.npmjs.org/ publish #设置npm库npm config set registry https://registry.npm.taobao.org/npm config set registry http://registry.npmjs.org #查看当前npm库cat ~/.npmrc#登录npm adduser –-registry http://192.168.101.30:10005/repository/npm-repo-hosted/ 二、nrm的使用开发的npm registry 管理工具 nrm, 能够查看和切换当前使用的registry, 最近NPM经常 down 掉, 这个还是很有用的哈哈 Install1$ npm install -g nrm Example1234567$ nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ eu ----- http://registry.npmjs.eu/ au ----- http://registry.npmjs.org.au/ sl ----- http://npm.strongloop.com/ nj ----- https://registry.nodejitsu.com/ 12$ nrm use cnpm //switch registry to cnpm Registry has been set to: http://r.cnpmjs.org/ 12345cmdnrm help // show helpnrm list // show all registriesnrm use cnpm // switch to cnpmnrm home // go to a registry home page]]></content>
@@ -190,6 +190,17 @@
       <tags>
         <tag>npm</tag>
         <tag>nrm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[oracle常用命令]]></title>
+    <url>%2F2019%2F03%2F29%2Foracle%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[Oracle中用命令参数详解1、exp/imp——导入、导出【用 exp 数 据 导 出】：1 将数据库TEST完全导出,用户名system 密码manager 导出到D:\daochu.dmp中 1exp east/east@xe file=/root/east.dmp full=y exp east/east@xe file=/root/east.dmp full=yexp east/east file=/root/east.dmp full=y imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y 2、创建表空间2.1先创建一个表空间，例如（临时表空间）create temporary tablespace fitech_temp tempfile ‘/u01/app/oracle/oradata/XE/fitech_temp.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; （永久表空间） create tablespace fitech_data logging datafile ‘/u01/app/oracle/oradata/XE/fitech_data.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; 2.2创建用户并指定表空间（第一个east为用户名，第二个east为密码） create user east identified by east default tablespace fitech_data temporary tablespace fitech_temp; 修改用户表空间 alter user 用户名 default tablespace 表空间名字 ;–创建时候指定表空间 alter user east default tablespace fitech_data temporary tablespace fitech_temp; 2.3给用户分配权限grant connect,resource,dba to east; 2.4使用east用户登录，查看数据库用户正常访问即可3、查看数据库状态lsnrctl status]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
       </tags>
   </entry>
   <entry>
@@ -235,8 +246,8 @@
         <category>前端</category>
       </categories>
       <tags>
-        <tag>componentWillReceiveProps</tag>
         <tag>React</tag>
+        <tag>componentWillReceiveProps</tag>
       </tags>
   </entry>
   <entry>
