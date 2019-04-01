@@ -1,5 +1,5 @@
 ---
-title: 解决 mac （windows）终端上代理的难题
+title: 解决mac（windows）终端上代理的难题
 data:  2017-12-12 14:07:01
 tag:
 -  ShadowSocks
@@ -15,19 +15,20 @@ categories: 干货
 还需要另外一个神器：proxifier
 举个例子，在终端里 git clone 一个repository，究竟是什么程序发起了网络请求，我现在可以直接告诉你答案，是 git-remote-https，请求 github.com:443，使用proxifier，就可以做到这一点，定位到是什么程序，请求的 host 以及 port，并且给它设置代理
 下面这张图就是proxifier的庐山真面目了
-![][image-1]
+![image_1b4oengilkbc1djbb48m7e1hbnm.png-370.8kB](../images/解决mac(windows)终端上代理的难题/image_1b4oengilkbc1djbb48m7e1hbnm.png)
 上面的日志给出了详细的解释   
 当我在终端里敲下 npm install xxx，对应的就是 node 请求 registry.npmjs.org:443   
 当我在webstorm中设置 github 帐户的时候，对应的是 webstorm，请求 api.github.com:443   
 当我在 git clone repository的时候，对应的是git-remote-https 请求 github.com:443
 第一步：你得在shadowsocksX中开启 socks5 的本地代理，这是最重要的前提   
 第二步：在proxifier使用第一步设置的代理，如下图所示
-![][image-2]
+![image_1b4ofiiia5821397ea0phm6rn13.png-261.8kB](../images/解决mac(windows)终端上代理的难题/image_1b4ofiiia5821397ea0phm6rn13.png)
 第三步：设置代理规则   
-![][image-3]
+![image_1b4og01u91alg1ggk1mh51omdurr1g.png-479.7kB](../images/解决mac(windows)终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g.png)
 解释一下我所设置的规则：   
-![][image-4]  
+![image_1b4og01u91alg1ggk1mh51omdurr1g.png-479.7kB](../images/解决mac(windows)终端上代理的难题/image_1b4og01u91alg1ggk1mh51omdurr1g-1554097364886.png)
 规则匹配的顺序是从上往下的   
+
 1. 生效的第一条规则是shadowsocksX，因为我们的代理就是靠这个程序的，所以不能让它自己代理自己，否则proxifier 会报无限循环，动作选 direct   
 2. 规则 github，这里也并没有指定程序git-remote-https，因为 像 webstorm等 GUI 之流，也会访问 github：443的请求，所以不指定程序，只限制 主机和端口，应用范围就不限于终端了   
 3. 规则 node，解决 npm install 的代理，可以不用 cnpm 了   
