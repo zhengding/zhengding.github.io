@@ -451,232 +451,21 @@
       
         
           
-            <p>1、<strong>Element.getBoundingClientRect()</strong>方法返回元素的大小及其相对于视口的位置。 </p>
-<p>​    返回值是一个 <a href="https://developer.mozilla.org/zh-CN/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMClientRect" target="_blank" rel="noopener">DOMRect</a> 对象，这个对象是由该元素的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getClientRects" target="_blank" rel="noopener"><code>getClientRects()</code></a> 方法返回的一组矩形的集合, 即：是与该元素相关的CSS 边框集合 。</p>
-<p>​    DOMRect 对象包含了一组用于描述边框的只读属性——left、top、right和bottom，单位为像素。除了 width 和 height 外的属性都是相对于视口的左上角位置而言的。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rectObject = object.getBoundingClientRect();</span><br></pre></td></tr></table></figure>
-<p><img src="https://mdn.mozillademos.org/files/15087/rect.png" alt="getBoundingClientRectç¤ºä¾å¾"> </p>
-
+            <p>
+              1、Element.getBoundingClientRect()方法返回元素的大小及其相对于视口的位置。 
+​    返回值是一个 DOMRect 对象，这个对象是由该元素的 getClientRects() 方法返回的一组矩形的集合, 即：是与该元素相关的CSS 边框集合 。
+​    DOMR
+              ...
+            </p>
+          <!--noindex-->
           
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/webpack踩坑之路图片的路径与打包/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content="This site is used to record notes">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/29/webpack踩坑之路图片的路径与打包/" class="post-title-link" itemprop="url">webpack踩坑之路图片的路径与打包</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-29 11:19:41" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">2019-03-29</time>
-            
-
-            
-          </span>
-
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/width&height&top&bottom/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>刚开始用webpack的同学很容易掉进图片打包这个坑里，比如打包出来的图片地址不对或者有的图片并不能打包进我们的目标文件夹里(bundle)。下面我们就来分析下在webpack项目中图片的应用场景。</p>
-<p>在实际生产中有以下几种图片的引用方式：</p>
-<p>\1. HTML文件中img标签的src属性引用或者内嵌样式引用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;photo.jpg&quot; /&gt;</span><br><span class="line">&lt;div style=&quot;background:url(photo.jpg)&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<p>\2. CSS文件中的背景图等设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.photo &#123;</span><br><span class="line">    background: url(photo.jpg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>\3. JavaScript文件中动态添加或者改变的图片引用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var imgTempl = &apos;&lt;img src=&quot;photo.jpg&quot; /&gt;&apos;;</span><br><span class="line">document.body.innerHTML = imgTempl;</span><br></pre></td></tr></table></figure>
-<p>\4. ReactJS中图片的引用</p>
-<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import ReactDOM from &apos;react-dom&apos;;</span><br><span class="line"></span><br><span class="line">class App extends React.Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (&lt;img src=&apos;photo.jpg&apos; /&gt;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReactDom.render(&lt;App /&gt;, document.querySelector(&apos;#container&apos;));</span><br></pre></td></tr></table></figure>
-<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
-<p><strong>url-loader</strong></p>
-<p>在 webpack 中引入图片需要依赖 url-loader 这个加载器。</p>
-<p>安装：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install url-loader --save-dev</span><br></pre></td></tr></table></figure>
-<p>当然你可以将其写入配置中，以后与其他工具模块一起安装。</p>
-<p>在 webpack.config.js 文件中配置如下：</p>
-<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">　　loaders: [</span><br><span class="line">　　　　&#123;</span><br><span class="line">　　　　　　test: /\.(png|jpg)$/,</span><br><span class="line">　　　　　　loader: &apos;url-loader?limit=8192&apos;</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
-<p>test 属性代表可以匹配的图片类型，除了 png、jpg 之外也可以添加 gif 等，以竖线隔开即开。</p>
-<p>loader 后面 limit 字段代表图片打包限制，这个限制并不是说超过了就不能打包，而是指当图片大小小于限制时会自动转成 base64 码引用。上例中大于8192字节的图片正常打包，小于8192字节的图片以 base64 的方式引用。</p>
-<p>url-loader 后面除了 limit 字段，还可以通过 name 字段来指定图片打包的目录与文件名：</p>
-<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">　　loaders: [</span><br><span class="line">　　　　&#123;</span><br><span class="line">　　　　　　test: /\.(png|jpg)$/,</span><br><span class="line">　　　　　　loader: &apos;url-loader?limit=8192&amp;name=images/[hash:8].[name].[ext]&apos;</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
-<p> 上例中的 name 字段指定了在打包根目录（output.path）下生成名为 images 的文件夹，并在原图片名前加上8位 hash 值。</p>
-<p>例：工程目录如下</p>
-<p><img src="https://images2015.cnblogs.com/blog/613712/201608/613712-20160829110930980-61005633.png" alt="img"></p>
-<p>在 main.css 中引用了同级 images 文件夹下的 bg.jpg 图片</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image: url(./images/bg.jpg);</span><br></pre></td></tr></table></figure>
-<p>通过之前的配置，使用 $ webpack 命令对代码进行打包后生成如下目录</p>
-<p><img src="https://images2015.cnblogs.com/blog/613712/201608/613712-20160829111126058-1615962110.png" alt="img"></p>
-<p>打包目录中，css 文件和 images 文件夹保持了同样的层级，可以不做任务修改即能访问到图片。区别是打包后的图片加了 hash 值，bundle.css 文件里引入的也是有hash值的图片。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image: url(images/f593fbb9.bg.jpg);</span><br></pre></td></tr></table></figure>
-<p> （上例中，使用了单独打包css的技术，只是为了方便演示）</p>
-<p><strong>publicPath</strong></p>
-<p>output.publicPath 表示资源的发布地址，当配置过该属性后，打包文件中所有通过相对路径引用的资源都会被配置的路径所替换。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">　　path: &apos;dist&apos;,</span><br><span class="line">　　publicPath: &apos;/assets/&apos;,</span><br><span class="line">　　filename: &apos;bundle.js&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> main.css</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image: url(./images/bg.jpg);</span><br></pre></td></tr></table></figure>
-<p> bundle.css</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image: url(/assets/images/f593fbb9.bg.jpg);</span><br></pre></td></tr></table></figure>
-<p>该属性的好处在于当你配置了图片 CDN 的地址，本地开发时引用本地的图片资源，上线打包时就将资源全部指向 CDN 了。</p>
-<p>但是要注意，如果没有确定的发布地址不建议配置该属性，否则会让你打包后的资源路径很混乱。</p>
-<p><strong>JS中的图片</strong></p>
-<p>初用 webpack 进行项目开发的同学会发现：在 js 或者 react 中引用的图片都没有打包进 bundle 文件夹中。</p>
-<p>正确写法应该是通过模块化的方式引用图片路径，这样引用的图片就可以成功打包进 bundle 文件夹里了</p>
-<p><strong>js</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var imgUrl = require(&apos;./images/bg.jpg&apos;),</span><br><span class="line">    imgTempl = &apos;&lt;img src=&quot;&apos;+imgUrl+&apos;&quot; /&gt;&apos;;</span><br><span class="line">document.body.innerHTML = imgTempl;</span><br></pre></td></tr></table></figure>
-<p><strong>react</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">    return (&lt;img src=&#123;require(&apos;./images/bg.jpg&apos;)&#125; /&gt;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>HTML中的图片</strong></p>
-<p>由于 webpack 对 html 的处理不太好，打包 HTML 文件中的图片资源是相对来说最麻烦的。这里需要引用一个插件—— html-withimg-loder</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install html-withimg-loader --save-dev</span><br></pre></td></tr></table></figure>
-<p> webpack.config.js 添加配置</p>
-<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">　　loaders: [</span><br><span class="line">　　　　&#123;</span><br><span class="line">　　　　　　test: /\.html$/,</span><br><span class="line">　　　　　　loader: &apos;html-withimg-loader&apos;</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
-<p>在 bundle.js 中引用 html 文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;../index.html&apos;;</span><br></pre></td></tr></table></figure>
-<p>这样 html 文件中的图片就可以被打包进 bundle 文件夹里了。</p>
-
-          
+          <!--/noindex-->
         
       
     </div>
@@ -831,14 +620,194 @@
       
         
           
-            <p>1、启动跳过jar包检查</p>
-<p>在conf/catalina.properties中加入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.el.parser.SKIP_IDENTIFIER_CHECK=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>2、应用中需要绘图，例如activiti的流程图：</p>
-<p>在catalina.sh加入</p>
-<p><img src="C:\Users\ADMINI~1\AppData\Local\Temp\1528354046187.png" alt="1528354046187"></p>
+            <p>
+              1、启动跳过jar包检查
+在conf/catalina.properties中加入
+org.apache.el.parser.SKIP_IDENTIFIER_CHECK=true
+2、应用中需要绘图，例如activiti的流程图：
+在catalina.sh加入
+
+
+              
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/tomcat常用配置/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/webpack踩坑之路图片的路径与打包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content="This site is used to record notes">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/29/webpack踩坑之路图片的路径与打包/" class="post-title-link" itemprop="url">webpack踩坑之路图片的路径与打包</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-29 11:19:41" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">2019-03-29</time>
+            
+
+            
+          </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              刚开始用webpack的同学很容易掉进图片打包这个坑里，比如打包出来的图片地址不对或者有的图片并不能打包进我们的目标文件夹里(bundle)。下面我们就来分析下在webpack项目中图片的应用场景。
+在实际生产中有以下几种图片的引用方式：
+\1. HTML文件中img标签的src属性引用或者内嵌样式
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/webpack踩坑之路图片的路径与打包/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -993,10 +962,20 @@
       
         
           
-            <p>需安装babel-plugin-import插件</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  test: <span class="regexp">/\.(js|jsx)$/</span>,</span><br><span class="line">  include: paths.appSrc,</span><br><span class="line">  loader: <span class="built_in">require</span>.resolve(<span class="string">'babel-loader'</span>),</span><br><span class="line">  options: &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">  [<span class="string">'import'</span>, [&#123; <span class="attr">libraryName</span>: <span class="string">'antd'</span>, <span class="attr">style</span>: <span class="literal">true</span> &#125;]],  <span class="comment">// import less</span></span><br><span class="line">  <span class="string">'react-hot-loader/babel'</span></span><br><span class="line">  ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
+            <p>
+              需安装babel-plugin-import插件
+&#123;  test: /\.(js|jsx)$/,  include: paths.appSrc,  loader: require.resolve('babel-loader'),  options: &#123;  plugins: [  
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/react引入antd/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -1151,36 +1130,21 @@
       
         
           
-            <h1 id="Oracle中用命令参数详解"><a href="#Oracle中用命令参数详解" class="headerlink" title="Oracle中用命令参数详解"></a><strong>Oracle中用命令参数详解</strong></h1><h2 id="1、exp-imp——导入、导出"><a href="#1、exp-imp——导入、导出" class="headerlink" title="1、exp/imp——导入、导出"></a>1、exp/imp——导入、导出</h2><p>【用 exp 数 据 导 出】：1  将数据库TEST完全导出,用户名system 密码manager 导出到D:\daochu.dmp中</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exp east/east@xe file=/root/east.dmp full=y</span><br></pre></td></tr></table></figure>
-<p>exp east/east@xe file=/root/east.dmp full=y<br>exp east/east file=/root/east.dmp full=y</p>
-<p>imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y</p>
-<h2 id="2、创建表空间"><a href="#2、创建表空间" class="headerlink" title="2、创建表空间"></a>2、创建表空间</h2><h4 id="2-1先创建一个表空间，例如（临时表空间）"><a href="#2-1先创建一个表空间，例如（临时表空间）" class="headerlink" title="2.1先创建一个表空间，例如（临时表空间）"></a>2.1先创建一个表空间，例如（临时表空间）</h4><p>create temporary tablespace fitech_temp </p>
-<p>tempfile ‘/u01/app/oracle/oradata/XE/fitech_temp.dbf’ </p>
-<p>size 50m  </p>
-<p>autoextend on  </p>
-<p>next 50m maxsize 20480m  </p>
-<p>extent management local;  </p>
-<p> （永久表空间）</p>
-<p>create tablespace fitech_data  </p>
-<p>logging  </p>
-<p>datafile ‘/u01/app/oracle/oradata/XE/fitech_data.dbf’ </p>
-<p>size 50m  </p>
-<p>autoextend on  </p>
-<p>next 50m maxsize 20480m  </p>
-<p>extent management local;</p>
-<h4 id="2-2创建用户并指定表空间"><a href="#2-2创建用户并指定表空间" class="headerlink" title="2.2创建用户并指定表空间"></a>2.2创建用户并指定表空间</h4><p>（第一个east为用户名，第二个east为密码）</p>
-<p>create user east identified by east </p>
-<p>default tablespace fitech_data  </p>
-<p>temporary tablespace fitech_temp;</p>
-<p>修改用户表空间</p>
-<p>alter user 用户名 default tablespace 表空间名字 ;–创建时候指定表空间</p>
-<p>alter user east default tablespace fitech_data  </p>
-<p>temporary tablespace fitech_temp;</p>
-<h4 id="2-3给用户分配权限"><a href="#2-3给用户分配权限" class="headerlink" title="2.3给用户分配权限"></a>2.3给用户分配权限</h4><p>grant connect,resource,dba to east;</p>
-<h4 id="2-4使用east用户登录，查看数据库用户正常访问即可"><a href="#2-4使用east用户登录，查看数据库用户正常访问即可" class="headerlink" title="2.4使用east用户登录，查看数据库用户正常访问即可"></a>2.4使用east用户登录，查看数据库用户正常访问即可</h4><h3 id="3、查看数据库状态"><a href="#3、查看数据库状态" class="headerlink" title="3、查看数据库状态"></a>3、查看数据库状态</h3><p>lsnrctl status </p>
-
+            <p>
+              Oracle中用命令参数详解1、exp/imp——导入、导出【用 exp 数 据 导 出】：1  将数据库TEST完全导出,用户名system 密码manager 导出到D:\daochu.dmp中
+exp east/east@xe file=/root/east.dmp full=y
+exp ea
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/oracle常用命令/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -1335,390 +1299,19 @@
       
         
           
-            <h1 id="一、常用命令"><a href="#一、常用命令" class="headerlink" title="一、常用命令"></a>一、常用命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看包信息</span></span><br><span class="line">npm list -g gulp  </span><br><span class="line"><span class="comment">#安装并查看安装信息</span></span><br><span class="line">npm -loglevel info install -g gulp  </span><br><span class="line"><span class="comment">#发布到https://registry.npmjs.org/</span></span><br><span class="line">npm --registry https://registry.npmjs.org/ publish  </span><br><span class="line"><span class="comment">#设置npm库</span></span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org/</span><br><span class="line">npm config <span class="built_in">set</span> registry http://registry.npmjs.org </span><br><span class="line"><span class="comment">#查看当前npm库</span></span><br><span class="line">cat ~/.npmrc</span><br><span class="line"><span class="comment">#登录</span></span><br><span class="line">npm adduser –-registry http://192.168.101.30:10005/repository/npm-repo-hosted/</span><br></pre></td></tr></table></figure>
-<h1 id="二、nrm的使用"><a href="#二、nrm的使用" class="headerlink" title="二、nrm的使用"></a>二、nrm的使用</h1><p>开发的npm registry 管理工具 nrm,  能够查看和切换当前使用的registry, 最近NPM经常 down 掉, 这个还是很有用的哈哈</p>
-<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g nrm</span><br></pre></td></tr></table></figure>
-<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ nrm ls</span><br><span class="line">* npm ---- https://registry.npmjs.org/</span><br><span class="line">  cnpm --- http://r.cnpmjs.org/</span><br><span class="line">  eu ----- http://registry.npmjs.eu/</span><br><span class="line">  au ----- http://registry.npmjs.org.au/</span><br><span class="line">  sl ----- http://npm.strongloop.com/</span><br><span class="line">  nj ----- https://registry.nodejitsu.com/</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nrm use cnpm //switch registry to cnpm</span><br><span class="line">	Registry has been <span class="built_in">set</span> to: http://r.cnpmjs.org/</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cmd</span><br><span class="line">nrm <span class="built_in">help</span> // show <span class="built_in">help</span></span><br><span class="line">nrm list // show all registries</span><br><span class="line">nrm use cnpm // switch to cnpm</span><br><span class="line">nrm home // go to a registry home page</span><br></pre></td></tr></table></figure>
-
+            <p>
+              一、常用命令#查看包信息npm list -g gulp  #安装并查看安装信息npm -loglevel info install -g gulp  #发布到https://registry.npmjs.org/npm --registry https://registry.npmjs.org/ 
+              ...
+            </p>
+          <!--noindex-->
           
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/nexus 上搭建npm本地服务器-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content="This site is used to record notes">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/29/nexus 上搭建npm本地服务器-1/" class="post-title-link" itemprop="url">nexus 上搭建npm本地服务器-1</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-29 11:19:41" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">2019-03-29</time>
-            
-
-            
-          </span>
-
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/nrm常用命令/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="http://img.blog.csdn.net/20160901070831124" alt="这里写图片描述"><br>Nexus作为私库管理最为流行的工具之一，用于包的管理和Docker镜像管理的私库管理场景中非常常用，但同时也可以用于NPM私库等的管理。</p>
-<h1 id="Why-Nexus-3"><a href="#Why-Nexus-3" class="headerlink" title="Why Nexus 3"></a>Why Nexus 3</h1><p>这里整理了为什么使用Nexus 3的一些理由，在做选型的时候可以做一个简单参照。</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>详细</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>为什么使用Nexus 3</td>
-<td><a href="http://blog.csdn.net/liumiaocn/article/details/62050525" target="_blank" rel="noopener">http://blog.csdn.net/liumiaocn/article/details/62050525</a></td>
-</tr>
-</tbody>
-</table>
-<h1 id="docker版本"><a href="#docker版本" class="headerlink" title="docker版本"></a>docker版本</h1><p>本次使用的docker的版本为17.09.0-ce，但是并不限于此版本，其他版本未作验证。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# docker version</span><br><span class="line">Client:</span><br><span class="line"> Version:      17.09.0-ce</span><br><span class="line"> API version:  1.32</span><br><span class="line"> Go version:   go1.8.3</span><br><span class="line"> Git commit:   afdb6d4</span><br><span class="line"> Built:        Tue Sep 26 22:39:28 2017</span><br><span class="line"> OS/Arch:      linux/amd64</span><br><span class="line"></span><br><span class="line">Server:</span><br><span class="line"> Version:      17.09.0-ce</span><br><span class="line"> API version:  1.32 (minimum version 1.12)</span><br><span class="line"> Go version:   go1.8.3</span><br><span class="line"> Git commit:   afdb6d4</span><br><span class="line"> Built:        Tue Sep 26 22:45:38 2017</span><br><span class="line"> OS/Arch:      linux/amd64</span><br><span class="line"> Experimental: false</span><br><span class="line">[root@angular ~]#123456789101112131415161718</span><br></pre></td></tr></table></figure>
-<h1 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# docker pull liumiaocn/nexus</span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from liumiaocn/nexus</span><br><span class="line">d9aaf4d82f24: Pull complete </span><br><span class="line">1bf6f9237306: Pull complete </span><br><span class="line">2cb68a4c7b1e: Pull complete </span><br><span class="line">a81c750844e6: Pull complete </span><br><span class="line">ea509a1d48c2: Pull complete </span><br><span class="line">24d48f5e8202: Pull complete </span><br><span class="line">Digest: sha256:3480d50b7ddfb72fe77ce55c7b5ce0a9aa7b6cfa90886a8f8ddc4a2401f1b7c9</span><br><span class="line">Status: Downloaded newer image for liumiaocn/nexus:latest</span><br><span class="line">[root@angular ~]#123456789101112</span><br></pre></td></tr></table></figure>
-<h1 id="启动Nexus"><a href="#启动Nexus" class="headerlink" title="启动Nexus"></a>启动Nexus</h1><table>
-<thead>
-<tr>
-<th>项目</th>
-<th>详细</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Nexus UI</td>
-<td>8081</td>
-</tr>
-<tr>
-<td>private repo</td>
-<td>8082</td>
-</tr>
-<tr>
-<td>proxy repo</td>
-<td>8083</td>
-</tr>
-<tr>
-<td>URL</td>
-<td><a href="http://192.168.163.151:8081/" target="_blank" rel="noopener">http://192.168.163.151:8081/</a></td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# docker run -d -p 8081:8081 -p 8082:8082 -p 8083:8083 --name nexus liumiaocn/nexus</span><br><span class="line">d5807c07c10c1f55d4ea85e774529dd6c0daf8833d1e505d4c1f09db00491e87</span><br><span class="line">[root@angular ~]#123</span><br></pre></td></tr></table></figure>
-<h1 id="logon"><a href="#logon" class="headerlink" title="logon"></a>logon</h1><table>
-<thead>
-<tr>
-<th>项目</th>
-<th>详细</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>URL</td>
-<td><a href="http://192.168.163.151:8081/" target="_blank" rel="noopener">http://192.168.163.151:8081/</a></td>
-</tr>
-<tr>
-<td>用户名称</td>
-<td>admin</td>
-</tr>
-<tr>
-<td>用户密码</td>
-<td>admin123</td>
-</tr>
-</tbody>
-</table>
-<p><img src="http://img.blog.csdn.net/20171115053834013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>登陆之后<br><img src="http://img.blog.csdn.net/20171115053933763?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h1 id="仓库类型"><a href="#仓库类型" class="headerlink" title="仓库类型"></a>仓库类型</h1><p>具体仓库类型主要分为hosted/proxy/group三种。具体含义如下：</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>详细说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>hosted</td>
-<td>本地存储，提供本地私库功能</td>
-</tr>
-<tr>
-<td>proxy</td>
-<td>提供代理其他仓库的类型</td>
-</tr>
-<tr>
-<td>group</td>
-<td>组类型，可以组合多个仓库为一个地址提供服务</td>
-</tr>
-</tbody>
-</table>
-<h1 id="创建blob"><a href="#创建blob" class="headerlink" title="创建blob"></a>创建blob</h1><p>创建一个blob用于存放npm相关数据。</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>详细说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Type</td>
-<td>File</td>
-</tr>
-<tr>
-<td>Name</td>
-<td>npm-repo-blob</td>
-</tr>
-<tr>
-<td>PATH</td>
-<td>/nexus-data/blobs/npm-repo-blob</td>
-</tr>
-</tbody>
-</table>
-<p><img src="http://img.blog.csdn.net/20171115054652616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>建议实际项目中各个仓库根据具体情况决定是否要分别创建blob进行对应，此处进行演示就通篇使用一个blob</p>
-<h1 id="创建priavete仓库"><a href="#创建priavete仓库" class="headerlink" title="创建priavete仓库"></a>创建priavete仓库</h1><p>创建一个Hosted的仓库作为private仓库，用于管理非npm社区的第三方包或者自己开发的内容。具体设定信息如下：</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>详细说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>类型</td>
-<td>npm(hosted)</td>
-</tr>
-<tr>
-<td>Name</td>
-<td>npm-repo-hosted</td>
-</tr>
-<tr>
-<td>Blob store</td>
-<td>npm-repo-blob</td>
-</tr>
-</tbody>
-</table>
-<p>其余Default设定即可<br><img src="http://img.blog.csdn.net/20171115054813826?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h1 id="创建proxy仓库"><a href="#创建proxy仓库" class="headerlink" title="创建proxy仓库"></a>创建proxy仓库</h1><p>创建一个proxy仓库，具体设定信息如下：</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>详细说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>类型</td>
-<td>npm(proxy)</td>
-</tr>
-<tr>
-<td>Name</td>
-<td>npm-repo-proxy</td>
-</tr>
-<tr>
-<td>Remote Storage</td>
-<td><a href="https://registry.npmjs.org/" target="_blank" rel="noopener">https://registry.npmjs.org</a></td>
-</tr>
-<tr>
-<td>Blob store</td>
-<td>npm-repo-blob</td>
-</tr>
-</tbody>
-</table>
-<p>其余Default设定即可</p>
-<p><img src="http://img.blog.csdn.net/20171115055458607?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>注意：此处的Remote Storage即为可以连接的npm的registry的地址，需要保证正确，并且当前机器能够访问到，比如可以使用curl确认：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# curl https://registry.npmjs.org</span><br><span class="line">&#123;&quot;db_name&quot;:&quot;registry&quot;,&quot;doc_count&quot;:715000,&quot;doc_del_count&quot;:344,&quot;update_seq&quot;:8090315,&quot;purge_seq&quot;:0,&quot;compact_running&quot;:false,&quot;disk_size&quot;:5368389766,&quot;data_size&quot;:3541008450,&quot;instance_start_time&quot;:&quot;1510668164237911&quot;,&quot;disk_format_version&quot;:6,&quot;committed_update_seq&quot;:8090315&#125;[root@angular ~]# 12</span><br></pre></td></tr></table></figure>
-<p>注意此处，可以还设定与社区相关的账号和密码等信息进行进一步连接。</p>
-<h1 id="创建group仓库"><a href="#创建group仓库" class="headerlink" title="创建group仓库"></a>创建group仓库</h1><p>创建一个group仓库，具体设定信息如下：</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>详细说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>类型</td>
-<td>npm(group)</td>
-</tr>
-<tr>
-<td>Name</td>
-<td>npm-repo-group</td>
-</tr>
-<tr>
-<td>Blob store</td>
-<td>npm-repo-blob</td>
-</tr>
-<tr>
-<td>Member repositories</td>
-<td>npm-repo-hosted</td>
-</tr>
-<tr>
-<td>Member repositories</td>
-<td>npm-repo-proxy</td>
-</tr>
-</tbody>
-</table>
-<p><img src="http://img.blog.csdn.net/20171115060119415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h1 id="本地npm设定"><a href="#本地npm设定" class="headerlink" title="本地npm设定"></a>本地npm设定</h1><h2 id="验证用npm版本"><a href="#验证用npm版本" class="headerlink" title="验证用npm版本"></a>验证用npm版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm -v</span><br><span class="line">5.5.1</span><br><span class="line">[root@angular ~]# node -v</span><br><span class="line">v9.1.0</span><br><span class="line">[root@angular ~]# 12345</span><br></pre></td></tr></table></figure>
-<p>具体安装可以参看：<a href="http://blog.csdn.net/liumiaocn/article/details/78510679" target="_blank" rel="noopener">http://blog.csdn.net/liumiaocn/article/details/78510679</a></p>
-<h2 id="设定-npmrc"><a href="#设定-npmrc" class="headerlink" title="设定.npmrc"></a>设定.npmrc</h2><p>可以使用如下命令，也可直接修改.npmrc文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm config set registry http://192.168.163.151:8081/repository/npm-repo-proxy/</span><br><span class="line">[root@angular ~]#12</span><br></pre></td></tr></table></figure>
-<p>确认.npmrc</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# cat ~/.npmrc</span><br><span class="line">registry=http://192.168.163.151:8081/repository/npm-repo-proxy/</span><br><span class="line">[root@angular ~]# 123</span><br></pre></td></tr></table></figure>
-<h1 id="确认"><a href="#确认" class="headerlink" title="确认"></a>确认</h1><p>至此，Nexus的设定准备基本就绪，可以确认结果了。</p>
-<h2 id="事前确认"><a href="#事前确认" class="headerlink" title="事前确认"></a>事前确认</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm list -g gulp</span><br><span class="line">/usr/local/npm/node/lib</span><br><span class="line">└── (empty)</span><br><span class="line"></span><br><span class="line">[root@angular ~]# 12345</span><br></pre></td></tr></table></figure>
-<h2 id="安装gulp"><a href="#安装gulp" class="headerlink" title="安装gulp"></a>安装gulp</h2><p>打开loglevel将其设定为info，在安装的过程中可以看到npm http fetch与新创建的proxy仓库的交互，因为其会将相关的依赖下载到本地nexus的npm私库中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm -loglevel info install -g gulp</span><br><span class="line">npm info it worked if it ends with ok</span><br><span class="line">npm info using npm@5.5.1</span><br><span class="line">npm info using node@v9.1.0</span><br><span class="line">...</span><br><span class="line">npm http fetch GET 200 http://192.168.163.151:8081/repository/npm-repo-proxy/gulplog/-/gulplog-1.0.0.tgz 4439ms</span><br><span class="line">...</span><br><span class="line">/usr/local/npm/node/bin/gulp -&gt; /usr/local/npm/node/lib/node_modules/gulp/bin/gulp.js</span><br><span class="line">...</span><br><span class="line">npm info lifecycle gulp@3.9.1~postinstall: gulp@3.9.1</span><br><span class="line">+ gulp@3.9.1</span><br><span class="line">added 186 packages in 143.59s</span><br><span class="line">npm info ok </span><br><span class="line">[root@angular ~]# </span><br><span class="line">123456789101112131415</span><br></pre></td></tr></table></figure>
-<h2 id="结果确认"><a href="#结果确认" class="headerlink" title="结果确认"></a>结果确认</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@angular ~]# npm list -g gulp</span><br><span class="line">/usr/local/npm/node/lib</span><br><span class="line">└── gulp@3.9.1 </span><br><span class="line"></span><br><span class="line">[root@angular ~]# 12345</span><br></pre></td></tr></table></figure>
-<h2 id="group仓库确认"><a href="#group仓库确认" class="headerlink" title="group仓库确认"></a>group仓库确认</h2><p>gulp 3.9.1已经通过group仓库可以看到<br><img src="http://img.blog.csdn.net/20171115062230237?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h2 id="proxy仓库确认"><a href="#proxy仓库确认" class="headerlink" title="proxy仓库确认"></a>proxy仓库确认</h2><p>gulp 3.9.1已经通过proxy仓库可以看到</p>
-<p><img src="http://img.blog.csdn.net/20171115062251031?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1bWlhb2Nu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这篇文章简单介绍了如何使用nexus3进行npm私库设定和使用。</p>
-
-          
+          <!--/noindex-->
         
       
     </div>
@@ -1873,131 +1466,203 @@
       
         
           
-            <h2 id="1-在本地运行nexus"><a href="#1-在本地运行nexus" class="headerlink" title="1.在本地运行nexus"></a>1.在本地运行nexus</h2><p>附上下载链接：<a href="https://link.jianshu.com?t=https://www.sonatype.com/download-oss-sonatype?hsCtaTracking=10655413-f621-4c62-be46-df84cf6b6b90%7C79f798b3-f0df-4370-b569-0eda6e14390e" target="_blank" rel="noopener">Nexus Repository OSS 下载链接</a><br>附上文档链接：<a href="https://link.jianshu.com?t=https://help.sonatype.com/display/HSC/Node+Packaged+Modules+and+npm+Registries+-+NXRM+3" target="_blank" rel="noopener">Nexus Repository OSS 文档链接</a></p>
-<blockquote>
-<p>有几个值得注意的是</p>
-</blockquote>
-<ul>
-<li>我的 系统为 64位 win 7，平时只配置了java的基本环境，没有配置编译环境。很尴尬，配置javac耽误了我一点时间。需要的同学，在运行之前 需要配置一下jre环境。</li>
-<li>我下载的是 nexus-3.5.0-02 这个版本。事实证明在win下虽然看起来一副人畜无害的样子，似乎可以直接点击安装，但是事实上，啧啧啧。</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-7d1345539585ca9b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/438" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>这里没有好好阅读文档，也消耗了我的一些时间，下面放出win 下正确启动方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 在 \nexus-3.5.0-02\bin 目录下执行</span><br><span class="line">$ nexus.exe /run</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>这里经测试 用win自带的cmd，和budun都可以比较好的启动，用git bash则启动不是很好</p>
-<p>​</p>
-<p>​</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-f69905866766485d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-</li>
-</ul>
-<p>启动之后默认地址为 localhost:8081, 默认账号密码  admin/ admin123</p>
-<h2 id="Nexus-Repository-Manager-中添加-npm"><a href="#Nexus-Repository-Manager-中添加-npm" class="headerlink" title="Nexus Repository Manager 中添加 npm"></a>Nexus Repository Manager 中添加 npm</h2><p>如果点击：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-6ed2f417bae14036.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>这里有三个类型的npm选项：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-76bb9056ac0b4799.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>文档中对这三个类型的仓库有详细的解释：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-5b66f23647b467bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-<hr>
-<p>附上某歌翻译：</p>
-<h3 id="Proxying-npm-Registries"><a href="#Proxying-npm-Registries" class="headerlink" title="Proxying npm Registries"></a>Proxying npm Registries</h3><p>为了减少开发人员和CI服务器的重复下载量并提高下载速度，您应该对托管在<a href="https://link.jianshu.com?t=https://registry.npmjs.org" target="_blank" rel="noopener">https://registry.npmjs.org</a>上的注册表进行代理。 默认情况下，npm直接访问此注册表。 您还可以代理您需要的任何其他注册表。<br>要代理外部npm注册表，您只需创建一个新的npm（代理），如“存储库管理”中所述。<br>最小配置步骤是：</p>
-<ul>
-<li>定义名称</li>
-<li>定义远程存储的URL，例如<a href="https://link.jianshu.com?t=https://registry.npmjs.org" target="_blank" rel="noopener">https://registry.npmjs.org</a></li>
-<li>选择存储的Blob存储</li>
-</ul>
-<h3 id="Private-npm-Registries"><a href="#Private-npm-Registries" class="headerlink" title="Private npm Registries"></a>Private npm Registries</h3><p>私人npm注册表可用于上传您自己的软件包以及第三方软件包。 您可以通过在存储库管理器中设置npm格式的托管存储库来创建私有的npm注册表。 为了这些目的，建立两个独立的托管存储库是一个很好的做法。<br>要创建具有npm格式的托管存储库，只需创建一个新的npm（托管），如“存储库管理”中所述。<br>最小配置步骤是：</p>
-<ul>
-<li>定义名称</li>
-<li>选择存储的Blob存储</li>
-</ul>
-<p>随着软件包从存储库部署或删除，npm注册表信息将立即更新。</p>
-<h3 id="Grouping-npm-Registries"><a href="#Grouping-npm-Registries" class="headerlink" title="Grouping npm Registries"></a>Grouping npm Registries</h3><p>存储库组是将所有npm注册表存储库从存储库管理器公开给您的用户的推荐方式，而不需要任何其他客户端配置。存储库组允许您将多个代理和托管存储库的聚合内容公开为一个URL到npm和其他工具。这可以通过创建一个新的npm（组），如“存储库管理”中所述，用于npm存储库。<br>最小配置步骤是：</p>
-<ul>
-<li>定义名称</li>
-<li>选择存储的Blob存储</li>
-<li>以所需的顺序将npm存储库添加到成员列表中</li>
-</ul>
-<p>典型的有用的示例是将代理存储库分组：代理npm注册表，npm托管存储库与内部软件包和另一个npm托管存储库与第三方软件包。<br>使用存储库组的URL作为客户端工具中的npm存储库URL，您可以使用一个URL访问所有三个存储库中的软件包。添加的任何新软件包以及添加到组中的任何新存储库将自动可用。</p>
-<hr>
-<ol>
-<li>创建 Proxying npm Registries 代理仓库</li>
-</ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-37ebbc0d64c830a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-<ol>
-<li>创建 Hosted npm Registries 代理仓库</li>
-</ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-66c19792d1a1af8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-<ol>
-<li>创建  Grouping npm Registries 仓库<br>需要注意的是组仓库要把之前的 proxy 和 hosted 都添加上。</li>
-</ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-4a3b73e82ef008b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-<blockquote>
-<p>我的目录对应为  mytest/myhost/mygroup</p>
-</blockquote>
-<p>在home目录下， 的.npmrc文件中添加 registry = <a href="https://link.jianshu.com?t=http://localhost:8081/repository/npm-all/" target="_blank" rel="noopener">http://localhost:8081/repository/npm-all/</a> 。这个路径要和自己的路径一致，并且最后的rep名要和group相同。</p>
-<p>win下 home路径：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-3d22c1473c8540f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/456" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>这时尝试一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 查看一下 是否从本地服务器中下载</span><br><span class="line">$ npm -loglevel info install grunt</span><br></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-24fa52ac1a45328a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>图片我抄的，我自己的没截图</p>
-<p>此时可以验证一下 是否依赖走了代理：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-f8a82f22a035ae41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/558" alt="img"></p>
-<p>Paste_Image.png</p>
-<h2 id="设置权限"><a href="#设置权限" class="headerlink" title="设置权限"></a>设置权限</h2><p>把这个选项拖到右边就可以了</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-d90bcf8c8fdcdb2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>在admin之外可以重新设置一个账号，以及权限</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-3a59e0300667d076.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 使用</span><br><span class="line">$ npm login –registry=http://localhost:8081/repository/mygroup</span><br><span class="line">// 进行登陆，需要填写账号、密码以及邮箱。</span><br></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-65b42a283b08a7cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/696" alt="img"></p>
-<p>Paste_Image.png</p>
-<h2 id="发布到hosted"><a href="#发布到hosted" class="headerlink" title="发布到hosted"></a>发布到hosted</h2><blockquote>
-<p>我和原教程不一样的是：我发布到本地hosted， 而不是直接到npm社区，这里需要注意的是 通过proxy是可以直接发布到npm社区的，使用的是社区的账号密码，这个需要提前申请</p>
-</blockquote>
-<blockquote>
-<p>要发布的模块，必须保证在根目录下有package.json文件，否则会报错。</p>
-</blockquote>
-<p>pachage.json文件内容比较随意，如果比较懒 可以用  npm init 直接自动生成。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;myhost&quot;,</span><br><span class="line">    &quot;version&quot;: &quot;1.0.0&quot;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>然后执行发布命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm publish –registry http://localhost:8081/repository/myhost</span><br></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-7ff83834a03ba6c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/659" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>然后我遇到了报错，按照报错执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm adduser –registry http://localhost:8081/repository/myhost</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>这里值得注意的是， adduser的时候要指明是哪个rep，要不就会add到默认的.npmrc 里添加的 rep中</p>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-b9cd8079d4a9c1be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/685" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>添加完用户之后，再执行发布命令就ok了。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-394b1c8bce17b24a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/674" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>package.json可以指定name 和version并且可以添加发布路径的配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   &quot;name&quot;: &quot;intro&quot;,</span><br><span class="line">   &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">   &quot;publishConfig&quot; : &#123;</span><br><span class="line">       &quot;registry&quot; : &quot;http://localhost:8081/repository/myhost/&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样的话发布直接用 npm publish就可以了。</p>
-<p>发布之后可以在 系统中的 左侧browse 中的assets中看到上传的资源</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-70f6dd148c39055d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>group 中可以同时看到 proxy 和 hosted 的资源， proxy会存下第一次下载过的目录，之后再下载时走的是代理，hosted存的是本地上传的包资源。</p>
-<p>然后可以在本地下载一下刚才上传到hosted的包：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3112405-23f5a0982a8abcc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/630" alt="img"></p>
-<p>Paste_Image.png</p>
-<p>以上，为所有内容。</p>
+            <p>
+              1.在本地运行nexus附上下载链接：Nexus Repository OSS 下载链接附上文档链接：Nexus Repository OSS 文档链接
+
+有几个值得注意的是
+
+
+我的 系统为 64位 win 7，平时只配置了java的基本环境，没有配置编译环境。很尴尬，配置javac耽误了我一点时
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/nexus 上搭建npm本地服务器-2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/nexus 上搭建npm本地服务器-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content="This site is used to record notes">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/29/nexus 上搭建npm本地服务器-1/" class="post-title-link" itemprop="url">nexus 上搭建npm本地服务器-1</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-29 11:19:41" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">2019-03-29</time>
+            
+
+            
+          </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              Nexus作为私库管理最为流行的工具之一，用于包的管理和Docker镜像管理的私库管理场景中非常常用，但同时也可以用于NPM私库等的管理。
+Why Nexus 3这里整理了为什么使用Nexus 3的一些理由，在做选型的时候可以做一个简单参照。
+
+
+
+项目
+详细
+
+
+
+
+为什么使用Nexus 3
+ht
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/nexus 上搭建npm本地服务器-1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -2152,19 +1817,21 @@
       
         
           
-            <p>总有一天你会遇到下面的问题.<br>(1)改完代码匆忙提交,上线发现有问题,怎么办? 赶紧回滚.<br>(2)改完代码测试也没有问题,但是上线发现你的修改影响了之前运行正常的代码报错,必须回滚.</p>
-<p>这些开发中很常见的问题,所以git的取消提交,回退甚至返回上一版本都是特别重要的.<br>大致分为下面2种情况:  </p>
-<p>1.没有push<br>这种情况发生在你的本地代码仓库,可能你add ,commit 以后发现代码有点问题,准备取消提交,用到下面命令<br>reset<br>git reset <a href>–soft | –mixed | –hard
-</a><br>上面常见三种类型  </p>
-<p>–mixed<br>会保留源码,只是将git commit和index 信息回退到了某个版本.<br>git reset 默认是 –mixed 模式<br>git reset –mixed  等价于  git reset  </p>
-<p>–soft<br>保留源码,只回退到commit 信息到某个版本.不涉及index的回退,如果还需要提交,直接commit即可.</p>
-<p>–hard<br>源码也会回退到某个版本,commit和index 都回回退到某个版本.(注意,这种方式是改变本地代码仓库源码)<br>当然有人在push代码以后,也使用 reset –hard \&lt;commit…> 回退代码到某个版本之前,但是这样会有一个问题,你线上的代码没有变,线上commit,index都没有变,当你把本地代码修改完提交的时候你会发现权是冲突…..<br>所以,这种情况你要使用下面的方式</p>
-<p>2.已经push<br>对于已经把代码push到线上仓库,你回退本地代码其实也想同时回退线上代码,回滚到某个指定的版本,线上,线下代码保持一致.你要用到下面的命令</p>
-<p>revert<br>git revert用于反转提交,执行evert命令时要求工作树必须是干净的.<br>git revert用一个新提交来消除一个历史提交所做的任何修改.<br>revert 之后你的本地代码会回滚到指定的历史版本,这时你再 git push 既可以把线上的代码更新.(这里不会像reset造成冲突的问题)</p>
-<p>revert 使用,需要先找到你想回滚版本唯一的commit标识代码,可以用 git log 或者在adgit搭建的web环境历史提交记录里查看.<br>git revert c011eb3c20ba6fb38cc94fe5a8dda366a3990c61<br>通常,前几位即可<br>git revert c011eb3</p>
-<p>git revert是用一次新的commit来回滚之前的commit，git reset是直接删除指定的commit<br>看似达到的效果是一样的,其实完全不同.<br>第一:<br>上面我们说的如果你已经push到线上代码库, reset 删除指定commit以后,你git push可能导致一大堆冲突.但是revert 并不会.<br>第二:<br>如果在日后现有分支和历史分支需要合并的时候,reset 恢复部分的代码依然会出现在历史分支里.但是revert 方向提交的commit 并不会出现在历史分支里.<br>第三:<br>reset 是在正常的commit历史中,删除了指定的commit,这时 HEAD 是向后移动了,而 revert 是在正常的commit历史中再commit一次,只不过是反向提交,他的 HEAD 是一直向前的.</p>
-
+            <p>
+              总有一天你会遇到下面的问题.(1)改完代码匆忙提交,上线发现有问题,怎么办? 赶紧回滚.(2)改完代码测试也没有问题,但是上线发现你的修改影响了之前运行正常的代码报错,必须回滚.
+这些开发中很常见的问题,所以git的取消提交,回退甚至返回上一版本都是特别重要的.大致分为下面2种情况:  
+1.没有p
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/git reset revert 回退回滚取消提交返回上一版本/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -2319,20 +1986,21 @@
       
         
           
-            <p>关于组件挂载的经典的图片：<br><img src="http://p09eeagrw.bkt.clouddn.com/1106982-20170811224737742-1564011484.jpg" alt></p>
-<p>下面一一说一下这几个生命周期的意义：</p>
-<h2 id="getDefaultProps"><a href="#getDefaultProps" class="headerlink" title="getDefaultProps"></a>getDefaultProps</h2><p>object getDefaultProps()<br>执行过一次后，被创建的类会有缓存，映射的值会存在this.props,前提是这个prop不是父组件指定的<br>这个方法在对象被创建之前执行，因此不能在方法内调用this.props ，另外，注意任何getDefaultProps()返回的对象在实例中共享，不是复制</p>
-<h2 id="getInitialState"><a href="#getInitialState" class="headerlink" title="getInitialState"></a>getInitialState</h2><p>object getInitialState()<br>控件加载之前执行，返回值会被用于state的初始化值</p>
-<h2 id="componentWillMount"><a href="#componentWillMount" class="headerlink" title="componentWillMount"></a>componentWillMount</h2><p>void componentWillMount()<br>执行一次，在初始化render之前执行，如果在这个方法内调用setState，render()知道state发生变化，并且只执行一次</p>
-<h2 id="render"><a href="#render" class="headerlink" title="render"></a>render</h2><p>ReactElement render()<br>render的时候会调用render()会被调用<br>调用render()方法时，首先检查this.props和this.state返回一个子元素，子元素可以是DOM组件或者其他自定义复合控件的虚拟实现<br>如果不想渲染可以返回null或者false，这种场景下，react渲染一个\&lt;noscript>标签，当返回null或者false时，ReactDOM.findDOMNode(this)返回null<br>render()方法是很纯净的，这就意味着不要在这个方法里初始化组件的state，每次执行时返回相同的值，不会读写DOM或者与服务器交互，如果必须如服务器交互，在componentDidMount()方法中实现或者其他生命周期的方法中实现，保持render()方法纯净使得服务器更准确，组件更简单</p>
-<h2 id="componentDidMount"><a href="#componentDidMount" class="headerlink" title="componentDidMount"></a>componentDidMount</h2><p>void componentDidMount()<br>在初始化render之后只执行一次，在这个方法内，可以访问任何组件，componentDidMount()方法中的子组件在父组件之前执行<br>从这个函数开始，就可以和 js 其他框架交互了，例如设置计时 setTimeout 或者 setInterval，或者发起网络请求</p>
-<h2 id="shouldComponentUpdate"><a href="#shouldComponentUpdate" class="headerlink" title="shouldComponentUpdate"></a>shouldComponentUpdate</h2><p>boolean shouldComponentUpdate(<br>  object nextProps, object nextState<br>}<br>这个方法在初始化render时不会执行，当props或者state发生变化时执行，并且是在render之前，当新的props或者state不需要更新组件时，返回false<br>shouldComponentUpdate: function(nextProps, nextState) {<br>  return nextProps.id !== this.props.id;<br>}<br>当shouldComponentUpdate方法返回false时，就不会执行render()方法，componentWillUpdate和componentDidUpdate方法也不会被调用<br>默认情况下，shouldComponentUpdate方法返回true防止state快速变化时的问题，但是如果·state不变，props只读，可以直接覆盖shouldComponentUpdate用于比较props和state的变化，决定UI是否更新，当组件比较多时，使用这个方法能有效提高应用性能</p>
-<h2 id="componentWillUpdate"><a href="#componentWillUpdate" class="headerlink" title="componentWillUpdate"></a>componentWillUpdate</h2><p>void componentWillUpdate(<br>  object nextProps, object nextState<br>)<br>当props和state发生变化时执行，并且在render方法之前执行，当然初始化render时不执行该方法，需要特别注意的是，在这个函数里面，你就不能使用this.setState来修改状态。这个函数调用之后，就会把nextProps和nextState分别设置到this.props和this.state中。紧接着这个函数，就会调用render()来更新界面了</p>
-<h2 id="componentDidUpdate"><a href="#componentDidUpdate" class="headerlink" title="componentDidUpdate"></a>componentDidUpdate</h2><p>void componentDidUpdate(<br>  object prevProps, object prevState<br>)<br>组件更新结束之后执行，在初始化render时不执行</p>
-<h2 id="componentWillReceiveProps"><a href="#componentWillReceiveProps" class="headerlink" title="componentWillReceiveProps"></a>componentWillReceiveProps</h2><p>void componentWillReceiveProps(<br>  object nextProps<br>)<br>当props发生变化时执行，初始化render时不执行，在这个回调函数里面，你可以根据属性的变化，通过调用this.setState()来更新你的组件状态，旧的属性还是可以通过this.props来获取,这里调用更新状态是安全的，并不会触发额外的render调用<br>componentWillReceiveProps: function(nextProps) {<br>  this.setState({<br>likesIncreasing: nextProps.likeCount > this.props.likeCount<br>  });<br>}</p>
-<h2 id="componentWillUnmount"><a href="#componentWillUnmount" class="headerlink" title="componentWillUnmount"></a>componentWillUnmount</h2><p>void componentWillUnmount()<br>当组件要被从界面上移除的时候，就会调用componentWillUnmount(),在这个函数中，可以做一些组件相关的清理工作，例如取消计时器、网络请求等</p>
-
+            <p>
+              关于组件挂载的经典的图片：
+下面一一说一下这几个生命周期的意义：
+getDefaultPropsobject getDefaultProps()执行过一次后，被创建的类会有缓存，映射的值会存在this.props,前提是这个prop不是父组件指定的这个方法在对象被创建之前执行，因此不能在方法内调用t
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/componentWillReceiveProps详解（this.props）状态改变检测机制/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
