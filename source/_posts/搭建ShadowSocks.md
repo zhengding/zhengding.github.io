@@ -3,7 +3,7 @@ title: 搭建ShadowSocks
 data:  2017-12-11 14:53:01
 tag:
 - ShadowSocks
-categories: Linux
+categories: 干货
 ---
 
 ## VPS安装ShadowSocks

@@ -3,10 +3,8 @@ title: Centos7.0 中的中iptables、firewall和SELINUX
 data:  2017-12-8 17:14:01
 tag:
 - 防火墙
-- iptables
-- firewall
-- SELINUX
-categories: Linux
+- linux
+categories: 运维
 ---
 
 CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。

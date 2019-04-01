@@ -3,7 +3,7 @@ title: Linux常用命令
 data:  2018-01-05 11:16:01
 tag:
 - Linux
-categories: Linux
+categories: 运维
 ---
 
 1、ssh连接主机

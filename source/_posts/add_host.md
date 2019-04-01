@@ -3,7 +3,7 @@ title: add host
 data:  2019-3-28 08:07:01
 tag:
 -  mesos
-categories: Linux
+categories: 运维
 ---
 
 ## 配置免密登录

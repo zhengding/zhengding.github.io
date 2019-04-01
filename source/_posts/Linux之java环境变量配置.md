@@ -3,9 +3,7 @@ title: Linux之Java环境变量配置
 data:  2018-04-08 08:53:01
 tag:
 - Linux
-- Java
-- 环境变量
-categories: Linux
+categories: 运维
 ---
 
 ```bash
