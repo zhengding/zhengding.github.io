@@ -396,7 +396,7 @@
                 
               
 
-              <time title="创建时间：2019-04-01 09:08:43 / 修改时间：13:33:22" itemprop="dateCreated datePublished" datetime="2019-04-01T09:08:43+08:00">2019-04-01</time>
+              <time title="创建时间：2019-04-01 09:08:43 / 修改时间：13:36:34" itemprop="dateCreated datePublished" datetime="2019-04-01T09:08:43+08:00">2019-04-01</time>
             
 
             
@@ -455,7 +455,7 @@
       
         
           
-            <p><img src="/images/Fitech-Gitlab启动流程/k8s.png" alt="k8s"></p>
+            <p><img src="../images/Fitech-Gitlab启动流程/k8s-1554096912836.png" alt="k8s"></p>
 
           
         
@@ -574,7 +574,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-01 08:52:15" itemprop="dateModified" datetime="2019-04-01T08:52:15+08:00">2019-04-01</time>
+                <time title="修改时间：2019-04-01 13:36:59" itemprop="dateModified" datetime="2019-04-01T13:36:59+08:00">2019-04-01</time>
               
             
           </span>
@@ -644,13 +644,13 @@
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ol>
 <li>打开<code>复制图片</code>功能</li>
 </ol>
-<p><img src="/images/3250317-de7ba1569df532cb-1553852667819-1554079833570.webp" alt="img"></p>
+<p><img src="../images/Typora功能新发现-自动复制图片到指定目录下/3250317-de7ba1569df532cb-1553852667819-1554079833570.webp" alt="img"></p>
 <ol>
 <li><p>md文件下建立<code>media</code>文件夹, 并指定它为复制图片的存储路径</p>
 <p><img src="/images/Typora功能新发现-自动复制图片到指定目录下/3250317-bfe15eb7ca56d721.webp" alt="img"></p>
 </li>
 </ol>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="/images/Typora功能新发现-自动复制图片到指定目录下/3250317-a169293d3e733616-1554079903558.webp" alt="img"></p>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="../images/Typora功能新发现-自动复制图片到指定目录下/3250317-a169293d3e733616-1554079903558.webp" alt="img"></p>
 <p>按下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl+/</span><br></pre></td></tr></table></figure>
 <p>可进入</p>
@@ -905,6 +905,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/解决 mac （windows）终端上代理的难题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content="This site is used to record notes">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/29/解决 mac （windows）终端上代理的难题/" class="post-title-link" itemprop="url">解决 mac （windows）终端上代理的难题</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-29 11:19:41" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">2019-03-29</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/干货/" itemprop="url" rel="index"><span itemprop="name">干货</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况<br>情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦<br>情况2：同事在安装 brew 的过程中，需要下载 github 上的repository，于是遭受了和上面一样的痛苦<br>不仅仅如此，为了解决类似的麻烦，很多人使用了 cnpm（淘宝出的代替 npm 的工具），或者更换各种包仓库的地址为国内镜像的地址，归根到底为一个原因，终端里的命令：诸如 wget，curl，git ，npm 等等，不好设置代理翻墙。<br>经过本人的探索，找出了一条解决之道，先不说麻不麻烦，总归是解决了长久以来困扰自己的问题<br>你所需要的，要有一个 ss 帐号，mac 上安装 shadowsocksX，已设置本地代理：socks5：127.0.0.1：1080<br>还需要另外一个神器：proxifier<br>举个例子，在终端里 git clone 一个repository，究竟是什么程序发起了网络请求，我现在可以直接告诉你答案，是 git-remote-https，请求 github.com:443，使用proxifier，就可以做到这一点，定位到是什么程序，请求的 host 以及 port，并且给它设置代理<br>下面这张图就是proxifier的庐山真面目了<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4oengilkbc1djbb48m7e1hbnm.png" alt><br>上面的日志给出了详细的解释<br>当我在终端里敲下 npm install xxx，对应的就是 node 请求 registry.npmjs.org:443<br>当我在webstorm中设置 github 帐户的时候，对应的是 webstorm，请求 api.github.com:443<br>当我在 git clone repository的时候，对应的是git-remote-https 请求 github.com:443<br>第一步：你得在shadowsocksX中开启 socks5 的本地代理，这是最重要的前提<br>第二步：在proxifier使用第一步设置的代理，如下图所示<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4ofiiia5821397ea0phm6rn13.png" alt><br>第三步：设置代理规则<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4og01u91alg1ggk1mh51omdurr1g.png" alt><br>解释一下我所设置的规则：<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4og4c2k2i6j8b1jdjd03has1t.png" alt><br>规则匹配的顺序是从上往下的   </p>
+<ol>
+<li>生效的第一条规则是shadowsocksX，因为我们的代理就是靠这个程序的，所以不能让它自己代理自己，否则proxifier 会报无限循环，动作选 direct   </li>
+<li>规则 github，这里也并没有指定程序git-remote-https，因为 像 webstorm等 GUI 之流，也会访问 github：443的请求，所以不指定程序，只限制 主机和端口，应用范围就不限于终端了   </li>
+<li>规则 node，解决 npm install 的代理，可以不用 cnpm 了   </li>
+<li>规则 brew，解决终端下使用 brew 安装 package 的代理   </li>
+<li>规则 google-analytics，，解决终端下使用 brew 安装 package 的代理   </li>
+<li>规则 default，不能删除，当匹配不到任何规则的时候，使用该规则<br>任何一个连接请求，从上往下匹配，匹配到了，就会停止<br>以上就是我摸索出来的方法，如果 ss 速度快的话，相信我，你会开心死的<br>一言以蔽之，如果你在终端中发起了网络请求速度很慢的话，可以先把 default 规则，设置为socks5代理（只有设置为代理，日志才会记录），然后分析一下请求的 host：port，然后就可以添加规则了，这样的话，就做到只给部分请求走代理，如果你觉得这样很麻烦，<br>也可以简单粗暴的，将 default 规则设置为 socks5代理，其余的规则全部禁用，那就是全部的请求走代理<br>ps：shadowsocks和proxifier windows 下也有，按照道理，windows 下也可用，我自己未测试过</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/搭建ShadowSocks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1030,171 +1195,6 @@
 <p>安装成功后，命令行出现：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Congratulations, Shadowsocks-Go server install completed!</span><br><span class="line">Your Server IP        :  45.32.73.59</span><br><span class="line">Your Server Port      :  8989</span><br><span class="line">Your Password         :  teddysun.com</span><br><span class="line">Your Encryption Method:  aes-256-cfb</span><br><span class="line"></span><br><span class="line">Welcome to visit: https://teddysun.com/486.html</span><br><span class="line">Enjoy it!</span><br></pre></td></tr></table></figure>
 <p>（如果安装失败，请尝试其他脚本）</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/解决 mac （windows）终端上代理的难题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content="This site is used to record notes">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhengding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/29/解决 mac （windows）终端上代理的难题/" class="post-title-link" itemprop="url">解决 mac （windows）终端上代理的难题</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-29 11:19:41" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">2019-03-29</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/干货/" itemprop="url" rel="index"><span itemprop="name">干货</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>买了 ss （shadowsocks）帐号，装了 ss 代理的软件，浏览器上也装了代理的插件，一直用的都挺好的，但是最近遇到了一些情况<br>情况1：最近网络抽风，网页上访问 github 还好，但是在终端里，git clone 一个 repository，或者在 webstorm 中检出一个 github 上的repository，那是相当的痛苦<br>情况2：同事在安装 brew 的过程中，需要下载 github 上的repository，于是遭受了和上面一样的痛苦<br>不仅仅如此，为了解决类似的麻烦，很多人使用了 cnpm（淘宝出的代替 npm 的工具），或者更换各种包仓库的地址为国内镜像的地址，归根到底为一个原因，终端里的命令：诸如 wget，curl，git ，npm 等等，不好设置代理翻墙。<br>经过本人的探索，找出了一条解决之道，先不说麻不麻烦，总归是解决了长久以来困扰自己的问题<br>你所需要的，要有一个 ss 帐号，mac 上安装 shadowsocksX，已设置本地代理：socks5：127.0.0.1：1080<br>还需要另外一个神器：proxifier<br>举个例子，在终端里 git clone 一个repository，究竟是什么程序发起了网络请求，我现在可以直接告诉你答案，是 git-remote-https，请求 github.com:443，使用proxifier，就可以做到这一点，定位到是什么程序，请求的 host 以及 port，并且给它设置代理<br>下面这张图就是proxifier的庐山真面目了<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4oengilkbc1djbb48m7e1hbnm.png" alt><br>上面的日志给出了详细的解释<br>当我在终端里敲下 npm install xxx，对应的就是 node 请求 registry.npmjs.org:443<br>当我在webstorm中设置 github 帐户的时候，对应的是 webstorm，请求 api.github.com:443<br>当我在 git clone repository的时候，对应的是git-remote-https 请求 github.com:443<br>第一步：你得在shadowsocksX中开启 socks5 的本地代理，这是最重要的前提<br>第二步：在proxifier使用第一步设置的代理，如下图所示<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4ofiiia5821397ea0phm6rn13.png" alt><br>第三步：设置代理规则<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4og01u91alg1ggk1mh51omdurr1g.png" alt><br>解释一下我所设置的规则：<br><img src="http://p09eeagrw.bkt.clouddn.com/image_1b4og4c2k2i6j8b1jdjd03has1t.png" alt><br>规则匹配的顺序是从上往下的   </p>
-<ol>
-<li>生效的第一条规则是shadowsocksX，因为我们的代理就是靠这个程序的，所以不能让它自己代理自己，否则proxifier 会报无限循环，动作选 direct   </li>
-<li>规则 github，这里也并没有指定程序git-remote-https，因为 像 webstorm等 GUI 之流，也会访问 github：443的请求，所以不指定程序，只限制 主机和端口，应用范围就不限于终端了   </li>
-<li>规则 node，解决 npm install 的代理，可以不用 cnpm 了   </li>
-<li>规则 brew，解决终端下使用 brew 安装 package 的代理   </li>
-<li>规则 google-analytics，，解决终端下使用 brew 安装 package 的代理   </li>
-<li>规则 default，不能删除，当匹配不到任何规则的时候，使用该规则<br>任何一个连接请求，从上往下匹配，匹配到了，就会停止<br>以上就是我摸索出来的方法，如果 ss 速度快的话，相信我，你会开心死的<br>一言以蔽之，如果你在终端中发起了网络请求速度很慢的话，可以先把 default 规则，设置为socks5代理（只有设置为代理，日志才会记录），然后分析一下请求的 host：port，然后就可以添加规则了，这样的话，就做到只给部分请求走代理，如果你觉得这样很麻烦，<br>也可以简单粗暴的，将 default 规则设置为 socks5代理，其余的规则全部禁用，那就是全部的请求走代理<br>ps：shadowsocks和proxifier windows 下也有，按照道理，windows 下也可用，我自己未测试过</li>
-</ol>
 
           
         
