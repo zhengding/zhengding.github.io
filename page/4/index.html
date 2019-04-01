@@ -351,7 +351,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/Linux常用命令/">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/Linux之java环境变量配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -371,7 +371,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/03/29/Linux常用命令/" class="post-title-link" itemprop="url">Linux常用命令</a>
+                <a href="/2019/03/29/Linux之java环境变量配置/" class="post-title-link" itemprop="url">Linux之Java环境变量配置</a>
               
             
           </h1>
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-01 09:34:43" itemprop="dateModified" datetime="2019-04-01T09:34:43+08:00">2019-04-01</time>
+                <time title="修改时间：2019-04-01 09:34:37" itemprop="dateModified" datetime="2019-04-01T09:34:37+08:00">2019-04-01</time>
               
             
           </span>
@@ -467,24 +467,9 @@
       
         
           
-            <p>
-              1、ssh连接主机
-ssh root@192.168.2.156 12345678
-2、ssh连接主机copy文件
-scp root@192.168.2.156:/root/docker-oracle-xe-11g.tar （路径)
-3、ssh连接主机copy文件夹及其下文件
-scp -r root
-              ...
-            </p>
-          <!--noindex-->
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/profile</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/fitech03/jdk1.8.0_161</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$JAVA_HOME</span>/jre</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JRE_HOME</span>/lib:<span class="variable">$CLASSPATH</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JRE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># source /etc/profile</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#/etc/environment</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/fitech03/jdk1.8.0_161</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JAVA_HOME</span>/jre/lib</span><br><span class="line"></span><br><span class="line"><span class="comment"># source /etc/environment</span></span><br></pre></td></tr></table></figure>
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/Linux常用命令/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -639,23 +624,80 @@ scp -r root
       
         
           
-            <p>
-              循环语句，用于重复执行某个操作，它有多种形式。
-while循环
+            <h1 id="循环语句，用于重复执行某个操作，它有多种形式。"><a href="#循环语句，用于重复执行某个操作，它有多种形式。" class="headerlink" title="循环语句，用于重复执行某个操作，它有多种形式。"></a>循环语句，用于重复执行某个操作，它有多种形式。</h1><blockquote>
+<p>while循环</p>
+</blockquote>
+<p>while语句的循环条件是一个表达式（express），必须放在圆括号中。代码块部分，如果只有一条语句（statement），可以省略大括号，否则就必须加上大括号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">while (expression)</span><br><span class="line">  statement;</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line"></span><br><span class="line">while (expression) statement;</span><br></pre></td></tr></table></figure>
+<p>下面写个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while (i &lt; 100) &#123;</span><br><span class="line">  console.log(&apos;i当前为：&apos; + i);</span><br><span class="line">  i += 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码将循环100次，直到i等于100为止。</p>
+<p>下面的例子是一个无限循环，因为条件总是为真。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while (true) &#123;</span><br><span class="line">  console.log(&apos;Hello, world&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>for循环</p>
+</blockquote>
+<p>for语句是循环命令的另一种形式，可以指定循环的起点、终点和终止条件。它的格式如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for (initialize; test; increment)</span><br><span class="line">  statement</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line"></span><br><span class="line">for (initialize; test; increment) &#123;</span><br><span class="line">  statement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>for语句后面的括号里面，有三个表达式。</p>
+<blockquote>
+<ul>
+<li>初始化表达式（initialize）：确定循环的初始值，只在循环开始时执行一次。</li>
+<li>测试表达式（test）：检查循环条件，只要为真就进行后续操作。</li>
+<li>递增表达式（increment）：完成后续操作，然后返回上一步，再一次检查循环条件。</li>
+</ul>
+</blockquote>
+<p>eg:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;</span><br><span class="line">for (var i = 0; i &lt; x; i++) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">&#125;</span><br><span class="line">// 0</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br></pre></td></tr></table></figure>
+<p>上面代码中，初始化表达式是var i = 0，即初始化一个变量i；测试表达式是i &lt; x，即只要i小于x，就会执行循环；递增表达式是i++，即每次循环结束后，i增大1。</p>
+<p>所有for循环，都可以改写成while循环。上面的例子改为while循环，代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;</span><br><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while (i &lt; x) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">  i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>for语句的三个部分（initialize，test，increment），可以省略任何一个，也可以全部省略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for ( ; ; )&#123;</span><br><span class="line">  console.log(&apos;Hello World&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码省略了for语句表达式的三个部分，结果就导致了一个无限循环。</p>
+<blockquote>
+<p>do…while循环</p>
+</blockquote>
+<p>do…while循环与while循环类似，唯一的区别就是先运行一次循环体，然后判断循环条件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">do</span><br><span class="line">  statement</span><br><span class="line">while (expression);</span><br><span class="line"></span><br><span class="line">// 或者</span><br><span class="line"></span><br><span class="line">do &#123;</span><br><span class="line">  statement</span><br><span class="line">&#125; while (expression);</span><br></pre></td></tr></table></figure>
+<p>不管条件是否为真，do..while循环至少运行一次，这是这种结构最大的特点。另外，while语句后面的分号不能省略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x = 3;</span><br><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">do &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">  i++;</span><br><span class="line">&#125; while(i &lt; x);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>break语句和continue语句</p>
+<p>break语句和continue语句都具有跳转作用，可以让代码不按既有的顺序执行。</p>
+<p>break语句用于跳出代码块或循环。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while(i &lt; 100) &#123;</span><br><span class="line">  console.log(&apos;i当前为：&apos; + i);</span><br><span class="line">  i++;</span><br><span class="line">  if (i === 10) break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码只会执行10次循环，一旦i等于10，就会跳出循环。</p>
+<blockquote>
+<p>for循环也可以使用break语句跳出循环。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">  if (i === 3)</span><br><span class="line">    break;</span><br><span class="line">&#125;</span><br><span class="line">// 0</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br><span class="line">// 3</span><br></pre></td></tr></table></figure>
+<p>上面代码执行到i等于3，就会跳出循环</p>
+<blockquote>
+<p>continue语句用于立即终止本轮循环，返回循环结构的头部，开始下一轮循环。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">while (i &lt; 100)&#123;</span><br><span class="line">  i++;</span><br><span class="line">  if (i%2 === 0) continue;</span><br><span class="line">  console.log(&apos;i当前为：&apos; + i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码只有在i为奇数时，才会输出i的值。如果i为偶数，则直接进入下一轮循环。</p>
+<blockquote>
+<p>如果存在多重循环，不带参数的break语句和continue语句都只针对最内层循环。</p>
+<p>标签（label）</p>
+</blockquote>
+<p>JavaScript语言允许，语句的前面有标签（label），相当于定位符，用于跳转到程序的任意位置，标签的格式如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">label:</span><br><span class="line">  statement</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>标签可以是任意的标识符，但是不能是保留字，语句部分可以是任意语句。</p>
+</blockquote>
+<p>标签通常与break语句和continue语句配合使用，跳出特定的循环。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">top:</span><br><span class="line">  for (var i = 0; i &lt; 3; i++)&#123;</span><br><span class="line">    for (var j = 0; j &lt; 3; j++)&#123;</span><br><span class="line">      if (i === 1 &amp;&amp; j === 1) break top;</span><br><span class="line">      console.log(&apos;i=&apos; + i + &apos;, j=&apos; + j);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">// i=0, j=0</span><br><span class="line">// i=0, j=1</span><br><span class="line">// i=0, j=2</span><br><span class="line">// i=1, j=0</span><br></pre></td></tr></table></figure>
+<p>上面代码为一个双重循环区块，break命令后面加上了top标签（注意，top不用加引号），满足条件时，直接跳出双层循环。如果break语句后面不使用标签，则只能跳出内层循环，进入下一次的外层循环。</p>
+<blockquote>
+<p>continue语句也可以与标签配合使用。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">top:</span><br><span class="line">  for (var i = 0; i &lt; 3; i++)&#123;</span><br><span class="line">    for (var j = 0; j &lt; 3; j++)&#123;</span><br><span class="line">      if (i === 1 &amp;&amp; j === 1) continue top;</span><br><span class="line">      console.log(&apos;i=&apos; + i + &apos;, j=&apos; + j);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">// i=0, j=0</span><br><span class="line">// i=0, j=1</span><br><span class="line">// i=0, j=2</span><br><span class="line">// i=1, j=0</span><br><span class="line">// i=2, j=0</span><br><span class="line">// i=2, j=1</span><br><span class="line">// i=2, j=2</span><br></pre></td></tr></table></figure>
+<p>上面代码中，continue命令后面有一个标签名，满足条件时，会跳过当前循环，直接进入下一轮外层循环。如果continue语句后面不使用标签，则只能进入下一轮的内层循环。</p>
 
-while语句的循环条件是一个表达式（express），必须放在圆括号中。代码块部分，如果只有一条语句（statement），可以省略大括号，否则就必须加上大括号。
-while (expression)  statement;// 或
-              ...
-            </p>
-          <!--noindex-->
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/JS中几种循环的区别与相同点/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -826,19 +868,8 @@ while (expression)  statement;// 或
       
         
           
-            <p>
-              
-              
-            </p>
-          <!--noindex-->
+            
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/Kubernetes常用命令/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -993,29 +1024,43 @@ while (expression)  statement;// 或
       
         
           
-            <p>
-              开发过程中，你肯定会遇到这样的场景：
-场景一：
-糟了，我刚把不想要的代码，commit到本地仓库中了，但是还没有做push操作！
+            <p>开发过程中，你肯定会遇到这样的场景：</p>
+<h2 id="场景一："><a href="#场景一：" class="headerlink" title="场景一："></a>场景一：</h2><blockquote>
+<p>糟了，我刚把不想要的代码，commit到本地仓库中了，但是还没有做push操作！</p>
+</blockquote>
+<h2 id="场景二："><a href="#场景二：" class="headerlink" title="场景二："></a>场景二：</h2><blockquote>
+<p>彻底完了，刚线上更新的代码出现问题了，需要还原这次提交的代码！</p>
+</blockquote>
+<h2 id="场景三："><a href="#场景三：" class="headerlink" title="场景三："></a>场景三：</h2><blockquote>
+<p>刚才我发现之前的某次提交太愚蠢了，现在想要干掉它！</p>
+</blockquote>
+<h1 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h1><p>上述场景一，在未进行git push前的所有操作，都是在“本地仓库”中执行的。我们暂且将“本地仓库”的代码还原操作叫做“撤销”！</p>
+<h2 id="情况一：文件被修改了，但未执行git-add操作-working-tree内撤销"><a href="#情况一：文件被修改了，但未执行git-add操作-working-tree内撤销" class="headerlink" title="情况一：文件被修改了，但未执行git add操作(working tree内撤销)"></a>情况一：文件被修改了，但未执行git add操作(working tree内撤销)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout fileName</span><br><span class="line">git checkout .</span><br></pre></td></tr></table></figure>
+<h2 id="情况二：同时对多个文件执行了git-add操作，但本次只想提交其中一部分文件"><a href="#情况二：同时对多个文件执行了git-add操作，但本次只想提交其中一部分文件" class="headerlink" title="情况二：同时对多个文件执行了git add操作，但本次只想提交其中一部分文件"></a>情况二：同时对多个文件执行了git add操作，但本次只想提交其中一部分文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git add *</span><br><span class="line">$ git status</span><br><span class="line"><span class="comment"># 取消暂存</span></span><br><span class="line">$ git reset HEAD &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="情况三：文件执行了git-add操作，但想撤销对其的修改（index内回滚）"><a href="#情况三：文件执行了git-add操作，但想撤销对其的修改（index内回滚）" class="headerlink" title="情况三：文件执行了git add操作，但想撤销对其的修改（index内回滚）"></a>情况三：文件执行了git add操作，但想撤销对其的修改（index内回滚）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取消暂存</span></span><br><span class="line">git reset HEAD fileName</span><br><span class="line"><span class="comment"># 撤销修改</span></span><br><span class="line">git checkout fileName</span><br></pre></td></tr></table></figure>
+<h2 id="情况四：修改的文件已被git-commit，但想再次修改不再产生新的Commit"><a href="#情况四：修改的文件已被git-commit，但想再次修改不再产生新的Commit" class="headerlink" title="情况四：修改的文件已被git commit，但想再次修改不再产生新的Commit"></a>情况四：修改的文件已被git commit，但想再次修改不再产生新的Commit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改最后一次提交 </span></span><br><span class="line">$ git add sample.txt</span><br><span class="line">$ git commit --amend -m<span class="string">"说明"</span></span><br></pre></td></tr></table></figure>
+<h2 id="情况五：已在本地进行了多次git-commit操作，现在想撤销到其中某次Commit"><a href="#情况五：已在本地进行了多次git-commit操作，现在想撤销到其中某次Commit" class="headerlink" title="情况五：已在本地进行了多次git commit操作，现在想撤销到其中某次Commit"></a>情况五：已在本地进行了多次git commit操作，现在想撤销到其中某次Commit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [--hard|soft|mixed|merge|keep] [commit|HEAD]</span><br></pre></td></tr></table></figure>
+<h1 id="回滚"><a href="#回滚" class="headerlink" title="回滚"></a>回滚</h1><p>上述场景二，已进行git push，即已推送到“远程仓库”中。我们将已被提交到“远程仓库”的代码还原操作叫做“回滚”！注意：对远程仓库做回滚操作是有风险的，需提前做好备份和通知其他团队成员！<br>如果你每次更新线上，都会打tag，那恭喜你，你可以很快的处理上述场景二的情况</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;tag&gt;</span><br></pre></td></tr></table></figure>
+<p>如果你回到当前HEAD指向</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="情况一：撤销指定文件到指定版本"><a href="#情况一：撤销指定文件到指定版本" class="headerlink" title="情况一：撤销指定文件到指定版本"></a>情况一：撤销指定文件到指定版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看指定文件的历史版本</span></span><br><span class="line">git <span class="built_in">log</span> &lt;filename&gt;</span><br><span class="line"><span class="comment"># 回滚到指定commitID</span></span><br><span class="line">git checkout &lt;commitID&gt; &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="情况二：删除最后一次远程提交"><a href="#情况二：删除最后一次远程提交" class="headerlink" title="情况二：删除最后一次远程提交"></a>情况二：删除最后一次远程提交</h2><h3 id="方式一：使用revert"><a href="#方式一：使用revert" class="headerlink" title="方式一：使用revert"></a>方式一：使用revert</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h3 id="方式二：使用reset"><a href="#方式二：使用reset" class="headerlink" title="方式二：使用reset"></a>方式二：使用reset</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line">git push origin master -f</span><br></pre></td></tr></table></figure>
+<p>二者区别：</p>
+<ol>
+<li>revert是放弃指定提交的修改，但是会生成一次新的提交，需要填写提交注释，以前的历史记录都在；</li>
+<li>reset是指将HEAD指针指到指定提交，历史记录中不会出现放弃的提交记录。<h2 id="情况三：回滚某次提交"><a href="#情况三：回滚某次提交" class="headerlink" title="情况三：回滚某次提交"></a>情况三：回滚某次提交</h2></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到要回滚的commitID</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">git revert commitID</span><br></pre></td></tr></table></figure>
+<h3 id="删除某次提交"><a href="#删除某次提交" class="headerlink" title="删除某次提交"></a>删除某次提交</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline -n5</span><br><span class="line">		</span><br><span class="line">git rebase -i <span class="string">"commit id"</span>^</span><br></pre></td></tr></table></figure>
+<p>注意：需要注意最后的^号，意思是commit id的前一次提交</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i <span class="string">"5b3ba7a"</span>^</span><br></pre></td></tr></table></figure>
+<p>在编辑框中删除相关commit，如pick 5b3ba7a test2，然后保存退出（如果遇到冲突需要先解决冲突）！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master -f</span><br></pre></td></tr></table></figure>
+<p>通过上述操作，如果你想对历史多个commit进行处理或者，可以选择git rebase -i，只需删除对应的记录就好。rebase还可对 commit 消息进行编辑，以及合并多个commit。</p>
 
-场景二：
-彻底完了，刚线上更新的代码出现问题了，需要还原这次提交的代码！
-
-场景三：
-刚才我发现之前的某次提交太愚蠢了，现在想要干掉它！
-
-撤销上述场景一，在未进行gi
-              ...
-            </p>
-          <!--noindex-->
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/Git撤销&回滚操作/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1186,21 +1231,19 @@ while (expression)  statement;// 或
       
         
           
-            <p>
-              1. 查看docker信息（version、info）# 查看docker版本$ docker version# 显示docker系统的信息$ docker info
-2、查看容器$ docker ps #查看正在运行容器$ docker ps -a #查看所有容器
-3、启动容器$ docker r
-              ...
-            </p>
-          <!--noindex-->
+            <h2 id="1-查看docker信息（version、info）"><a href="#1-查看docker信息（version、info）" class="headerlink" title="1. 查看docker信息（version、info）"></a>1. 查看docker信息（version、info）</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看docker版本</span></span><br><span class="line">$ docker version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示docker系统的信息</span></span><br><span class="line">$ docker info</span><br></pre></td></tr></table></figure>
+<h2 id="2、查看容器"><a href="#2、查看容器" class="headerlink" title="2、查看容器"></a>2、查看容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps <span class="comment">#查看正在运行容器</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker ps -a <span class="comment">#查看所有容器</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="3、启动容器"><a href="#3、启动容器" class="headerlink" title="3、启动容器"></a>3、启动容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run -d -p 8080:8080 --restart=always containerId</span></span><br><span class="line">-d: #后台启动</span><br><span class="line">-p: #映射端口</span><br><span class="line">--restart=always: #自动重启</span><br><span class="line">--name="zhengding/oracle": #为容器指定一个名称</span><br><span class="line">--dns 8.8.8.8 #指定容器使用的DNS服务器: 默认和宿主一致</span><br><span class="line">-e username="ritchie": #设置环境变量</span><br><span class="line">--env-file=[]: #从指定文件读入环境变量</span><br><span class="line">--net="bridge": #指定容器的网络连接类型，支持 bridge/host/none/container: 四种类型</span><br></pre></td></tr></table></figure>
+<h2 id="4、进入容器"><a href="#4、进入容器" class="headerlink" title="4、进入容器"></a>4、进入容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it fc873 /bin/bash</span></span><br><span class="line">或</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it fc873 /bin/bash</span></span><br></pre></td></tr></table></figure>
+<h2 id="5-对容器的操作（rm、rmi、tag、stop、start、kill、logs、diff、top、cp、restart、attach）"><a href="#5-对容器的操作（rm、rmi、tag、stop、start、kill、logs、diff、top、cp、restart、attach）" class="headerlink" title="5. 对容器的操作（rm、rmi、tag、stop、start、kill、logs、diff、top、cp、restart、attach）"></a>5. 对容器的操作（rm、rmi、tag、stop、start、kill、logs、diff、top、cp、restart、attach）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除所有容器</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm `docker ps -a -q`</span></span><br><span class="line"><span class="meta">#</span><span class="bash">删除所有已退出容器</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm $(docker ps -a | grep <span class="string">"Exited"</span> | awk <span class="string">'&#123;print $1 &#125;'</span>) </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm -v $(docker ps -aq -f status=exited)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除单个容器; -f, --force=<span class="literal">false</span>; -l, --link=<span class="literal">false</span> Remove the specified link and not the underlying container; -v, --volumes=<span class="literal">false</span> Remove the volumes associated to the container</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm Name/ID</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 停止、启动、杀死一个容器</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker stop Name/ID</span></span><br><span class="line"><span class="meta">#</span><span class="bash">停止所有已退出容器</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker stop $(docker ps -a | grep <span class="string">"Exited"</span> | awk <span class="string">'&#123;print $1 &#125;'</span>) </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker start Name/ID</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">kill</span> Name/ID</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">删除镜像</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi imageId </span></span><br><span class="line"><span class="meta">#</span><span class="bash">删除所有为none的镜像</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi $(docker images | grep <span class="string">"none"</span> | awk <span class="string">'&#123;print $3&#125;'</span>) </span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">标记本地镜像，将其归入某一仓库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker tag ubuntu:15.10 runoob/ubuntu:v3</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 从一个容器中取日志; -f, --follow=<span class="literal">false</span> Follow <span class="built_in">log</span> output; -t, --timestamps=<span class="literal">false</span> Show timestamps</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker logs Name/ID</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 列出一个容器里面被改变的文件或者目录，list列表会显示出三种事件，A 增加的，D 删除的，C 被改变的</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker diff Name/ID</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 显示一个运行的容器里面的进程信息</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker top Name/ID</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 从容器里面拷贝文件/目录到本地一个路径</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker cp Name:/container_path to_path</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker cp ID:/container_path to_path</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启一个正在运行的容器; -t, --time=10 Number of seconds to try to stop <span class="keyword">for</span> before killing the container, Default=10</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker restart Name/ID</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 附加到一个运行的容器上面; --no-stdin=<span class="literal">false</span> Do not attach stdin; --sig-proxy=<span class="literal">true</span> Proxify all received signal to the process</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker attach ID</span></span><br></pre></td></tr></table></figure>
+<p>Note： attach命令允许你查看或者影响一个运行的容器。你可以在同一时间attach同一个容器。你也可以从一个容器中脱离出来，是从CTRL-C。</p>
+<h2 id="6、使用Dockerfile创建镜像"><a href="#6、使用Dockerfile创建镜像" class="headerlink" title="6、使用Dockerfile创建镜像"></a>6、使用Dockerfile创建镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">使用当前目录的Dockerfile创建镜像。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker build -t runoob/ubuntu:v1 . </span></span><br><span class="line"><span class="meta">#</span><span class="bash">使用URL github.com/creack/docker-firefox 的 Dockerfile 创建镜像。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker build github.com/creack/docker-firefox</span></span><br></pre></td></tr></table></figure>
+<h2 id="7、加载镜像"><a href="#7、加载镜像" class="headerlink" title="7、加载镜像"></a>7、加载镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker load --input runoob/ubuntu:v1</span></span><br></pre></td></tr></table></figure>
+<h2 id="8、ssh配置"><a href="#8、ssh配置" class="headerlink" title="8、ssh配置"></a>8、ssh配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">一、进入容器之后进行编辑ssh文件，如果没有ssh,需要先安装：</span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装ssh-client命令：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install openssh-client</span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装ssh-server命令：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install openssh-server</span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装完成以后，先启动服务：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo /etc/init.d/ssh start</span></span><br><span class="line"><span class="meta">#</span><span class="bash">启动后，可以通过“ps -e|grep ssh”查看是否正确启动。</span></span><br><span class="line"><span class="meta">#</span><span class="bash">二、编辑ssh配置文件：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo vim/etc/ssh/sshd_config</span></span><br><span class="line"><span class="meta">#</span><span class="bash">PermitRootLogin without-password 改为 PermitRootLogin yesPasswordAuthentication yes 改为 PasswordAuthentication no</span></span><br><span class="line"><span class="meta">#</span><span class="bash">三、重启服务：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo service ssh restart</span></span><br><span class="line"><span class="meta">#</span><span class="bash">四、设置ssh密码：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> passwd root</span></span><br><span class="line">Enter new UNIX password:   </span><br><span class="line">Retype new UNIX password:   </span><br><span class="line">passwd: password updated successfully</span><br></pre></td></tr></table></figure>
+<h2 id="9、自动清理镜像容器"><a href="#9、自动清理镜像容器" class="headerlink" title="9、自动清理镜像容器"></a>9、自动清理镜像容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker system prune</span></span><br></pre></td></tr></table></figure>
+<h2 id="10、查看当前容器资源占用i情况"><a href="#10、查看当前容器资源占用i情况" class="headerlink" title="10、查看当前容器资源占用i情况"></a>10、查看当前容器资源占用i情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker stats</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure>
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/Docker常用命令/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1355,19 +1398,10 @@ while (expression)  statement;// 或
       
         
           
-            <p>
-              常用命令将数据库文件生成镜像docker load —input docker-oracle-xe-11g.tar生成容器docker run -d -p 1522:1521 f785进入容器内部docker exec -it fc873 /bin/bash查看数据库状态lsnrctl status
-              ...
-            </p>
-          <!--noindex-->
+            <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>将数据库文件生成镜像<br>docker load —input docker-oracle-xe-11g.tar<br>生成容器<br>docker run -d -p 1522:1521 f785<br>进入容器内部<br>docker exec -it fc873 /bin/bash<br>查看数据库状态<br>lsnrctl status(BLOCKED非正常)<br>配置文件路径<br>/u01/app/oracle/product/11.2.0/xe/network/admin<br>安装vim<br>apt-get update<br>apt-get install vim</p>
+<h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><p>1、Connection to @192.168.2.156 failed.<br><a href>66000</a><a href>12528</a> Listener refused the connection with the following error:<br>ORA-12528, TNS:listener: all appropriate instances are blocking new connections  </p>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/Docker安装oracle/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1538,19 +1572,72 @@ while (expression)  statement;// 或
       
         
           
-            <p>
-              今天，我们将学习如何快速地对docker容器进行快捷备份、恢复和迁移。Docker是一个开源平台，用于自动化部署应用，以通过快捷的途径在称之为容器的轻量级软件层下打包、发布和运行这些应用。它使得应用平台独立，因为它扮演了Linux上一个额外的操作系统级虚拟化的自动化抽象层。它通过其组件cgroups
-              ...
-            </p>
-          <!--noindex-->
+            <p>今天，我们将学习如何快速地对docker容器进行快捷备份、恢复和迁移。<a href="http://docker.com/" target="_blank" rel="noopener">Docker</a>是一个开源平台，用于自动化部署应用，以通过快捷的途径在称之为容器的轻量级软件层下打包、发布和运行这些应用。它使得应用平台独立，因为它扮演了Linux上一个额外的操作系统级虚拟化的自动化抽象层。它通过其组件cgroups和命名空间利用Linux内核的资源分离特性，达到避免虚拟机开销的目的。它使得用于部署和扩展web应用、数据库和后端服务的大规模构建组件无需依赖于特定的堆栈或供应者。</p>
+<p>所谓的容器，就是那些创建自Docker镜像的软件层，它包含了独立的Linux文件系统和开箱即用的应用程序。如果我们有一个在机器中运行着的Docker容器，并且想要备份这些容器以便今后使用，或者想要迁移这些容器，那么，本教程将帮助你掌握在Linux操作系统中备份、恢复和迁移Docker容器的方法。</p>
+<p>我们怎样才能在Linux中备份、恢复和迁移Docker容器呢？这里为您提供了一些便捷的步骤。</p>
+<p><img src="https://www.linuxidc.com/upload/2015_08/150806153161271.jpg" alt="img"></p>
+<h4 id="1-备份容器"><a href="#1-备份容器" class="headerlink" title="1. 备份容器"></a>1. 备份容器</h4><p>首先，为了备份Docker中的容器，我们会想看看我们想要备份的容器列表。要达成该目的，我们需要在我们运行着Docker引擎，并已创建了容器的Linux机器中运行 docker ps 命令。</p>
+<ol>
+<li><code># docker ps</code></li>
+</ol>
+<p><img src="https://www.linuxidc.com/upload/2015_08/150806153161279.png" alt="Docker Containers List"></p>
+<p><em>Docker Containers List</em></p>
+<p>在此之后，我们要选择我们想要备份的容器，然后去创建该容器的快照。我们可以使用 docker commit 命令来创建快照。</p>
+<ol>
+<li><code># docker commit -p 30b8f18f20b4 container-backup</code></li>
+</ol>
+<p><img src="https://www.linuxidc.com/upload/2015_08/150806153161273.png" alt="Docker Commit"></p>
+<p><em>Docker Commit</em></p>
+<p>该命令会生成一个作为Docker镜像的容器快照，我们可以通过运行 <code>docker images</code> 命令来查看Docker镜像，如下。</p>
+<ol>
+<li><code># docker images</code></li>
+</ol>
+<p><img src="https://www.linuxidc.com/upload/2015_08/150806153161272.png" alt="Docker Images"></p>
+<p><em>Docker Images</em></p>
+<p>正如我们所看见的，上面做的快照已经作为Docker镜像保存了。现在，为了备份该快照，我们有两个选择，一个是我们可以登录进Docker注册中心，并推送该镜像；另一个是我们可以将Docker镜像打包成tar包备份，以供今后使用。</p>
+<p>如果我们想要在<a href="https://registry.hub.docker.com/" target="_blank" rel="noopener">Docker注册中心</a>上传或备份镜像，我们只需要运行 docker login 命令来登录进Docker注册中心，然后推送所需的镜像即可。</p>
+<ol>
+<li><code># docker login</code></li>
+</ol>
+<p><img src="https://www.linuxidc.com/upload/2015_08/150806153161274.png" alt="Docker Login"></p>
+<p><em>Docker Login</em></p>
+<ol>
+<li><code># docker tag a25ddfec4d2a arunpyasi/container-backup:test</code></li>
+<li><code># docker push arunpyasi/container-backup</code></li>
+</ol>
+<p><img src="https://www.linuxidc.com/upload/2015_08/150806153161276.png" alt="Docker Push"></p>
+<p><em>Docker Push</em></p>
+<p>如果我们不想备份到docker注册中心，而是想要将此镜像保存在本地机器中，以供日后使用，那么我们可以将其作为tar包备份。要完成该操作，我们需要运行以下 <code>docker save</code> 命令。</p>
+<ol>
+<li><code># docker save -o ~/container-backup.tar container-backup</code></li>
+</ol>
+<p><img src="https://www.linuxidc.com/upload/2015_08/150806153161275.png" alt="taking tarball backup"></p>
+<p><em>taking tarball backup</em></p>
+<p>要验证tar包是否已经生成，我们只需要在保存tar包的目录中运行 ls 命令即可。</p>
+<h4 id="2-恢复容器"><a href="#2-恢复容器" class="headerlink" title="2. 恢复容器"></a>2. 恢复容器</h4><p>接下来，在我们成功备份了我们的Docker容器后，我们现在来恢复这些制作了Docker镜像快照的容器。如果我们已经在注册中心推送了这些Docker镜像，那么我们仅仅需要把那个Docker镜像拖回并直接运行即可。</p>
+<ol>
+<li><code># docker pull arunpyasi/container-backup:test</code></li>
+</ol>
+<p><img src="https://www.linuxidc.com/upload/2015_08/150806153161277.png" alt="Docker Pull"></p>
+<p><em>Docker Pull</em></p>
+<p>但是，如果我们将这些Docker镜像作为tar包文件备份到了本地，那么我们只要使用 docker load 命令，后面加上tar包的备份路径，就可以加载该Docker镜像了。</p>
+<ol>
+<li><code># docker load -i ~/container-backup.tar</code></li>
+</ol>
+<p>现在，为了确保这些Docker镜像已经加载成功，我们来运行 docker images 命令。</p>
+<ol>
+<li><code># docker images</code></li>
+</ol>
+<p>在镜像被加载后，我们将用加载的镜像去运行Docker容器。</p>
+<ol>
+<li><code># docker run -d -p 80:80 container-backup</code></li>
+</ol>
+<p><img src="https://www.linuxidc.com/upload/2015_08/150806153161278.png" alt="Restoring Docker Tarball"></p>
+<p><em>Restoring Docker Tarball</em></p>
+<h4 id="3-迁移Docker容器"><a href="#3-迁移Docker容器" class="headerlink" title="3. 迁移Docker容器"></a>3. 迁移Docker容器</h4><p>迁移容器同时涉及到了上面两个操作，备份和恢复。我们可以将任何一个Docker容器从一台机器迁移到另一台机器。在迁移过程中，首先我们将把容器备份为Docker镜像快照。然后，该Docker镜像或者是被推送到了Docker注册中心，或者被作为tar包文件保存到了本地。如果我们将镜像推送到了Docker注册中心，我们简单地从任何我们想要的机器上使用 docker run 命令来恢复并运行该容器。但是，如果我们将镜像打包成tar包备份到了本地，我们只需要拷贝或移动该镜像到我们想要的机器上，加载该镜像并运行需要的容器即可。</p>
+<h4 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h4><p>最后，我们已经学习了如何快速地备份、恢复和迁移Docker容器，本教程适用于各个可以成功运行Docker的操作系统平台。真的，Docker是一个相当简单易用，然而功能却十分强大的工具。它的命令相当易记，这些命令都非常短，带有许多简单而强大的标记和参数。上面的方法让我们备份容器时很是安逸，使得我们可以在日后很轻松地恢复它们。这会帮助我们恢复我们的容器和镜像，即便主机系统崩溃，甚至意外地被清除。</p>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/Docker备份和恢复/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1721,21 +1808,22 @@ while (expression)  statement;// 或
       
         
           
-            <p>
-              CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。
-firewallfirewall能够允许哪些服务可用，那些端口可用…. 属于更高一层的防火墙。firewall的底层是使用iptables进行数据过滤，建立在iptables之上。
-firewall是动态防
-              ...
-            </p>
-          <!--noindex-->
+            <p>CentOS 7.0默认使用的是firewall作为防火墙，这里改为iptables防火墙。</p>
+<h2 id="firewall"><a href="#firewall" class="headerlink" title="firewall"></a>firewall</h2><p>firewall能够允许哪些服务可用，那些端口可用…. 属于更高一层的防火墙。<br>firewall的底层是使用iptables进行数据过滤，建立在iptables之上。</p>
+<p>firewall是动态防火墙，使用了D-BUS方式，修改配置不会破坏已有的数据链接。  </p>
+<h2 id="关闭firewall"><a href="#关闭firewall" class="headerlink" title="关闭firewall"></a>关闭firewall</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service <span class="comment">#停止firewall</span></span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld.service <span class="comment">#禁止firewall开机启动</span></span><br><span class="line">firewall-cmd --state <span class="comment">#查看默认防火墙状态（关闭后显示notrunning，开启后显示running）</span></span><br></pre></td></tr></table></figure>
+<h2 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h2><p>iptables用于过滤数据包，属于网络层防火墙.  </p>
+<p>在设置iptables后需要重启iptables，会重新加载防火墙模块，而模块的装载将会破坏状态防火墙和确立的连接。会破坏已经对外提供数据链接的程序。可能需要重启程序。  </p>
+<h2 id="iptables防火墙"><a href="#iptables防火墙" class="headerlink" title="iptables防火墙"></a>iptables防火墙</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install iptables-services <span class="comment">#安装iptables</span></span><br><span class="line">vi /etc/sysconfig/iptables <span class="comment">#编辑iptables防火墙配置文件</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Firewall configuration written by system-config-firewall</span><br><span class="line">Manual customization of this file is not recommended.</span><br><span class="line">*filter</span><br><span class="line">:INPUT ACCEPT [0:0]</span><br><span class="line">:FORWARD ACCEPT [0:0]</span><br><span class="line">:OUTPUT ACCEPT [0:0]</span><br><span class="line">-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span><br><span class="line">-A INPUT -p icmp -j ACCEPT</span><br><span class="line">-A INPUT -i lo -j ACCEPT</span><br><span class="line">-A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT</span><br><span class="line">-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT</span><br><span class="line">-A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT</span><br><span class="line">-A INPUT -j REJECT --reject-with icmp-host-prohibited</span><br><span class="line">-A FORWARD -j REJECT --reject-with icmp-host-prohibited</span><br><span class="line">COMMIT</span><br><span class="line">:wq! <span class="comment">#保存退出</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart iptables.service <span class="comment">#最后重启防火墙使配置生效</span></span><br><span class="line">systemctl <span class="built_in">enable</span> iptables.service <span class="comment">#设置防火墙开机启动</span></span><br><span class="line">yum remove iptables   <span class="comment">#卸载iptables</span></span><br></pre></td></tr></table></figure>
+<h2 id="SELinux"><a href="#SELinux" class="headerlink" title="SELinux"></a>SELinux</h2><p>SELinux(Security-Enhanced Linux) 是美国国家安全局（NSA）对于强制访问控制的实现，是 Linux历史上最杰出的新安全子系统。它不是用来防火墙设置的。但它对Linux系统的安全很有用。Linux内核(Kernel)从2.6就有了SELinux。  </p>
+<p>SELinux是一种基于 域-类型 模型（domain-type）的强制访问控制（MAC）安全系统，它由NSA编写并设计成内核模块包含到内核中，相应的某些安全相关的应用也被打了SELinux的补丁，最后还有一个相应的安全策略。任何程序对其资源享有完全的控制权。假设某个程序打算把含有潜在重要信息的文件扔到/tmp目录下，那么在DAC情况下没人能阻止他。SELinux提供了比传统的UNⅨ权限更好的访问控制。</p>
+<h2 id="关闭SELinux"><a href="#关闭SELinux" class="headerlink" title="关闭SELinux"></a>关闭SELinux</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi  /etc/selinux/config</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELINUX=enforcing <span class="comment">#注释掉  </span></span><br><span class="line">SELINUXTYPE=targeted <span class="comment">#注释掉  </span></span><br><span class="line">SELINUX=disabled <span class="comment">#增加</span></span><br></pre></td></tr></table></figure>
+<p>:wq! #保存退出<br>setenforce 0 #使配置立即生效</p>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/Centos7.0 中的中iptables、firewall和SELINUX/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1890,22 +1978,424 @@ firewall是动态防
       
         
           
-            <p>
-              前端布局非常重要的一环就是页面框架的搭建，也是最基础的一环。在页面框架的搭建之中，又有居中布局、多列布局以及全局布局，今天我们就来总结总结前端干货中的CSS布局。
-居中布局水平居中1）使用inline-block+text-align（1）原理、用法
+            <p>前端布局非常重要的一环就是页面框架的搭建，也是最基础的一环。在页面框架的搭建之中，又有居中布局、多列布局以及全局布局，今天我们就来总结总结前端干货中的CSS布局。</p>
+<h3 id="居中布局"><a href="#居中布局" class="headerlink" title="居中布局"></a>居中布局</h3><h4 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h4><p>1）使用inline-block+text-align<br>（1）原理、用法</p>
+<ul>
+<li>原理：先将子框由块级元素改变为行内块元素，再通过设置行内块元素居中以达到水平居中。</li>
+<li>用法：对子框设置display:inline-block，对父框设置text-align:center。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.child&#123;</span><br><span class="line">    display:inline-block;</span><br><span class="line">&#125;</span><br><span class="line">.parent&#123;</span><br><span class="line">    text-align:center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:兼容性好，甚至可以兼容ie6、ie7</li>
+<li>缺点:child里的文字也会水平居中，可以在.child添加text-align:left;还原</li>
+</ul>
+<p>2）使用table+margin<br>（1）原理、用法</p>
+<ul>
+<li>原理：先将子框设置为块级表格来显示（类似 <table>），再设置子框居中以达到水平居中。</table></li>
+<li>用法：对子框设置display:table，再设置margin:0 auto。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.child &#123;</span><br><span class="line">    display:table;</span><br><span class="line">    margin:0 auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点：</p>
+<ul>
+<li>优点：只设置了child，ie8以上都支持</li>
+<li>缺点：不支持ie6、ie7,将div换成table</li>
+</ul>
+<p>3）使用absolute+transform<br>（1）原理、用法</p>
+<ul>
+<li>原理：将子框设置为绝对定位，移动子框，使子框左侧距离相对框左侧边框的距离为相对框宽度的一半，再通过向左移动子框的一半宽度以达到水平居中。当然，在此之前，我们需要设置父框为相对定位，使父框成为子框的相对框。</li>
+<li>用法：对父框设置position:relative，对子框设置position:absolute，left:50%，transform:translateX(-50%)。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    position:relative;</span><br><span class="line">&#125;</span><br><span class="line">.child &#123;</span><br><span class="line">    position:absolute;</span><br><span class="line">    left:50%;</span><br><span class="line">    transform:translateX(-50%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:居中元素不会对其他的产生影响</li>
+<li>缺点:transform属于css3内容，兼容性存在一定问题，高版本浏览器需要添加一些前缀</li>
+</ul>
+<p>4）使用flex+margin<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过CSS3中的布局利器flex将子框转换为flex item，再设置子框居中以达到居中。</li>
+<li>用法：先将父框设置为display:flex，再设置子框margin:0 auto。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    display:flex;</span><br><span class="line">&#125;</span><br><span class="line">.child &#123;</span><br><span class="line">    margin:0 auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>缺点:低版本浏览器(ie6 ie7 ie8)不支持</li>
+</ul>
+<p>5）使用flex+justify-content<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过CSS3中的布局利器flex中的justify-content属性来达到水平居中。</li>
+<li>用法：先将父框设置为display:flex，再设置justify-content:center。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    display:flex;</span><br><span class="line">    justify-content:center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:设置parent即可</li>
+<li>缺点:低版本浏览器(ie6 ie7 ie8)不支持</li>
+</ul>
+<h4 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h4><p>1）使用table-cell+vertical-align<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过将父框转化为一个表格单元格显示（类似 <td> 和 <th>），再通过设置属性，使表格单元格内容垂直居中以达到垂直居中。</th></td></li>
+<li>用法：先将父框设置为display:table-cell，再设置vertical-align:middle。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    display:table-cell;</span><br><span class="line">    vertical-align:middle;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:兼容性较好，ie8以上均支持</li>
+</ul>
+<p>2）使用absolute+transform<br>（1）原理、用法</p>
+<ul>
+<li>原理：类似于水平居中时的absolute+transform原理。将子框设置为绝对定位，移动子框，使子框上边距离相对框上边边框的距离为相对框高度的一半，再通过向上移动子框的一半高度以达到垂直居中。当然，在此之前，我们需要设置父框为相对定位，使父框成为子框的相对框。</li>
+<li>用法：先将父框设置为position:relative，再设置子框position:absolute，top:50%，transform:translateY(-50%)。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    position:relative;</span><br><span class="line">&#125;</span><br><span class="line">.child &#123;</span><br><span class="line">    position:absolute;</span><br><span class="line">    top:50%;</span><br><span class="line">    transform:translateY(-50%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:居中元素不会对其他的产生影响</li>
+<li>缺点:transform属于css3内容，兼容性存在一定问题，高版本浏览器需要添加一些前缀</li>
+</ul>
+<p>3）使用flex+align-items<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过设置CSS3中的布局利器flex中的属性align-times，使子框垂直居中。</li>
+<li>用法：先将父框设置为position:flex，再设置align-items:center。</li>
+</ul>
+<p>（1）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    position:flex;</span><br><span class="line">    align-items:center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:只设置parent</li>
+<li>缺点:兼容性存在一定问题</li>
+</ul>
+<h4 id="水平垂直居中"><a href="#水平垂直居中" class="headerlink" title="水平垂直居中"></a>水平垂直居中</h4><p>1）使用absolute+transform<br>（1）原理、用法</p>
+<ul>
+<li>原理：将水平居中时的absolute+transform和垂直居中时的absolute+transform相结合。详见：水平居中的3）和垂直居中的2）。</li>
+<li>见水平居中的3）和垂直居中的2）。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    position:relative;</span><br><span class="line">&#125;</span><br><span class="line">.child &#123;</span><br><span class="line">    position:absolute;</span><br><span class="line">    left:50%;</span><br><span class="line">    top:50%;</span><br><span class="line">    transform:tranplate(-50%,-50%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:child元素不会对其他元素产生影响</li>
+<li>缺点:兼容性存在一定问题</li>
+</ul>
+<p>2）使用inline-block+text-align+table-cell+vertical-align<br>（1）原理、用法</p>
+<ul>
+<li>原理：使用inline-block+text-align水平居中，再用table-cell+vertical-align垂直居中，将二者结合起来。详见：水平居中的1）和垂直居中的1）。</li>
+<li>见水平居中的1）和垂直居中的1）。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    text-align:center;</span><br><span class="line">    display:table-cell;</span><br><span class="line">    vertical-align:middle;</span><br><span class="line">&#125;</span><br><span class="line">.child &#123;</span><br><span class="line">    display:inline-block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:兼容性较好</li>
+</ul>
+<p>3）使用flex+justify-content+align-items<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过设置CSS3布局利器flex中的justify-content和align-items，从而达到水平垂直居中。详见：水平居中的4）和垂直居中的3）。</li>
+<li>见水平居中的4）和垂直居中的3）。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;child&gt;DEMO&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    display:flex;</span><br><span class="line">    justify-content:center;</span><br><span class="line">    align-items:center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:只设置了parent</li>
+<li>缺点:兼容性存在一定问题</li>
+</ul>
+<h3 id="多列布局"><a href="#多列布局" class="headerlink" title="多列布局"></a>多列布局</h3><h4 id="定宽-自适应"><a href="#定宽-自适应" class="headerlink" title="定宽+自适应"></a>定宽+自适应</h4><p>1）使用float+overflow<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过将左边框脱离文本流，设置右边规定当内容溢出元素框时发生的事情以达到多列布局。</li>
+<li>用法：先将左框设置为float:left、width、margin-left，再设置实际的右框overflow:hidden。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.left &#123;</span><br><span class="line">    float:left;</span><br><span class="line">    width:100px;</span><br><span class="line">    margin-right:20px;</span><br><span class="line">&#125;</span><br><span class="line">.right &#123;</span><br><span class="line">    overflow:hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:简单</li>
+<li>缺点:不支持ie6</li>
+</ul>
+<p>2）使用float+margin<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过将左框脱离文本流，加上右框向右移动一定的距离，以达到视觉上的多列布局。</li>
+<li>用法：先将左框设置为float:left、margin-left，再设置右框margin-left。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.left &#123;</span><br><span class="line">    float:left;</span><br><span class="line">    width:100px;</span><br><span class="line">&#125;</span><br><span class="line">.right &#123;</span><br><span class="line">    margin-left:120px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:简单，易理解</li>
+<li>缺点:兼容性存在一定问题，ie6下有3px的bug。right下的p清除浮动将产生bug</li>
+</ul>
+<p>3）使用float+margin（改良版）<br>（1）原理、用法</p>
+<ul>
+<li>原理：在1）的基础之上，通过向右框添加一个父框，再加上设置左、右父框属性使之产生BFC以去除bug。</li>
+<li>用法：先将左框设置为float:left、margin-left、position:relative，再设置右父框float:right、width:100%、margin-left，最后设置实际的右框margin-left。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;rigth-fix&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">            &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">            &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.left &#123;</span><br><span class="line">    float:left;</span><br><span class="line">    width:100px;</span><br><span class="line">    position:relative;</span><br><span class="line">&#125;</span><br><span class="line">.right-fix &#123;</span><br><span class="line">    float:right;</span><br><span class="line">    width:100%;</span><br><span class="line">    margin-left:-100px;</span><br><span class="line">&#125;</span><br><span class="line">.right &#123;</span><br><span class="line">    margin-left:120px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:简单，易理解</li>
+</ul>
+<p>4）使用table<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过将父框设置为表格，将左右边框转化为类似于同一行的td，从而达到多列布局。</li>
+<li>用法：先将父框设置为display:table、width:100%、table-layout:fixed，再设置左右框display:table-cell，最后设置左框width、padding-right。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    display:table;</span><br><span class="line">    width:100%;</span><br><span class="line">    table-layout:fixed;</span><br><span class="line">&#125;</span><br><span class="line">.left &#123;</span><br><span class="line">    width:100px;</span><br><span class="line">    padding-right:20px;</span><br><span class="line">&#125;</span><br><span class="line">.right,.left &#123;</span><br><span class="line">    display:table-cell;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>5）使用flex<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过设置CSS3布局利器flex中的flex属性以达到多列布局。</li>
+<li>用法：先将父框设置为display:flex，再设置左框flex:1，最后设置左框width、margin-right。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    display:flex;</span><br><span class="line">&#125;</span><br><span class="line">.left &#123;</span><br><span class="line">    width:100px;</span><br><span class="line">    margin-right:20px;</span><br><span class="line">&#125;</span><br><span class="line">.right &#123;</span><br><span class="line">    flex:1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:flex很强大</li>
+<li>缺点:兼容性存在一定问题，性能存在一定问题</li>
+</ul>
+<h4 id="两列定宽-一列自适应"><a href="#两列定宽-一列自适应" class="headerlink" title="两列定宽+一列自适应"></a>两列定宽+一列自适应</h4><p>（1）原理、用法</p>
+<ul>
+<li>原理：这种情况与两列定宽查不多。</li>
+<li>用法：先将左、中框设置为float:left、width、margin-right，再设置右框overflow:hidden。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;center&quot;&gt;</span><br><span class="line">        &lt;p&gt;center&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.left,.center &#123;</span><br><span class="line">    float:left;</span><br><span class="line">    width:100px;</span><br><span class="line">    margin-right:20px;</span><br><span class="line">&#125;</span><br><span class="line">.right &#123;</span><br><span class="line">    overflow:hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="不定宽-自适应"><a href="#不定宽-自适应" class="headerlink" title="不定宽+自适应"></a>不定宽+自适应</h4><p>1）使用float+overflow<br>（1）原理、用法</p>
+<ul>
+<li>原理：这种情况与两列定宽查不多。</li>
+<li>用法：先将左框设置为float:left、margin-right，再设置右框overflow: hidden，最后设置左框中的内容width。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.left&#123;</span><br><span class="line">        float: left;</span><br><span class="line">        margin-right: 20px;</span><br><span class="line">    &#125;</span><br><span class="line">.right&#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">.left p&#123;</span><br><span class="line">    width: 200px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:简单</li>
+<li>缺点:ie6下兼容性存在一定问题</li>
+</ul>
+<p>2）使用table<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过将父框改变为表格，将左右框转换为类似于同一行的td以达到多列布局，设置父框宽度100%，给左框子元素一个固定宽度从而达到自适应。</li>
+<li>用法：先将父框设置为display: table、width: 100%，再设置左、右框display: table-cell，最后设置左框width: 0.1%、padding-right以及左框中的内容width。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.parent&#123;</span><br><span class="line">    display: table; width: 100%;</span><br><span class="line">    &#125;</span><br><span class="line">.left,.right&#123;</span><br><span class="line">    display: table-cell;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">    width: 0.1%;</span><br><span class="line">    padding-right: 20px;</span><br><span class="line">&#125;</span><br><span class="line">.left p&#123;</span><br><span class="line">    width:200px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>缺点:ie6 ie7不支持</li>
+</ul>
+<p>3）使用flex<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过设置CSS3布局利器flex中的flex属性以达到多列布局，加上给左框中的内容定宽、给右框设置flex达到不定款+自适应。</li>
+<li>用法：先将父框设置为display:flex，再设置右框flex:1，最后设置左框margin-right:20px、左框中的内容width。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    display:flex;</span><br><span class="line">&#125;</span><br><span class="line">.left &#123;</span><br><span class="line">    margin-right:20px;</span><br><span class="line">&#125;</span><br><span class="line">.right &#123;</span><br><span class="line">    flex:1;</span><br><span class="line">&#125;</span><br><span class="line">.left p&#123;</span><br><span class="line">    width: 200px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:flex很强大</li>
+<li>缺点:兼容性存在一定问题，性能存在一定问题</li>
+</ul>
+<h4 id="两列不定宽-一列自适应"><a href="#两列不定宽-一列自适应" class="headerlink" title="两列不定宽+一列自适应"></a>两列不定宽+一列自适应</h4><p>（1）原理、用法</p>
+<ul>
+<li>原理：这个情况与一列不定宽+一列自适应查不多。</li>
+<li>用法：先将左、中框设置为float:left、margin-right，再设置右框overflow:hidden，最后给左中框中的内容设置width。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;center&quot;&gt;</span><br><span class="line">        &lt;p&gt;center&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.left,.center&#123;</span><br><span class="line">    float: left;</span><br><span class="line">    margin-right: 20px;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">.left p,.center p&#123;</span><br><span class="line">    width: 100px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="等分布局"><a href="#等分布局" class="headerlink" title="等分布局"></a>等分布局</h4><p><img src="https://segmentfault.com/img/bV5ioR?w=619&amp;h=362" alt="img"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">公式转化:</span><br><span class="line">l = w * n + g * (n-1) -&gt; l = w * n + g * n - g -&gt; l + g = （w + g） * n</span><br></pre></td></tr></table></figure>
+<p><img src="https://segmentfault.com/img/bV5ioO?w=610&amp;h=375" alt="img"></p>
+<p>因此，我们需要解决两个问题：</p>
+<ul>
+<li>如何让总宽度增加g(即：L+g)</li>
+<li>如何让每个宽包含g（即：w+g）</li>
+</ul>
+<p>1）使用float<br>（1）原理、用法</p>
+<ul>
+<li>原理：增大父框的实际宽度后，使用CSS3属性box-sizing进行布局的辅助。</li>
+<li>用法：先将父框设置为margin-left: -*px，再设置子框float: left、width: 25%、padding-left、box-sizing: border-box。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;2&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;3&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;4&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.parent&#123;</span><br><span class="line">    margin-left: -20px;//l增加g</span><br><span class="line">&#125;</span><br><span class="line">.column&#123;</span><br><span class="line">    float: left;</span><br><span class="line">    width: 25%;</span><br><span class="line">    padding-left: 20px;</span><br><span class="line">    box-sizing: border-box;//包含padding区域 w+g</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点：兼容性较好</li>
+<li>缺点：ie6 ie7百分比兼容存在一定问题</li>
+</ul>
+<p>2）使用table<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过增加一个父框的修正框，增大其宽度，并将父框转换为table，将子框转换为tabel-cell进行布局。</li>
+<li>用法：先将父框的修正框设置为margin-left: -*px，再设置父框display: table、width:100%、table-layout: fixed，设置子框display: table-cell、padding-left。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent-fix&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;column&quot;&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;column&quot;&gt;&lt;p&gt;2&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;column&quot;&gt;&lt;p&gt;3&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;column&quot;&gt;&lt;p&gt;4&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.parent-fix&#123;</span><br><span class="line">    margin-left: -20px;//l+g</span><br><span class="line">&#125;</span><br><span class="line">.parent&#123;</span><br><span class="line">    display: table;</span><br><span class="line">    width:100%;</span><br><span class="line">    table-layout: fixed;</span><br><span class="line">&#125;</span><br><span class="line">.column&#123;</span><br><span class="line">    display: table-cell;</span><br><span class="line">    padding-left: 20px;//w+g</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点：结构和块数无关联</li>
+<li>缺点：增加了一层</li>
+</ul>
+<p>3）使用flex<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过设置CSS3布局利器flex中的flex属性以达到等分布局。</li>
+<li>用法：将父框设置为display: flex，再设置子框flex: 1，最后设置子框与子框的间距margin-left。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;1&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;2&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;3&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;column&quot;&gt;&lt;p&gt;4&lt;/p&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.parent&#123;</span><br><span class="line">    display: flex;</span><br><span class="line">&#125;</span><br><span class="line">.column&#123;</span><br><span class="line">    flex: 1;</span><br><span class="line">&#125;</span><br><span class="line">.column+.column&#123;</span><br><span class="line">    margin-left:20px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点：代码量少，与块数无关</li>
+<li>缺点：兼容性存在一定问题</li>
+</ul>
+<h4 id="定宽-自适应-两块高度一样高"><a href="#定宽-自适应-两块高度一样高" class="headerlink" title="定宽+自适应+两块高度一样高"></a>定宽+自适应+两块高度一样高</h4><p>1）使用float<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过过分加大左右子框的高度，辅助超出隐藏，以达到视觉上的等高。</li>
+<li>用法：将父框设置overflow: hidden，再设置左右子框padding-bottom: 9999px、margin-bottom: -9999px，最后设置左框float: left、width、margin-right，右框overflow: hidden。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">p&#123;</span><br><span class="line">    background: none!important;</span><br><span class="line">&#125;</span><br><span class="line">.left,.right&#123;</span><br><span class="line">    background: #444;</span><br><span class="line">&#125;</span><br><span class="line">.parent&#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">.left,.right&#123;</span><br><span class="line">    padding-bottom: 9999px;</span><br><span class="line">    margin-bottom: -9999px;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">    float: left; </span><br><span class="line">    width: 100px;</span><br><span class="line">    margin-right: 20px;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(3)优缺点</p>
+<ul>
+<li>优点：兼容性好</li>
+<li>缺点：伪等高，不是真正意义上的等高</li>
+</ul>
+<p>2）使用table<br>（1）原理、用法</p>
+<ul>
+<li>原理：将父框转化为tabel，将子框转化为tabel-cell布局，以达到定宽+自适应+两块高度一样高。</li>
+<li>用法：先将父框设置为display:table、width:100%、table-layout:fixed，再设置左右框为display:table-cell，最后设置左框width、padding-right。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    display:table;</span><br><span class="line">    width:100%;</span><br><span class="line">    table-layout:fixed;</span><br><span class="line">&#125;</span><br><span class="line">.left &#123;</span><br><span class="line">    width:100px;</span><br><span class="line">    padding-right:20px;</span><br><span class="line">&#125;</span><br><span class="line">.right,.left &#123;</span><br><span class="line">    display:table-cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3）使用flex<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过设置CSS3布局利器flex中的flex属性以达到定宽+自适应+两块高度一样高。</li>
+<li>用法：将父框设置为display: flex，再设置左框width、margin-right，最后设置右框flex:1。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;</span><br><span class="line">        &lt;p&gt;left&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;right&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    display:flex;</span><br><span class="line">&#125;</span><br><span class="line">.left &#123;</span><br><span class="line">    width:100px;</span><br><span class="line">    margin-right:20px;</span><br><span class="line">&#125;</span><br><span class="line">.right &#123;</span><br><span class="line">    flex:1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）优缺点</p>
+<ul>
+<li>优点:代码少，flex很强大</li>
+<li>缺点:兼容性存在一定问题</li>
+</ul>
+<p>4)使用display<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过设置display中的CSS3的-webkit-box属性以达到定宽+自适应+两块高度一样高。</li>
+<li>用法：将父框设置为display: -webkit-box、width: 100%，再设置左框width、margin-right，最后设置右框-webkit-box-flex: 1。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;left&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;right &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    width: 100%;</span><br><span class="line">    display: -webkit-box;</span><br><span class="line">&#125;</span><br><span class="line">.left &#123;</span><br><span class="line">    width:100px;</span><br><span class="line">    margin-right: 20px;</span><br><span class="line">&#125;</span><br><span class="line">.right &#123;</span><br><span class="line">    -webkit-box-flex: 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(3)优缺点</p>
+<ul>
+<li>缺点:兼容性存在较大的问题</li>
+</ul>
+<h3 id="全屏布局"><a href="#全屏布局" class="headerlink" title="全屏布局"></a>全屏布局</h3><h4 id="全屏布局的特点"><a href="#全屏布局的特点" class="headerlink" title="全屏布局的特点"></a>全屏布局的特点</h4><ul>
+<li>滚动条不是全局滚动条，而是出现在内容区域里，往往是主内容区域</li>
+<li>浏览器变大时，撑满窗口</li>
+</ul>
+<h4 id="全屏布局的方法"><a href="#全屏布局的方法" class="headerlink" title="全屏布局的方法"></a>全屏布局的方法</h4><p><img src="https://segmentfault.com/img/bV5im3?w=1144&amp;h=776" alt="img"></p>
+<p>1）使用position<br>（1）原理、用法</p>
+<ul>
+<li>原理：将上下部分固定，中间部分使用定宽+自适应+两块高度一样高。</li>
+<li>用法：见实例。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;top&quot;&gt;top&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;left&quot;&gt;left&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;inner&quot;&gt;right&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;bottom&quot;&gt;bottom&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">html,body,.parent&#123;</span><br><span class="line">    margin:0;</span><br><span class="line">    height:100%;</span><br><span class="line">    overflow:hidden;</span><br><span class="line">&#125;</span><br><span class="line">body&#123;</span><br><span class="line">    color:white;</span><br><span class="line">&#125;</span><br><span class="line">.top&#123;</span><br><span class="line">    position:absolute;</span><br><span class="line">    top:0;</span><br><span class="line">    left:0;</span><br><span class="line">    right:0;</span><br><span class="line">    height:100px;</span><br><span class="line">    background:blue;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">    position:absolute;</span><br><span class="line">    left:0;</span><br><span class="line">    top:100px;</span><br><span class="line">    bottom:50px;</span><br><span class="line">    width:200px;</span><br><span class="line">    background:red;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">    position:absolute;</span><br><span class="line">    left:200px;</span><br><span class="line">    top:100px;</span><br><span class="line">    bottom:50px;</span><br><span class="line">    right:0;</span><br><span class="line">    background:pink;</span><br><span class="line">    overflow: auto;</span><br><span class="line">&#125;</span><br><span class="line">.right .inner&#123;</span><br><span class="line">    min-height: 1000px;</span><br><span class="line">&#125;</span><br><span class="line">.bottom&#123;</span><br><span class="line">    position:absolute;</span><br><span class="line">    left:0;</span><br><span class="line">    right:0;</span><br><span class="line">    bottom:0;</span><br><span class="line">    height:50px;</span><br><span class="line">    background: black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(3)优缺点</p>
+<ul>
+<li>优点：兼容性好，ie6下不支持</li>
+</ul>
+<p>2）使用flex<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过灵活使用CSS3布局利器flex中的flex属性和flex-direction属性以达到全屏布局。</li>
+<li>用法：见实例。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;top&quot;&gt;top&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;middle&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;left&quot;&gt;left&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;inner&quot;&gt;right&lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;bottom&quot;&gt;bottom&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">html,body,.parent&#123;</span><br><span class="line">    margin:0;</span><br><span class="line">    height:100%;</span><br><span class="line">    overflow:hidden;</span><br><span class="line">&#125;</span><br><span class="line">body&#123;</span><br><span class="line">    color: white;</span><br><span class="line">&#125; </span><br><span class="line">.parent&#123;</span><br><span class="line">    display: flex;</span><br><span class="line">    flex-direction: column;</span><br><span class="line">&#125;</span><br><span class="line">.top&#123;</span><br><span class="line">    height:100px;</span><br><span class="line">    background: blue;</span><br><span class="line">&#125;</span><br><span class="line">.bottom&#123;</span><br><span class="line">    height:50px;</span><br><span class="line">    background: black;</span><br><span class="line">&#125;</span><br><span class="line">.middle&#123;</span><br><span class="line">    flex:1;</span><br><span class="line">    display:flex;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">    width:200px;</span><br><span class="line">    background: red;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">    flex: 1;</span><br><span class="line">    overflow: auto;</span><br><span class="line">    background:pink;</span><br><span class="line">&#125;</span><br><span class="line">.right .inner&#123;</span><br><span class="line">    min-height: 1000px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(3)优缺点</p>
+<ul>
+<li>缺点：兼容性差，ie9及ie9以下不兼容</li>
+</ul>
+<p><img src="https://segmentfault.com/img/bV5im4?w=1162&amp;h=790" alt="img"></p>
+<p>1）使用flex<br>（1）原理、用法</p>
+<ul>
+<li>原理：通过灵活使用CSS3布局利器flex中的flex属性和flex-direction属性以达到全屏布局。</li>
+<li>用法：见实例。</li>
+</ul>
+<p>（2）代码实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;top&quot;&gt;top&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;middle&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;left&quot;&gt;left&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;right&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;inner&quot;&gt;right&lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;bottom&quot;&gt;bottom&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">html,body,.parent&#123;</span><br><span class="line">    margin:0;</span><br><span class="line">    height:100%;</span><br><span class="line">    overflow:hidden;</span><br><span class="line">&#125;</span><br><span class="line">body&#123;</span><br><span class="line">    color:white;</span><br><span class="line">&#125; </span><br><span class="line">.parent&#123;</span><br><span class="line">    display:flex;</span><br><span class="line">    flex-direction:column;</span><br><span class="line">&#125;</span><br><span class="line">.top&#123;</span><br><span class="line">    background:blue;</span><br><span class="line">&#125;</span><br><span class="line">.bottom&#123;</span><br><span class="line">    background:black;</span><br><span class="line">&#125;</span><br><span class="line">.middle&#123;</span><br><span class="line">    flex:1;</span><br><span class="line">    display:flex;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">    background: red;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">    flex:1;</span><br><span class="line">    overflow:auto;</span><br><span class="line">    background: pink;</span><br><span class="line">&#125;</span><br><span class="line">.right .inner&#123;</span><br><span class="line">    min-height:1000px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="全屏布局相关方案的兼容性、性能和自适应一览表"><a href="#全屏布局相关方案的兼容性、性能和自适应一览表" class="headerlink" title="全屏布局相关方案的兼容性、性能和自适应一览表"></a>全屏布局相关方案的兼容性、性能和自适应一览表</h4><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>兼容性</th>
+<th>性能</th>
+<th>是否自适应</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Position</td>
+<td>好</td>
+<td>好</td>
+<td>部分自适应</td>
+</tr>
+<tr>
+<td>Flex</td>
+<td>较差</td>
+<td>差</td>
+<td>可自适应</td>
+</tr>
+<tr>
+<td>Grid</td>
+<td>差</td>
+<td>较好</td>
+<td>可自适应</td>
+</tr>
+</tbody>
+</table>
+<p>当然，最最最最最后，如果您喜欢这片文章，可以疯狂点赞和收藏喔！！</p>
 
-原理：先将子框由块级元素改变为行内块元素，再通
-              ...
-            </p>
-          <!--noindex-->
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/CSS布局解决方案（终结版）/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -2064,23 +2554,48 @@ firewall是动态防
       
         
           
-            <p>
-              docker容器，我们想直接通过ssh链接docker容器，而不是通过宿主机进入的方式
-首先，先了解一下docker，docker 命令
-启动docker，进入docker容器
-1.如果是守护态容器，可以通过下面的方式进入：
-docker exec -it 42d099e3fdca /bin/bas
-              ...
-            </p>
-          <!--noindex-->
+            <p>docker容器，我们想直接通过ssh链接docker容器，而不是通过宿主机进入的方式</p>
+<p>首先，先了解一下docker，<a href="http://www.fecshop.com/topic/591" target="_blank" rel="noopener">docker 命令</a></p>
+<p>启动docker，进入docker容器</p>
+<p>1.如果是守护态容器，可以通过下面的方式进入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 42d099e3fdca /bin/bash （3c0498ea5254是CONTAINER ID）</span><br></pre></td></tr></table></figure>
+<p>2.进入docker后，使用passwd密码来修改密码（如提示没有这个命令行使用<code>yum install passwd</code>安装）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br><span class="line">    xxx密码</span><br><span class="line">    xxx确认密码</span><br></pre></td></tr></table></figure>
+<p>3.安装Openssh（docker 容器中执行）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install openssh-server</span><br><span class="line">$ sudo yum -y install openssh-clients</span><br></pre></td></tr></table></figure>
+<p>修改SSH配置文件以下选项，去掉#注释，将四个选项启用：</p>
+<p>vi /etc/ssh/sshd_config</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RSAAuthentication yes #启用 RSA 认证</span><br><span class="line">PubkeyAuthentication yes #启用公钥私钥配对认证方式</span><br><span class="line">AuthorizedKeysFile .ssh/authorized_keys #公钥文件路径（和上面生成的文件同）</span><br><span class="line">PermitRootLogin yes #root能使用ssh登录</span><br></pre></td></tr></table></figure>
+<p>重启ssh服务，并设置开机启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service sshd restart</span><br><span class="line">$ chkconfig sshd on</span><br></pre></td></tr></table></figure>
+<p>4.退出容器并保存更改</p>
+<p>使用exit命令或者ctrl+C来退出当前运行的容器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@ffe81683c404 /]# exit</span><br></pre></td></tr></table></figure>
+<p>注意：上面<code>ffe81683c404</code>是容器的ID，退出后用于保存的唯一ID。</p>
+<p>当结束后，我们使用 exit 来退出</p>
+<p>现在我们的容器已经被我们改变了，使用 <code>docker commit</code> 命令，将当前的容器生成镜像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker commit -m &apos;install openssh&apos; -a &apos;Docker Newbee&apos; ffe81683c404  centos6-jdk7:ssh</span><br><span class="line">4f177bd27a9ff0f6dc2a830403925b5360bfe0b93d476f7fc3231110e7f71b1c</span><br></pre></td></tr></table></figure>
+<p><code>-m</code>:来指定提交的说明信息，跟我们使用的版本控制工具一样</p>
+<p><code>-a</code> 可以指定更新的用户信息</p>
+<p><code>ffe81683c404</code>： 创建镜像的容器的ID，就是上面的容器id，也就是我们刚才进入的容器id</p>
+<p><code>centos6-jdk7:ssh</code>: 目标镜像的仓库名和 tag 信息，冒号前面部分是生成的镜像的仓库名字，冒号后面是镜像tag</p>
+<p>创建成功后会返回这个镜像的 ID 信息，查看镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<p>5.启动新的容器并打通22端口</p>
+<p>将新的镜像启动，并将docker服务器的50001端口映射到容器的22端口上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 2222:22 centos6-jdk7:ssh /usr/sbin/sshd -D</span><br></pre></td></tr></table></figure>
+<p>然后用xshell连接，</p>
+<p><code>ip</code>: 为宿主主机的ip，而不是docker容器的ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">端口`:就是上面的`2222</span><br></pre></td></tr></table></figure>
+<p><code>用户名</code>： root</p>
+<p><code>密码</code>： 就是上面password部分设置的密码</p>
+<p>即可连接成功</p>
+<p>6.关掉该容器</p>
+<p>在宿主机通过 <code>docker stop 容器id</code> 即可关闭</p>
+<p>启动容器 <code>docker start 容器id</code></p>
+<p>启动后，就可以用xshell进行连接。</p>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/29/ssh直接登录docker容器/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -2414,12 +2929,6 @@ docker exec -it 42d099e3fdca /bin/bas
 
 
 
-
-  
-    
-    
-  
-  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
 
