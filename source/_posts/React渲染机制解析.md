@@ -6,155 +6,356 @@ tags:
 categories: 前端
 ---
 
-### React渲染过程
+在介绍React渲染机制之间先来说一说下面几个概念，对于新入手React的学员来说，经常会被搞蒙圈。
+       **React与ReactDOM区别**
+       在v0.14前,ReactDOM是React的函数，之所以在v0.14之后分成两个包是package是因为
 
-我们都知道使用React可以使得网页的性能有很大的提高，本文具体探究它是通过什么样的渲染机制做到的。
+> ​      As we look at packages like react-native, react-art, react-canvas, and react-three, it has become clear that the beauty and essence of React has nothing to do with browsers or the DOM.
+> ​       To make this more clear and to make it easier to build more environments that React can render to, we’re splitting the main react package into two: react and react-dom. This paves the way to writing components that can be shared between the web version of React and React Native. We don’t expect all the code in an app to be shared, but we want to be able to share the components that do behave the same across platforms.
 
-在页面一开始打开的时候，React会调用render函数构建一棵Dom树，在state/props发生改变的时候，render函数会被再次调用渲染出另外一棵树，接着，React会用对两棵树进行对比，找到需要更新的地方批量改动。
+​      可见，React分为react-dom和react的原因是React-Native的出现，它可以实现跨平台实现相同的组件。
+​       react包包含了React.createElement、 .createClass、 .Component、 .PropTypes、.Children以及其他的描述元素和组件的类。
+​       react-dom包包含了ReactDOM.render、.unmountComponentAtNode和.findDOMNode等。下面看一个创建组件的实例：
 
-### Diff 算法
-
-这个过程中，比较两棵Dom tree高效找出需要更新的地方是很重要的。React基于两个假设：
-
-- 两个相同的组件产生类似的DOM结构，不同组件产生不同DOM结构
-- 对于同一层次的一组子节点，它们可以通过唯一的id区分
-
-发明了一种叫Diff的算法，它极大的优化了这个比较的过程，将算法复杂度从O(n^3)降低到O(n)。
-
-同时，基于第一点假设，我们可以推论出，Diff算法只会对同层的节点进行比较。如图，它只会对颜色相同的节点进行比较。
-
-![img](React渲染机制解析/squares.svg)
-
-也就是说如果父节点不同，React将不会在去对比子节点。因为不同的组件DOM结构会不相同，所以就没有必要在去对比子节点了。这也提高了对比的效率。
-
-下面，我们具体看下Diff算法是怎么做的，这里分为两种情况考虑
-
-- 节点类型不同
-- 节点类型相同，但是属性不同
-
-### 不同节点类型
-
-对于不同的节点类型，react会基于第一条假设，直接删去旧的节点，新建一个新的节点。
-
-比如：
-
-```
-<A>
-  <C/>
-</A>
-// 由shape1到shape2
-<B>
-  <C/>
-</B>
+```javascript
+var React = require('react');
+var ReactDOM = require('react-dom');
+var MyComponent = React.createClass({
+render: function() {
+return <div>Hello World</div>;
+}
+});
+ReactDOM.render(<MyComponent />, node);
 ```
 
-React会直接删掉A节点（包括它所有的子节点）,然后新建一个B节点插入。
+​      ReactDOM.render是React的最基本方法用于将模板转为HTML语言，并插入指定的DOM节点。它可以将一个React元素呈现在指定的DOM container中，并返回对组件的引用对象。
 
-为了验证这一点，我打印出了从shape1到shape2节点的生命周期，gitbub链接：
-[https://github.com/hhhuangqio...](https://github.com/hhhuangqiong/reconciliation)
+​      **Component、Element和Component**
 
-感兴趣的可以自己跑一跑代码~
+​       **Component**
+​       Component组件就是JavaScript函数，可以接受任意参数。可以使用createClass和Component创建组件。createClass如其名就是创建React组件对应的类，描述你将要创建组件的各种行为，其中只有当组件被渲染时需要输出的内容的render接口是必须实现的，其他都是可选：
 
-```
-Shape1 :
-A is created 
-A render
-C is created
-C render
-C componentDidMount
-A componentDidMount
-
-Shape2 :
-A componentWillUnmount
-C componentWillUnmount
-B is created
-B render
-C is created
-C render
-C componentDidMount
-B componentDidMount
+```javascript
+var SayHello = React.createClass({
+      render: function() {
+      return <div>Hello {this.props.name}</div>;
+    }
+});
 ```
 
-由此可以看出，A与其子节点C会被直接删除，然后重新建一个B，C插入。
+从 React 0.13 开始，可以使用 ES6 Class代替 React.createClass了
 
-### 相同节点类型
-
-当对比相同的节点类型比较简单，react会对比它们的属性，只改变需要改变的属性
-
-比如：
-
-```
-<div className="before" title="stuff" />
-
-<div className="after" title="stuff" />
+```javascript
+class SayHello extends React.Component {
+render() {
+return <div>Hello {this.props.name}</a> </div>;
+}
+}
 ```
 
-这两个div中，react会只更新className的值
+注意：（1）为了区分Component和DOM 元素，所有Component名字要首字母大写。
+       （2）所有的React组件都不能修改它的prop属性的值
+        **Element**
+       Element是class的一个实例，它描述DOM节点或component实例的字面级对象。它包含一些信息，包括组件类型type和属性props。就像一个描述DOM节点的元素(虚拟节点)。可以使用createElement，创建React组件实例
 
-```
-<div style={{color: 'red', fontWeight: 'bold'}} />
-
-<div style={{color: 'green', fontWeight: 'bold'}} />
-```
-
-这两个div中，react只会去更新color的值
-
-### 列表比较
-
-```
-<div>
-  <A />
-  <B />
-</div>
-// 列表一到列表二
-<div>
-  <A />
-  <C />
-  <B />
-</div>
+```javascript
+ReactElement.createElement= function(type, config, children) {
+...
+}
 ```
 
-从列表一到列表二，只是在中间插入了一个C，但是如果没有key的时候，react会把B删去，新建一个C放在B的位置，然后重新建一个节点B放在尾部。
+在上一篇文章中我们已经讲到，当我们用JSX来描述< SayHello />时 ，编译后就是React.createElement()。
+       **Factory**
+       React.createFactory和ReactElement.createElement一样，但是
+ Factory返回的是给定元素类型或组件类的实例。React.createFactory的定义基本就是如下形式，Element 的类型被提前绑定了
 
-你说什么就是什么咯？！不信的话，我们还是跑一边代码，看看生命周期验证一下
-
-```
-列表一：
-A is created
-A render
-B is created
-B render
-A componentDidMount
-B componentDidMount
-
-列表二：
-A render
-B componentWillUnmount
-C is created
-C render
-B is created
-B render
-A componentDidUpdate
-C componentDidMount
-B componentDidMount
+```javascript
+ReactElement.createFactory = function (type) {
+var factory = ReactElement.createElement.bind(null, type);
+    factory.type = type;
+    return factory;
+};
 ```
 
-当节点很多的时候，这样做是非常低效的，所以我们需要给每个节点配一个key，让react可以识别出来哪些节点是一样的，不需要重新创建。
-配上key之后，在跑一遍代码看看，
+官方鼓励使用JSX或者React.creatElement。下面进入今天的主题：React的渲染机制
+       **React渲染机制**
+       假设要实现的渲染代码如下：
 
+```javascript
+  class Form extends React.Component {
+    constructor() {
+    super();
+  }
+  render() {
+    return (
+        <form>
+          <input type="text"/>
+        </form>
+    );
+  }
+}
+
+ReactDOM.render( (
+  <div className="test">
+    <p>请输入你的信息</p>
+    <Form/>
+  </div>
+), document.getElementById('example'))
 ```
-A render
-C is created
-C render
-B render
-A componentDidUpdate
-C componentDidMount
-B componentDidUpdate
+
+​      从ReactDOM入口开始，找到ReactDOM.js文件
+
+```javascript
+var ReactDOMComponentTree = require('./ReactDOMComponentTree');
+var ReactDefaultInjection = require('./ReactDefaultInjection');
+var ReactMount = require('./ReactMount');
+var ReactReconciler = require('./ReactReconciler');
+var ReactUpdates = require('./ReactUpdates');
+var ReactVersion = require('./ReactVersion');
+
+var findDOMNode = require('./findDOMNode');
+var getHostComponentFromComposite = require('./getHostComponentFromComposite');
+var renderSubtreeIntoContainer = require('./renderSubtreeIntoContainer');
+var warning = require('fbjs/lib/warning');
+ReactDefaultInjection.inject(); 
+var ReactDOM = {
+  findDOMNode: findDOMNode,
+  render: ReactMount.render,
+  unmountComponentAtNode: ReactMount.unmountComponentAtNode,
+  version: ReactVersion,
+
+  /* eslint-disable camelcase */
+  unstable_batchedUpdates: ReactUpdates.batchedUpdates,
+  unstable_renderSubtreeIntoContainer: renderSubtreeIntoContainer
+  /* eslint-enable camelcase */
+};
 ```
 
-果然，配上key之后，列表二的生命周期就如我所愿，只在指定的位置创建C节点插入。
-这里要注意的一点是，key值必须是稳定（所以我们不能用Math.random()去创建key），可预测，并且唯一的。
+​      ReactDOM.render()方法来自ReactMount文件的render方法：
 
-## 小结
+```javascript
+render: function (nextElement, container, callback) {
+    return ReactMount._renderSubtreeIntoContainer(null, nextElement, container, callback);
+  },
+```
 
-React整个的渲染机制就是在state/props发生改变的时候，重新渲染所有的节点，构造出新的虚拟Dom tree跟原来的Dom tree用Diff算法进行比较，得到需要更新的地方在批量造作在真实的Dom上，由于这样做就减少了对Dom的频繁操作，从而提升的性能。
+​       Render方法返回的是当前文件下的_renderSubtreeIntoContainer方法，顾名思义，它的作用是将子树nextElement注入到指定的container中，并调用其回调方法_renderSubtreeIntoContainer方法主要完成以下一个功能：
+
+1. 调用React.createElement生成待插入节点的虚拟DOM的实例对象（上篇文章中已经讲到，这里就不再重复叙述）
+2. 与之前的component比较，如果是初次渲染直接将虚拟DOM转换为真实DOM
+3. 将真实的组件写到对应的container节点中
+
+```javascript
+_renderSubtreeIntoContainer: function (parentComponent, nextElement, container, callback) {
+/*
+*将callback放入到React的更新队列中，判断nextElement有效性以及当前是发开环境还是生产环境。（代码省略）
+*/
+…
+
+var nextWrappedElement = React.createElement(TopLevelWrapper, {child: nextElement});
+// 返回一个ReactElement实例对象，也就是虚拟DOM的实例对象，下面就要把它渲染出来
+var nextContext;
+/*（1）判断是否有parentComponent，如果有则将其写到parentComponent*/
+if (parentComponent) {
+var parentInst = ReactInstanceMap.get(parentComponent);
+nextContext = parentInst._processChildContext(parentInst._context);
+} else {
+nextContext = emptyObject;
+}
+
+var prevComponent =getTopLevelWrapperInContainer(container);
+ /*
+*（2）判断是否有prevComponent，如果有则取其child，利用Diff算法判断是否需要更新，如果需要则调用_updateRootComponen 方法，并return结果。对于初次渲染不需要该过程。 
+*/
+
+if (prevComponent) {
+var prevWrappedElement = prevComponent._currentElement;
+var prevElement = prevWrappedElement.props.child;
+ // shouldUpdateReactComponent方法判断是否需要更新,对同一DOM进行比较，type相同，key(如果有)相同的组件做DOM diff 
+
+if (shouldUpdateReactComponent(prevElement, nextElement)) {
+var publicInst = prevComponent._renderedComponent.getPublicInstance();
+var updatedCallback = callback && function () {
+callback.call(publicInst);
+};
+ReactMount._updateRootComponent(prevComponent, nextWrappedElement, nextContext, container, updatedCallback);
+return publicInst;
+} else {
+ReactMount.unmountComponentAtNode(container);
+}
+}
+/*
+*（3）对于prevElement为null直接跳到此步
+var reactRootElement = getReactRootElementInContainer(container);
+var containerHasReactMarkup = reactRootElement && !!internalGetID(reactRootElement);
+var containerHasNonRootReactChild = hasNonRootReactChild(container);
+var shouldReuseMarkup = containerHasReactMarkup && !prevComponent && !containerHasNonRootReactChild;
+/*
+*3核心部分，调用_renderNewRootComponent，_renderedComponent，getPublicInstance三个方法，
+*/
+var component =ReactMount._renderNewRootComponent(nextWrappedElement, container, shouldReuseMarkup, nextContext)._renderedComponent.getPublicInstance();
+if (callback) {
+callback.call(component);
+}
+return component;
+}
+```
+
+下面来看一看ＲenderNewRootComponent方法的源码
+
+**（1）_renderNewRootComponent：**
+
+```javascript
+_renderNewRootComponent: function (nextElement, container, shouldReuseMarkup, context) {
+… …
+ /*
+*第一部分是调用instantiateReactComponen方法返回虚拟DOM对应的DOM，并将其返回结果作为_renderNewRootComponent的最终返回结果 
+*/
+var componentInstance = <a name="OLE_LINK14"></a> <a name="OLE_LINK13">instantiateReactComponent</a> (nextElement, false);
+return componentInstance;
+ /*
+*第二部分是处理batchedMountComponentIntoNode方法，并将上面的结果componentInstance 结果插入到DOM中
+*/*
+
+ReactUpdates.batchedUpdates(batchedMountComponentIntoNode, componentInstance, container, shouldReuseMarkup, context);
+var wrapperID = componentInstance._instance.rootID;
+instancesByReactRootID[wrapperID] = componentInstance;
+return componentInstance;
+}
+```
+
+**解析第一部分：将虚拟DOM生成DOM**
+        再来看一看instantiateReactComponent方法，它是从instantiateReactComponent文件require进来的，输入参数是虚拟DOM节点，主要实现的功能是将虚拟DOM生成DOM。根element的类型不同，分别实例化ReactDOMTextComponent, ReactDOMComponent, ReactCompositeComponent类。
+ 下面来看一看instantiateReactComponent.js源码的伪代码
+
+```javascript
+function instantiateReactComponent(node, shouldHaveDebugID) {
+var instance;
+/*
+*判断node类型，不同的类型调用不同的渲染方法
+*/
+/*节点为空*/
+instance = ReactEmptyComponent.create(instantiateReactComponent); 
+/*如果节点是宿主内置节点，譬如浏览器的 的节点*/
+instance = ReactHostComponent.createInternalComponent(element);
+
+instance = new ReactCompositeComponentWrapper(element);
+/*如果节点是字符串或数字*/
+instance = ReactHostComponent.createInstanceForText(node);
+return instance;
+}
+```
+
+**解析第二部分：将新的component分批插入到DOM中**
+        batchedUpdates是ReactUpdates的一个方法，使用batchingStrategy更新DOM
+
+```javascript
+function batchedUpdates(callback, a, b, c, d, e) {
+ensureInjected();
+return batchingStrategy .batchedUpdates(callback, a, b, c, d, e);
+}
+```
+
+​       **batchedUpdates**  方法的回调函数是batchedMountComponentIntoNode方法
+
+```javascript
+function batchedMountComponentIntoNode(componentInstance, container, shouldReuseMarkup, context) {
+var transaction = ReactUpdates.ReactReconcileTransaction.getPooled(
+/* useCreateElement */
+!shouldReuseMarkup && ReactDOMFeatureFlags.useCreateElement);
+transaction.perform(mountComponentIntoNode, null, componentInstance, container, transaction, shouldReuseMarkup, context);
+ReactUpdates.ReactReconcileTransaction.release(transaction);
+}
+```
+
+**batchedMountComponentIntoNode**  方法通过
+ transaction.perform调用mountComponentIntoNode方法。
+
+```javascript
+/*
+* Mounts this component and inserts it into the DOM.
+* @param {ReactComponent} componentInstance The instance to mount.
+* @param {DOMElement} container DOM element to mount into.
+* @param {ReactReconcileTransaction} transaction
+* @param {boolean} shouldReuseMarkup If true, do not insert markup
+*/
+function mountComponentIntoNode(wrapperInstance, container, transaction, shouldReuseMarkup, context) {
+var markerName;
+if (ReactFeatureFlags.logTopLevelRenders) {
+var wrappedElement = wrapperInstance._currentElement.props.child;
+var type = wrappedElement.type;
+markerName = 'React mount: ' + (typeof type === 'string' ? type : type.displayName || type.name);
+console.time(markerName);
+}
+ **//*调用对应ReactReconciler中的mountComponent方法来渲染组件,返回React组件解析后的HTML** 
+
+var markup = ReactReconciler.mountComponent(wrapperInstance, transaction, null, ReactDOMContainerInfo(wrapperInstance, container), context, 0 /* parentDebugID */);
+if (markerName) {
+console.timeEnd(markerName);
+}
+wrapperInstance._renderedComponent._topLevelWrapper = wrapperInstance;
+ /*将解析出来的HTML插入DOM中 ReactMount._mountImageIntoNode</a> (markup, container, wrapperInstance, shouldReuseMarkup, transaction);
+
+}
+```
+
+**_mountImageIntoNode** 可以实现将HTML插入DOM中的操作方法是：
+
+```javascript
+_mountImageIntoNode: function (markup, container, instance, shouldReuseMarkup, transaction) {
+/*是否复用markup
+if (shouldReuseMarkup) {
+/*如果可以复用，直接将instance插入到根元素** 
+var rootElement = getReactRootElementInContainer(container);
+if (ReactMarkupChecksum.canReuseMarkup(markup, rootElement)) {
+ReactDOMComponentTree.precacheNode(instance, rootElement);
+return;
+} else {
+/*创建新的normalizedMarkup
+var checksum = rootElement.getAttribute(ReactMarkupChecksum.CHECKSUM_ATTR_NAME);
+rootElement.removeAttribute(ReactMarkupChecksum.CHECKSUM_ATTR_NAME);
+var rootMarkup = rootElement.outerHTML;
+rootElement.setAttribute(ReactMarkupChecksum.CHECKSUM_ATTR_NAME, checksum);
+var normalizedMarkup = markup;
+if (process.env.NODE_ENV !== 'production') {
+var normalizer;
+if (container.nodeType === ELEMENT_NODE_TYPE) {
+normalizer = document.createElement('div');
+normalizer.innerHTML = markup;
+normalizedMarkup = normalizer.innerHTML;
+} else {
+normalizer = document.createElement('iframe');
+document.body.appendChild(normalizer);
+normalizer.contentDocument.write(markup);
+normalizedMarkup = normalizer.contentDocument.documentElement.outerHTML;
+document.body.removeChild(normalizer);
+}
+}
+if (transaction.
+while (container.lastChild) {
+container.removeChild(container.lastChild);
+}
+DOMLazyTree.insertTreeBefore(container, markup, null);
+} else {
+/*利用innerHTML将markup插入到container这个DOM元素上** 
+setInnerHTML(container, markup);
+ /*将instance保存到container的原生节点firstChild上*/
+ReactDOMComponentTree.precacheNode(instance, container.firstChild);
+}
+if (process.env.NODE_ENV !== 'production') {
+var hostNode = ReactDOMComponentTree.getInstanceFromNode(container.firstChild);
+if (hostNode._debugID !== 0) {
+ReactInstrumentation.debugTool.onHostOperation({
+instanceID: hostNode._debugID,
+type: 'mount',
+payload: markup.toString()
+});
+}
+}
+}
+};
+```
+
+这么多的内容有点懵懵的，下面我们通过简单的流程图总结：
+
+![img](React渲染机制解析/8376068-e0d9c049f2e23863.webp)
