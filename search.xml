@@ -159,6 +159,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[oracle常用命令]]></title>
+    <url>%2F2019%2F03%2F29%2Foracle%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[Oracle中用命令参数详解1、exp/imp——导入、导出【用 exp 数 据 导 出】：1 将数据库TEST完全导出,用户名system 密码manager 导出到D:\daochu.dmp中 1exp east/east@xe file=/root/east.dmp full=y exp east/east@xe file=/root/east.dmp full=yexp east/east file=/root/east.dmp full=y imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y 2、创建表空间2.1先创建一个表空间，例如（临时表空间）create temporary tablespace fitech_temp tempfile ‘/u01/app/oracle/oradata/XE/fitech_temp.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; （永久表空间） create tablespace fitech_data logging datafile ‘/u01/app/oracle/oradata/XE/fitech_data.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; 2.2创建用户并指定表空间（第一个east为用户名，第二个east为密码） create user east identified by east default tablespace fitech_data temporary tablespace fitech_temp; 修改用户表空间 alter user 用户名 default tablespace 表空间名字 ;–创建时候指定表空间 alter user east default tablespace fitech_data temporary tablespace fitech_temp; 2.3给用户分配权限grant connect,resource,dba to east; 2.4使用east用户登录，查看数据库用户正常访问即可3、查看数据库状态lsnrctl status]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[npm常用命令]]></title>
     <url>%2F2019%2F03%2F29%2Fnrm%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
     <content type="text"><![CDATA[一、常用命令12345678910111213#查看包信息npm list -g gulp #安装并查看安装信息npm -loglevel info install -g gulp #发布到https://registry.npmjs.org/npm --registry https://registry.npmjs.org/ publish #设置npm库npm config set registry https://registry.npm.taobao.org/npm config set registry http://registry.npmjs.org #查看当前npm库cat ~/.npmrc#登录npm adduser –-registry http://192.168.101.30:10005/repository/npm-repo-hosted/ 二、nrm的使用开发的npm registry 管理工具 nrm, 能够查看和切换当前使用的registry, 最近NPM经常 down 掉, 这个还是很有用的哈哈 Install1$ npm install -g nrm Example1234567$ nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ eu ----- http://registry.npmjs.eu/ au ----- http://registry.npmjs.org.au/ sl ----- http://npm.strongloop.com/ nj ----- https://registry.nodejitsu.com/ 12$ nrm use cnpm //switch registry to cnpm Registry has been set to: http://r.cnpmjs.org/ 12345cmdnrm help // show helpnrm list // show all registriesnrm use cnpm // switch to cnpmnrm home // go to a registry home page]]></content>
@@ -168,17 +179,6 @@
       <tags>
         <tag>npm</tag>
         <tag>nrm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[oracle常用命令]]></title>
-    <url>%2F2019%2F03%2F29%2Foracle%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
-    <content type="text"><![CDATA[Oracle中用命令参数详解1、exp/imp——导入、导出【用 exp 数 据 导 出】：1 将数据库TEST完全导出,用户名system 密码manager 导出到D:\daochu.dmp中 1exp east/east@xe file=/root/east.dmp full=y exp east/east@xe file=/root/east.dmp full=yexp east/east file=/root/east.dmp full=y imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y 2、创建表空间2.1先创建一个表空间，例如（临时表空间）create temporary tablespace fitech_temp tempfile ‘/u01/app/oracle/oradata/XE/fitech_temp.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; （永久表空间） create tablespace fitech_data logging datafile ‘/u01/app/oracle/oradata/XE/fitech_data.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; 2.2创建用户并指定表空间（第一个east为用户名，第二个east为密码） create user east identified by east default tablespace fitech_data temporary tablespace fitech_temp; 修改用户表空间 alter user 用户名 default tablespace 表空间名字 ;–创建时候指定表空间 alter user east default tablespace fitech_data temporary tablespace fitech_temp; 2.3给用户分配权限grant connect,resource,dba to east; 2.4使用east用户登录，查看数据库用户正常访问即可3、查看数据库状态lsnrctl status]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>oracle</tag>
       </tags>
   </entry>
   <entry>
