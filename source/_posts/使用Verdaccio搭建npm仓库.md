@@ -1,17 +1,14 @@
 ---
-title: 快速掌握Dockerfile
+title: 使用Verdaccio搭建npm仓库
 data:  2017-12-12 08:58:01
 tag:
-- Docker
-- Dockerfile
-categories: Docker
+- npm
+categories: 运维
 ---
 
 # 使用Verdaccio搭建npm仓库
 
 Verdaccio是一个轻量级的私有NPM的Registry（从[Sinopia](https://github.com/rlidwka/sinopia)fork过来的，sinopia最后一次更新是在几年前了）。最开始是打算使用cnpmjs这个来搭建私有的npm仓库但是搭建完成之后存在一些问题，所以使用了Sinopia，本文记录下来搭建的过程。
-
-![verdaccio](http://blog.devzeng.com/images/verdaccio/logo.png)
 
 ### 直接安装
 
@@ -93,7 +90,7 @@ sudo chown -R 200 verdaccio
 
 启动容器之后访问`http://localhost:4873`出现如下界面表示安装成功：
 
-![verdaccio](http://blog.devzeng.com/images/verdaccio/demo.png)
+![img](使用Verdaccio搭建npm仓库/demo.png)
 
 （1）配置使用私有的镜像
 
@@ -116,12 +113,3 @@ npm publish --registry http://localhost:4873
 
 ```
 
-### 参考资料
-
-1、[verdaccio官网](http://www.verdaccio.org/)
-
-2、[使用Sinopia搭建私有的npm仓库](https://github.com/Pines-Cheng/blog/issues/1)
-
-3、[CentOS6.x 安装 Docker 和 Docker Compose](http://blog.csdn.net/kinginblue/article/details/73527832)
-
-4、[谈谈 Docker Volume 之权限管理（一）](https://yq.aliyun.com/articles/53990)
