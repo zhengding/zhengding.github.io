@@ -143,6 +143,19 @@ $ docker system prune
 $ docker stats
 ```
 
+## 11、保存和加载镜像（save、load）
+
+当需要把一台机器上的镜像迁移到另一台机器的时候，需要保存镜像与加载镜像。
+
+```shell
+# 保存镜像到一个tar包; -o, --output="" Write to an file
+$docker save image_name -o file_path
+# 加载一个tar包格式的镜像; -i, --input="" Read from a tar archive file
+$docker load -i file_path
+
+# 机器a
+$docker save image_name > /home/save.tar
+# 使用scp将save.tar拷到机器b上，然后：
+$docker load < /home/save.tar
 ```
-<!--more-->
-```
+
