@@ -123,17 +123,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[tomcat常用配置]]></title>
-    <url>%2F2019%2F03%2F29%2Ftomcat%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%2F</url>
-    <content type="text"><![CDATA[1、启动跳过jar包检查 在conf/catalina.properties中加入 1org.apache.el.parser.SKIP_IDENTIFIER_CHECK=true 2、应用中需要绘图，例如activiti的流程图： 在catalina.sh加入]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-      <tags>
-        <tag>tomcat</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[webpack踩坑之路图片的路径与打包]]></title>
     <url>%2F2019%2F03%2F29%2Fwebpack%E8%B8%A9%E5%9D%91%E4%B9%8B%E8%B7%AF%E5%9B%BE%E7%89%87%E7%9A%84%E8%B7%AF%E5%BE%84%E4%B8%8E%E6%89%93%E5%8C%85%2F</url>
     <content type="text"><![CDATA[刚开始用webpack的同学很容易掉进图片打包这个坑里，比如打包出来的图片地址不对或者有的图片并不能打包进我们的目标文件夹里(bundle)。下面我们就来分析下在webpack项目中图片的应用场景。 在实际生产中有以下几种图片的引用方式： \1. HTML文件中img标签的src属性引用或者内嵌样式引用 12&lt;img src=&quot;photo.jpg&quot; /&gt;&lt;div style=&quot;background:url(photo.jpg)&quot;&gt;&lt;/div&gt; \2. CSS文件中的背景图等设置 123.photo &#123; background: url(photo.jpg);&#125; \3. JavaScript文件中动态添加或者改变的图片引用 12var imgTempl = &apos;&lt;img src=&quot;photo.jpg&quot; /&gt;&apos;;document.body.innerHTML = imgTempl; \4. ReactJS中图片的引用 ;) 12345678910import React from &apos;react&apos;;import ReactDOM from &apos;react-dom&apos;;class App extends React.Component &#123; render() &#123; return (&lt;img src=&apos;photo.jpg&apos; /&gt;); &#125;&#125;ReactDom.render(&lt;App /&gt;, document.querySelector(&apos;#container&apos;)); ;) url-loader 在 webpack 中引入图片需要依赖 url-loader 这个加载器。 安装： 1npm install url-loader --save-dev 当然你可以将其写入配置中，以后与其他工具模块一起安装。 在 webpack.config.js 文件中配置如下： ;) 12345678module: &#123; loaders: [ &#123; test: /\.(png|jpg)$/, loader: &apos;url-loader?limit=8192&apos; &#125; ]&#125; ;) test 属性代表可以匹配的图片类型，除了 png、jpg 之外也可以添加 gif 等，以竖线隔开即开。 loader 后面 limit 字段代表图片打包限制，这个限制并不是说超过了就不能打包，而是指当图片大小小于限制时会自动转成 base64 码引用。上例中大于8192字节的图片正常打包，小于8192字节的图片以 base64 的方式引用。 url-loader 后面除了 limit 字段，还可以通过 name 字段来指定图片打包的目录与文件名： ;) 12345678module: &#123; loaders: [ &#123; test: /\.(png|jpg)$/, loader: &apos;url-loader?limit=8192&amp;name=images/[hash:8].[name].[ext]&apos; &#125; ]&#125; ;) 上例中的 name 字段指定了在打包根目录（output.path）下生成名为 images 的文件夹，并在原图片名前加上8位 hash 值。 例：工程目录如下 在 main.css 中引用了同级 images 文件夹下的 bg.jpg 图片 1background-image: url(./images/bg.jpg); 通过之前的配置，使用 $ webpack 命令对代码进行打包后生成如下目录 打包目录中，css 文件和 images 文件夹保持了同样的层级，可以不做任务修改即能访问到图片。区别是打包后的图片加了 hash 值，bundle.css 文件里引入的也是有hash值的图片。 1background-image: url(images/f593fbb9.bg.jpg); （上例中，使用了单独打包css的技术，只是为了方便演示） publicPath output.publicPath 表示资源的发布地址，当配置过该属性后，打包文件中所有通过相对路径引用的资源都会被配置的路径所替换。 12345output: &#123; path: &apos;dist&apos;, publicPath: &apos;/assets/&apos;, filename: &apos;bundle.js&apos;&#125; main.css 1background-image: url(./images/bg.jpg); bundle.css 1background-image: url(/assets/images/f593fbb9.bg.jpg); 该属性的好处在于当你配置了图片 CDN 的地址，本地开发时引用本地的图片资源，上线打包时就将资源全部指向 CDN 了。 但是要注意，如果没有确定的发布地址不建议配置该属性，否则会让你打包后的资源路径很混乱。 JS中的图片 初用 webpack 进行项目开发的同学会发现：在 js 或者 react 中引用的图片都没有打包进 bundle 文件夹中。 正确写法应该是通过模块化的方式引用图片路径，这样引用的图片就可以成功打包进 bundle 文件夹里了 js 123var imgUrl = require(&apos;./images/bg.jpg&apos;), imgTempl = &apos;&lt;img src=&quot;&apos;+imgUrl+&apos;&quot; /&gt;&apos;;document.body.innerHTML = imgTempl; react 123render() &#123; return (&lt;img src=&#123;require(&apos;./images/bg.jpg&apos;)&#125; /&gt;);&#125; HTML中的图片 由于 webpack 对 html 的处理不太好，打包 HTML 文件中的图片资源是相对来说最麻烦的。这里需要引用一个插件—— html-withimg-loder 1$ npm install html-withimg-loader --save-dev webpack.config.js 添加配置 ;) 12345678module: &#123; loaders: [ &#123; test: /\.html$/, loader: &apos;html-withimg-loader&apos; &#125; ]&#125; ;) 在 bundle.js 中引用 html 文件 1import &apos;../index.html&apos;; 这样 html 文件中的图片就可以被打包进 bundle 文件夹里了。]]></content>
@@ -144,6 +133,17 @@
         <tag>webpack</tag>
         <tag>gif</tag>
         <tag>打包</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[tomcat常用配置]]></title>
+    <url>%2F2019%2F03%2F29%2Ftomcat%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%2F</url>
+    <content type="text"><![CDATA[1、启动跳过jar包检查 在conf/catalina.properties中加入 1org.apache.el.parser.SKIP_IDENTIFIER_CHECK=true 2、应用中需要绘图，例如activiti的流程图： 在catalina.sh加入]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>tomcat</tag>
       </tags>
   </entry>
   <entry>
@@ -159,17 +159,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[oracle常用命令]]></title>
-    <url>%2F2019%2F03%2F29%2Foracle%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
-    <content type="text"><![CDATA[Oracle中用命令参数详解1、exp/imp——导入、导出【用 exp 数 据 导 出】：1 将数据库TEST完全导出,用户名system 密码manager 导出到D:\daochu.dmp中 1exp east/east@xe file=/root/east.dmp full=y exp east/east@xe file=/root/east.dmp full=yexp east/east file=/root/east.dmp full=y imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y 2、创建表空间2.1先创建一个表空间，例如（临时表空间）create temporary tablespace fitech_temp tempfile ‘/u01/app/oracle/oradata/XE/fitech_temp.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; （永久表空间） create tablespace fitech_data logging datafile ‘/u01/app/oracle/oradata/XE/fitech_data.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; 2.2创建用户并指定表空间（第一个east为用户名，第二个east为密码） create user east identified by east default tablespace fitech_data temporary tablespace fitech_temp; 修改用户表空间 alter user 用户名 default tablespace 表空间名字 ;–创建时候指定表空间 alter user east default tablespace fitech_data temporary tablespace fitech_temp; 2.3给用户分配权限grant connect,resource,dba to east; 2.4使用east用户登录，查看数据库用户正常访问即可3、查看数据库状态lsnrctl status]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>oracle</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[npm常用命令]]></title>
     <url>%2F2019%2F03%2F29%2Fnrm%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
     <content type="text"><![CDATA[一、常用命令12345678910111213#查看包信息npm list -g gulp #安装并查看安装信息npm -loglevel info install -g gulp #发布到https://registry.npmjs.org/npm --registry https://registry.npmjs.org/ publish #设置npm库npm config set registry https://registry.npm.taobao.org/npm config set registry http://registry.npmjs.org #查看当前npm库cat ~/.npmrc#登录npm adduser –-registry http://192.168.101.30:10005/repository/npm-repo-hosted/ 二、nrm的使用开发的npm registry 管理工具 nrm, 能够查看和切换当前使用的registry, 最近NPM经常 down 掉, 这个还是很有用的哈哈 Install1$ npm install -g nrm Example1234567$ nrm ls* npm ---- https://registry.npmjs.org/ cnpm --- http://r.cnpmjs.org/ eu ----- http://registry.npmjs.eu/ au ----- http://registry.npmjs.org.au/ sl ----- http://npm.strongloop.com/ nj ----- https://registry.nodejitsu.com/ 12$ nrm use cnpm //switch registry to cnpm Registry has been set to: http://r.cnpmjs.org/ 12345cmdnrm help // show helpnrm list // show all registriesnrm use cnpm // switch to cnpmnrm home // go to a registry home page]]></content>
@@ -179,6 +168,17 @@
       <tags>
         <tag>npm</tag>
         <tag>nrm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[oracle常用命令]]></title>
+    <url>%2F2019%2F03%2F29%2Foracle%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[Oracle中用命令参数详解1、exp/imp——导入、导出【用 exp 数 据 导 出】：1 将数据库TEST完全导出,用户名system 密码manager 导出到D:\daochu.dmp中 1exp east/east@xe file=/root/east.dmp full=y exp east/east@xe file=/root/east.dmp full=yexp east/east file=/root/east.dmp full=y imp east/east@xe file=east.dmp log=east.dmp full=y ignore=y 2、创建表空间2.1先创建一个表空间，例如（临时表空间）create temporary tablespace fitech_temp tempfile ‘/u01/app/oracle/oradata/XE/fitech_temp.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; （永久表空间） create tablespace fitech_data logging datafile ‘/u01/app/oracle/oradata/XE/fitech_data.dbf’ size 50m autoextend on next 50m maxsize 20480m extent management local; 2.2创建用户并指定表空间（第一个east为用户名，第二个east为密码） create user east identified by east default tablespace fitech_data temporary tablespace fitech_temp; 修改用户表空间 alter user 用户名 default tablespace 表空间名字 ;–创建时候指定表空间 alter user east default tablespace fitech_data temporary tablespace fitech_temp; 2.3给用户分配权限grant connect,resource,dba to east; 2.4使用east用户登录，查看数据库用户正常访问即可3、查看数据库状态lsnrctl status]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
       </tags>
   </entry>
   <entry>
@@ -354,6 +354,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Kubernetes常用命令]]></title>
+    <url>%2F2019%2F03%2F29%2FKubernetes%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[JS中几种循环的区别与相同点]]></title>
     <url>%2F2019%2F03%2F29%2FJS%E4%B8%AD%E5%87%A0%E7%A7%8D%E5%BE%AA%E7%8E%AF%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E7%9B%B8%E5%90%8C%E7%82%B9%2F</url>
     <content type="text"><![CDATA[循环语句，用于重复执行某个操作，它有多种形式。 while循环 while语句的循环条件是一个表达式（express），必须放在圆括号中。代码块部分，如果只有一条语句（statement），可以省略大括号，否则就必须加上大括号。 123456while (expression) statement;// 或者while (expression) statement; 下面写个例子 123456var i = 0;while (i &lt; 100) &#123; console.log(&apos;i当前为：&apos; + i); i += 1;&#125; 上面的代码将循环100次，直到i等于100为止。 下面的例子是一个无限循环，因为条件总是为真。 123while (true) &#123; console.log(&apos;Hello, world&apos;);&#125; for循环 for语句是循环命令的另一种形式，可以指定循环的起点、终点和终止条件。它的格式如下。 12345678for (initialize; test; increment) statement// 或者for (initialize; test; increment) &#123; statement&#125; for语句后面的括号里面，有三个表达式。 初始化表达式（initialize）：确定循环的初始值，只在循环开始时执行一次。 测试表达式（test）：检查循环条件，只要为真就进行后续操作。 递增表达式（increment）：完成后续操作，然后返回上一步，再一次检查循环条件。 eg: 1234567var x = 3;for (var i = 0; i &lt; x; i++) &#123; console.log(i);&#125;// 0// 1// 2 上面代码中，初始化表达式是var i = 0，即初始化一个变量i；测试表达式是i &lt; x，即只要i小于x，就会执行循环；递增表达式是i++，即每次循环结束后，i增大1。 所有for循环，都可以改写成while循环。上面的例子改为while循环，代码如下 1234567var x = 3;var i = 0;while (i &lt; x) &#123; console.log(i); i++;&#125; for语句的三个部分（initialize，test，increment），可以省略任何一个，也可以全部省略。 123for ( ; ; )&#123; console.log(&apos;Hello World&apos;);&#125; 上面代码省略了for语句表达式的三个部分，结果就导致了一个无限循环。 do…while循环 do…while循环与while循环类似，唯一的区别就是先运行一次循环体，然后判断循环条件。 123456789do statementwhile (expression);// 或者do &#123; statement&#125; while (expression); 不管条件是否为真，do..while循环至少运行一次，这是这种结构最大的特点。另外，while语句后面的分号不能省略。 1234567var x = 3;var i = 0;do &#123; console.log(i); i++;&#125; while(i &lt; x); break语句和continue语句 break语句和continue语句都具有跳转作用，可以让代码不按既有的顺序执行。 break语句用于跳出代码块或循环。 1234567var i = 0;while(i &lt; 100) &#123; console.log(&apos;i当前为：&apos; + i); i++; if (i === 10) break;&#125; 上面代码只会执行10次循环，一旦i等于10，就会跳出循环。 for循环也可以使用break语句跳出循环。 123456789for (var i = 0; i &lt; 5; i++) &#123; console.log(i); if (i === 3) break;&#125;// 0// 1// 2// 3 上面代码执行到i等于3，就会跳出循环 continue语句用于立即终止本轮循环，返回循环结构的头部，开始下一轮循环。 1234567var i = 0;while (i &lt; 100)&#123; i++; if (i%2 === 0) continue; console.log(&apos;i当前为：&apos; + i);&#125; 上面代码只有在i为奇数时，才会输出i的值。如果i为偶数，则直接进入下一轮循环。 如果存在多重循环，不带参数的break语句和continue语句都只针对最内层循环。 标签（label） JavaScript语言允许，语句的前面有标签（label），相当于定位符，用于跳转到程序的任意位置，标签的格式如下: 12label: statement 标签可以是任意的标识符，但是不能是保留字，语句部分可以是任意语句。 标签通常与break语句和continue语句配合使用，跳出特定的循环。 1234567891011top: for (var i = 0; i &lt; 3; i++)&#123; for (var j = 0; j &lt; 3; j++)&#123; if (i === 1 &amp;&amp; j === 1) break top; console.log(&apos;i=&apos; + i + &apos;, j=&apos; + j); &#125; &#125;// i=0, j=0// i=0, j=1// i=0, j=2// i=1, j=0 上面代码为一个双重循环区块，break命令后面加上了top标签（注意，top不用加引号），满足条件时，直接跳出双层循环。如果break语句后面不使用标签，则只能跳出内层循环，进入下一次的外层循环。 continue语句也可以与标签配合使用。 1234567891011121314top: for (var i = 0; i &lt; 3; i++)&#123; for (var j = 0; j &lt; 3; j++)&#123; if (i === 1 &amp;&amp; j === 1) continue top; console.log(&apos;i=&apos; + i + &apos;, j=&apos; + j); &#125; &#125;// i=0, j=0// i=0, j=1// i=0, j=2// i=1, j=0// i=2, j=0// i=2, j=1// i=2, j=2 上面代码中，continue命令后面有一个标签名，满足条件时，会跳过当前循环，直接进入下一轮外层循环。如果continue语句后面不使用标签，则只能进入下一轮的内层循环。]]></content>
@@ -363,17 +374,6 @@
       <tags>
         <tag>JS</tag>
         <tag>循环</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Kubernetes常用命令]]></title>
-    <url>%2F2019%2F03%2F29%2FKubernetes%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Kubernetes</tag>
       </tags>
   </entry>
   <entry>
