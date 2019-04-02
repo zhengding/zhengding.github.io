@@ -96,18 +96,21 @@
 
 
 
-  <meta name="description" content="This site is used to record notes">
+  <meta name="description" content="一、概述 　　以列表页中的标准列表为主 　　 　　Ant Design Pro 默认通过只需浏览器单方面就可处理的 HashHistory 来完成路由。如果要切换为 BrowserHistory，那在 src/index.js 中也有对应的内容可以直接修改，但需要在后端服务器进行相应路由配置。 二、详述 加载过程图  2.1、菜单→路由→组件　　在左侧的导航栏点击 列表页 &amp;gt; 标准列表 后，">
 <meta name="keywords" content="connect">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ant design pro 页面加载原理及过程，@connect 装饰器">
 <meta property="og:url" content="http://zhengding.github.io/2019/04/02/ant design pro 页面加载原理及过程，@connect 装饰器/index.html">
 <meta property="og:site_name" content="zhengding">
-<meta property="og:description" content="This site is used to record notes">
+<meta property="og:description" content="一、概述 　　以列表页中的标准列表为主 　　 　　Ant Design Pro 默认通过只需浏览器单方面就可处理的 HashHistory 来完成路由。如果要切换为 BrowserHistory，那在 src/index.js 中也有对应的内容可以直接修改，但需要在后端服务器进行相应路由配置。 二、详述 加载过程图  2.1、菜单→路由→组件　　在左侧的导航栏点击 列表页 &amp;gt; 标准列表 后，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-02T08:40:53.916Z">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/02/ant%20design%20pro%20页面加载原理及过程，@connect%20装饰器/292888-20180508154828060-1541921256.png">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/02/ant%20design%20pro%20页面加载原理及过程，@connect%20装饰器/20181120171847604.png">
+<meta property="og:updated_time" content="2019-04-02T08:55:12.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ant design pro 页面加载原理及过程，@connect 装饰器">
-<meta name="twitter:description" content="This site is used to record notes">
+<meta name="twitter:description" content="一、概述 　　以列表页中的标准列表为主 　　 　　Ant Design Pro 默认通过只需浏览器单方面就可处理的 HashHistory 来完成路由。如果要切换为 BrowserHistory，那在 src/index.js 中也有对应的内容可以直接修改，但需要在后端服务器进行相应路由配置。 二、详述 加载过程图  2.1、菜单→路由→组件　　在左侧的导航栏点击 列表页 &amp;gt; 标准列表 后，">
+<meta name="twitter:image" content="http://zhengding.github.io/2019/04/02/ant%20design%20pro%20页面加载原理及过程，@connect%20装饰器/292888-20180508154828060-1541921256.png">
 
 
 
@@ -395,7 +398,7 @@
                 
               
 
-              <time title="创建时间：2019-04-02 16:40:14 / 修改时间：16:40:53" itemprop="dateCreated datePublished" datetime="2019-04-02T16:40:14+08:00">2019-04-02</time>
+              <time title="创建时间：2019-04-02 16:40:14 / 修改时间：16:55:12" itemprop="dateCreated datePublished" datetime="2019-04-02T16:40:14+08:00">2019-04-02</time>
             
 
             
@@ -452,7 +455,47 @@
       
 
       
-        
+        <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><hr>
+<p>　　以列表页中的标准列表为主</p>
+<p>　　<img src="/2019/04/02/ant design pro 页面加载原理及过程，@connect 装饰器/292888-20180508154828060-1541921256.png" alt="img"></p>
+<p>　　Ant Design Pro 默认通过只需浏览器单方面就可处理的 HashHistory 来完成路由。如果要切换为 BrowserHistory，那在 src/index.js 中也有对应的内容可以直接修改，但需要在后端服务器进行相应路由配置。</p>
+<h2 id="二、详述"><a href="#二、详述" class="headerlink" title="二、详述"></a>二、详述</h2><hr>
+<p>加载过程图</p>
+<p><img src="/2019/04/02/ant design pro 页面加载原理及过程，@connect 装饰器/20181120171847604.png" alt="img"></p>
+<h2 id="2-1、菜单→路由→组件"><a href="#2-1、菜单→路由→组件" class="headerlink" title="2.1、菜单→路由→组件"></a>2.1、菜单→路由→组件</h2><p>　　在左侧的导航栏点击 <code>列表页 &gt; 标准列表</code> 后，可以进入到上面截图所示的页面。导航栏的内容在 <code>src/common/menu.js</code> 中【或者服务获取的地址】</p>
+<h3 id="菜单："><a href="#菜单：" class="headerlink" title="菜单："></a>菜单：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        name: <span class="string">'列表页'</span>,</span><br><span class="line">        icon: <span class="string">'table'</span>,</span><br><span class="line">        path: <span class="string">'list'</span>,</span><br><span class="line">        children: [</span><br><span class="line">          &#123;</span><br><span class="line">            name: <span class="string">'查询表格'</span>,</span><br><span class="line">            path: <span class="string">'table-list'</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            name: <span class="string">'标准列表'</span>,</span><br><span class="line">            path: <span class="string">'basic-list'</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">         <span class="comment">//……   </span></span><br><span class="line">        ],</span><br><span class="line">      &#125;,</span><br></pre></td></tr></table></figure>
+<h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><p>　　全局的路由关系是：<code>src/index.js</code> 中通过 <code>app.router(require(&#39;./router&#39;).default);</code>，将 <code>src/router.js</code> 绑定到 <code>dva</code> 实例的 <code>router</code> 方法上。而在 <code>src/router.js</code> 中又引入了 <code>src/common/router.js</code> 中的 <code>getRouterData</code> 作为数据源。</p>
+<p>　　其实就是相当于：<code>src/common/menu.js</code> 中 <code>path</code> 所指向的路径对应于 <code>src/common/router.js</code> 中的路由记录。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getRouterData = <span class="function">(<span class="params">app</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> routerConfig = &#123;</span><br><span class="line">    ...,</span><br><span class="line">    <span class="string">'/list/basic-list'</span>: &#123;</span><br><span class="line">      component: dynamicWrapper(app, [<span class="string">'list'</span>], () =&gt; <span class="keyword">import</span>(<span class="string">'../routes/List/BasicList'</span>)),</span><br><span class="line">    &#125;,</span><br><span class="line">    ...,</span><br><span class="line">  &#125;;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　这里调用了同文件内的 lazy-loading 的动态加载函数 <code>dynamicWrapper</code>，有 3 个参数，<code>app</code> 为全局 <code>dva</code> 实例，<code>models</code> 为一个带有相关 <code>dva</code> Model 的 Array，<code>component</code> 即为该路由记录对应的实际组件。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> dynamicWrapper = <span class="function">(<span class="params">app, models, component</span>) =&gt;</span> &#123;...&#125;;</span><br></pre></td></tr></table></figure>
+<p>　   可以看到：</p>
+<p>　　　　1、加载路由的时候,会动态加载当前文件下的model文件,也就是对应文件下的src/models/list.js</p>
+<h3 id="组件："><a href="#组件：" class="headerlink" title="组件："></a>组件：</h3><p>　　<code>src/routes/List/BasicList.js</code>，具体组件。已省略部分代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; PureComponent &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'dva'</span>;</span><br><span class="line"><span class="comment">//……</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> PageHeaderLayout <span class="keyword">from</span> <span class="string">'../../layouts/PageHeaderLayout'</span>;</span><br><span class="line">@connect(<span class="function">(<span class="params">&#123; list, loading &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  list,</span><br><span class="line">  loading: loading.models.list,</span><br><span class="line">&#125;))</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">BasicList</span> <span class="keyword">extends</span> <span class="title">PureComponent</span> </span>&#123;</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.dispatch(&#123;</span><br><span class="line">      type: <span class="string">'list/fetch'</span>,</span><br><span class="line">      payload: &#123;</span><br><span class="line">        count: <span class="number">5</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;PageHeaderLayout&gt;&#123;<span class="comment">/* 页面内容…… */</span>&#125;&lt;<span class="regexp">/PageHeaderLayout&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-2、-connect-装饰器"><a href="#2-2、-connect-装饰器" class="headerlink" title="2.2、@connect 装饰器"></a>2.2、@connect 装饰器</h2><p>　　组件写法中调用了 <code>dva</code> 所封装的 <code>react-redux</code> 的 <code>@connect</code> 装饰器，用来接收绑定的 <code>list</code> 这个 model 对应的 redux store。注意到这里的装饰器实际除了 <code>app.state.list</code> 以外还实际接收 <code>app.state.loading</code> 作为参数，这个 <code>loading</code> 的来源是 <code>src/index.js</code> 中调用的 <code>dva-loading</code>这个插件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* src/index.js</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">import</span> createLoading <span class="keyword">from</span> <span class="string">'dva-loading'</span>;</span><br><span class="line">app.use(createLoading());</span><br></pre></td></tr></table></figure>
+<p>它返回的信息包含了 global、model 和 effect 的异步加载完成情况。</p>
+<p>数据map一</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"global"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="string">"models"</span>: &#123;</span><br><span class="line">    <span class="string">"list"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="string">"user"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"rule"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"effects"</span>: &#123;</span><br><span class="line">    <span class="string">"list/fetch"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="string">"user/fetchCurrent"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"rule/fetch"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到在这里带上 <code>{count: 5}</code> 这个 payload 向 store 进行了一个类型为 <code>list/fetch</code> 的 dispatch，在 <code>src/models/list.js</code> 中就可以找到具体的对应操作。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; queryFakeList &#125; <span class="keyword">from</span> <span class="string">'../services/api'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  namespace: <span class="string">'list'</span>,</span><br><span class="line">  state: &#123;</span><br><span class="line">    list: [],</span><br><span class="line">  &#125;,</span><br><span class="line">  effects: &#123;</span><br><span class="line">    *fetch(&#123; payload &#125;, &#123; call, put &#125;) &#123;</span><br><span class="line">      <span class="keyword">const</span> response = <span class="keyword">yield</span> call(queryFakeList, payload);</span><br><span class="line">      <span class="keyword">yield</span> put(&#123;</span><br><span class="line">        type: <span class="string">'queryList'</span>,</span><br><span class="line">        payload: <span class="built_in">Array</span>.isArray(response) ? response : [],</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">  &#125;,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    queryList(state, action) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        list: action.payload,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>View中使用</p>
+<p>1、connect使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@connect(<span class="function">(<span class="params">&#123; list, loading &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  list,<span class="comment">//①</span></span><br><span class="line">  loading: loading.models.list,<span class="comment">//②</span></span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+<p>　　说明：</p>
+<p><strong>1、connect 有两个参数,mapStateToProps以及mapDispatchToProps,一个将状态绑定到组件的props一个将方法绑定到组件的props</strong></p>
+<p><strong>2、代码①：将实体list中的state数据绑定到props，注意绑定的是实体list整体，使用时需要list.[state中的具体变量]</strong></p>
+<p><strong>3、代码②：通过loading将上文“数据map一”中的models的list的key对应的value读取出来。赋值给loading，以方便使用，如表格是否有加载图标</strong></p>
+<p>　<strong>当然代码②也可以通过key value编写：loading.effects[“list/fetch”]</strong></p>
+<p>2、变量获取</p>
+<p>因，在<code>src/models/list.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  namespace: <span class="string">'list'</span>,</span><br><span class="line">  state: &#123;</span><br><span class="line">    list: [],</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<p>故在view中使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">list</span>: &#123; list &#125;, loading &#125; = <span class="keyword">this</span>.props;</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<p>　　定义使用时：list: { list }  ，含义实体list下的state类型的list变量</p>
+
       
     </div>
 
@@ -540,8 +583,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -721,6 +773,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概述"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、详述"><span class="nav-number">2.</span> <span class="nav-text">二、详述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1、菜单→路由→组件"><span class="nav-number">3.</span> <span class="nav-text">2.1、菜单→路由→组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#菜单："><span class="nav-number">3.1.</span> <span class="nav-text">菜单：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由"><span class="nav-number">3.2.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件："><span class="nav-number">3.3.</span> <span class="nav-text">组件：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2、-connect-装饰器"><span class="nav-number">4.</span> <span class="nav-text">2.2、@connect 装饰器</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
