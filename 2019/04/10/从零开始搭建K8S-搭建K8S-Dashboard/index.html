@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="一、K8S Dashboard简介简单的说，K8S Dashboard是官方的一个基于WEB的用户界面，专门用来管理K8S集群，并可展示集群的状态。K8S集群安装好后默认没有包含Dashboard，我们需要额外创建它。 Dashboard的搭建过程中，会遇到一些坑。现在开始，咱们一步一步踩来，走你! 二、RABC简介还是那句话，官方文档是最重要的参考资料：https://kubernetes.io">
+<meta name="keywords" content="k8s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始搭建K8S--搭建K8S Dashboard">
+<meta property="og:url" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/index.html">
+<meta property="og:site_name" content="zhengding">
+<meta property="og:description" content="一、K8S Dashboard简介简单的说，K8S Dashboard是官方的一个基于WEB的用户界面，专门用来管理K8S集群，并可展示集群的状态。K8S集群安装好后默认没有包含Dashboard，我们需要额外创建它。 Dashboard的搭建过程中，会遇到一些坑。现在开始，咱们一步一步踩来，走你! 二、RABC简介还是那句话，官方文档是最重要的参考资料：https://kubernetes.io">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-253d52f36b366c2c.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-0e80216a1f808eb8.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-1b8e649ffbe75e0d.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-550955da128d252e.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-776698b1334214bc.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-8c1181c63a328b14.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-b9156c5b44822e86.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-0dab62d668f362ef.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-3b902b6add2135a1.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-523e36c577c62c7d.webp">
+<meta property="og:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-f6a2440ae68beaa3.webp">
+<meta property="og:updated_time" content="2019-04-10T08:22:36.396Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从零开始搭建K8S--搭建K8S Dashboard">
+<meta name="twitter:description" content="一、K8S Dashboard简介简单的说，K8S Dashboard是官方的一个基于WEB的用户界面，专门用来管理K8S集群，并可展示集群的状态。K8S集群安装好后默认没有包含Dashboard，我们需要额外创建它。 Dashboard的搭建过程中，会遇到一些坑。现在开始，咱们一步一步踩来，走你! 二、RABC简介还是那句话，官方文档是最重要的参考资料：https://kubernetes.io">
+<meta name="twitter:image" content="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-253d52f36b366c2c.webp">
+
+
+
+
+
+
+  <link rel="canonical" href="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>从零开始搭建K8S--搭建K8S Dashboard | zhengding</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/zhengding/zhengding.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhengding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhengding">
+      <meta itemprop="description" content="This site is used to record notes">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhengding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从零开始搭建K8S--搭建K8S Dashboard
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-10 15:48:16 / 修改时间：16:22:36" itemprop="dateCreated datePublished" datetime="2019-04-10T15:48:16+08:00">2019-04-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一、K8S Dashboard简介<br>简单的说，K8S Dashboard是官方的一个基于WEB的用户界面，专门用来管理K8S集群，并可展示集群的状态。K8S集群安装好后默认没有包含Dashboard，我们需要额外创建它。</p>
+<p>Dashboard的搭建过程中，会遇到一些坑。现在开始，咱们一步一步踩来，走你!</p>
+<p>二、RABC简介<br>还是那句话，官方文档是最重要的参考资料：<a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/</a><br>该文档中，创建kubernetes-dashboard的命令为：<br>kubectl create -f <a href="https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml" target="_blank" rel="noopener">https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml</a><br>当然，直接这样创建的dashboard会有很多问题，参见：</p>
+<blockquote>
+<h2 id="Please-note-this-works-only-if-the-apiserver-is-set-up-to-allow-authentication-with-username-and-password-This-is-not-currently-the-case-with-some-setup-tools-e-g-kubeadm-Refer-to-the-authentication-admin-documentation-for-information-on-how-to-configure-authentication-manually"><a href="#Please-note-this-works-only-if-the-apiserver-is-set-up-to-allow-authentication-with-username-and-password-This-is-not-currently-the-case-with-some-setup-tools-e-g-kubeadm-Refer-to-the-authentication-admin-documentation-for-information-on-how-to-configure-authentication-manually" class="headerlink" title="Please note, this works only if the apiserver is set up to allow authentication with username and password. This is not currently the case with some setup tools (e.g., kubeadm). Refer to the authentication admin documentation for information on how to configure authentication manually."></a>Please note, this works only if the apiserver is set up to allow authentication with username and password. This is not currently the case with some setup tools (e.g., kubeadm). Refer to the authentication admin documentation for information on how to configure authentication manually.</h2></blockquote>
+<p>因为我们使用kubeadm搭建的集群会默认开启RABC（角色访问控制机制），所以我们必须要进行额外的设置。关于RABC的概念，网上资料很多，大家务必提前了解。这里简要介绍一下几个重要概念：</p>
+<p>RBAC<br>K8S 1.6引进，是让用户能够访问 k8S API 资源的授权方式【不授权就没有资格访问K8S的资源】<br>用户<br>K8S有两种用户：User和Service Account。其中，User给人用，Service Account给进程用，让进程有相关权限。如Dashboard就是一个进程，我们就可以创建一个Service Account给它<br>角色<br>Role是一系列权限的集合，例如一个Role可包含读取和列出 Pod的权限【 ClusterRole 和 Role 类似，其权限范围是整个集群】<br>角色绑定<br>RoleBinding把角色映射到用户，从而让这些用户拥有该角色的权限【ClusterRoleBinding 和RoleBinding 类似，可让用户拥有 ClusterRole 的权限】<br>Secret<br>Secret是一个包含少量敏感信息如密码，令牌，或秘钥的对象。把这些信息保存在 Secret对象中，可以在这些信息被使用时加以控制，并可以降低信息泄露的风险<br>如下图，灰色是“角色”，蓝色是“用户”，绿色是“角色绑定”，黄色是该角色拥有的权限。简言之 ，角色绑定将角色和用户进行挂钩：</p>
+<p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-253d52f36b366c2c.webp" alt="img"></p>
+<p>三、官方kubernetes-dashboard.yaml简介<br>很有必要介绍一下官方的kubernetes-dashboard.yaml，我们首先将其下载下来：<br>wget <a href="https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml" target="_blank" rel="noopener">https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml</a></p>
+<p>该文件分为以下几部分：</p>
+<p>Dashboard Service<br>Dashboard Deployment<br>Dashboard Role<br>RoleBinding<br>Dashboard Service Account<br>Dashboard Secret<br>这里，我们简单的对各个部分的功能进行介绍：</p>
+<h4 id="Dashboard-Role"><a href="#Dashboard-Role" class="headerlink" title="Dashboard Role"></a>Dashboard Role</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Role</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-minimal</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="comment"># Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.</span></span><br><span class="line"><span class="attr">- apiGroups:</span> <span class="string">[""]</span></span><br><span class="line"><span class="attr">  resources:</span> <span class="string">["secrets"]</span></span><br><span class="line"><span class="attr">  verbs:</span> <span class="string">["create"]</span></span><br><span class="line">  <span class="comment"># Allow Dashboard to create 'kubernetes-dashboard-settings' config map.</span></span><br><span class="line"><span class="attr">- apiGroups:</span> <span class="string">[""]</span></span><br><span class="line"><span class="attr">  resources:</span> <span class="string">["configmaps"]</span></span><br><span class="line"><span class="attr">  verbs:</span> <span class="string">["create"]</span></span><br><span class="line">  <span class="comment"># Allow Dashboard to get, update and delete Dashboard exclusive secrets.</span></span><br><span class="line"><span class="attr">- apiGroups:</span> <span class="string">[""]</span></span><br><span class="line"><span class="attr">  resources:</span> <span class="string">["secrets"]</span></span><br><span class="line"><span class="attr">  resourceNames:</span> <span class="string">["kubernetes-dashboard-key-holder",</span> <span class="string">"kubernetes-dashboard-certs"</span><span class="string">]</span></span><br><span class="line"><span class="attr">  verbs:</span> <span class="string">["get",</span> <span class="string">"update"</span><span class="string">,</span> <span class="string">"delete"</span><span class="string">]</span></span><br><span class="line">  <span class="comment"># Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.</span></span><br><span class="line"><span class="attr">- apiGroups:</span> <span class="string">[""]</span></span><br><span class="line"><span class="attr">  resources:</span> <span class="string">["configmaps"]</span></span><br><span class="line"><span class="attr">  resourceNames:</span> <span class="string">["kubernetes-dashboard-settings"]</span></span><br><span class="line"><span class="attr">  verbs:</span> <span class="string">["get",</span> <span class="string">"update"</span><span class="string">]</span></span><br><span class="line">  <span class="comment"># Allow Dashboard to get metrics from heapster.</span></span><br><span class="line"><span class="attr">- apiGroups:</span> <span class="string">[""]</span></span><br><span class="line"><span class="attr">  resources:</span> <span class="string">["services"]</span></span><br><span class="line"><span class="attr">  resourceNames:</span> <span class="string">["heapster"]</span></span><br><span class="line"><span class="attr">  verbs:</span> <span class="string">["proxy"]</span></span><br><span class="line"><span class="attr">- apiGroups:</span> <span class="string">[""]</span></span><br><span class="line"><span class="attr">  resources:</span> <span class="string">["services/proxy"]</span></span><br><span class="line"><span class="attr">  resourceNames:</span> <span class="string">["heapster",</span> <span class="string">"http:heapster:"</span><span class="string">,</span> <span class="string">"https:heapster:"</span><span class="string">]</span></span><br><span class="line"><span class="attr">  verbs:</span> <span class="string">["get"]</span></span><br></pre></td></tr></table></figure>
+<p>如上定义了Dashboard 的角色，其角色名称为kubernetes-dashboard-minimal，rules中清晰的列出了其拥有的多个权限。通过名称我们可以猜到，这个权限级别是比较低的。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br></pre></td></tr></table></figure>
+<p>如上定义了Dashboard的用户，其类型为ServiceAccount，名称为kubernetes-dashboard。</p>
+<h4 id="RoleBinding"><a href="#RoleBinding" class="headerlink" title="RoleBinding"></a>RoleBinding</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">RoleBinding</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-minimal</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">roleRef:</span></span><br><span class="line"><span class="attr">  apiGroup:</span> <span class="string">rbac.authorization.k8s.io</span></span><br><span class="line"><span class="attr">  kind:</span> <span class="string">Role</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-minimal</span></span><br><span class="line"><span class="attr">subjects:</span></span><br><span class="line"><span class="attr">- kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br></pre></td></tr></table></figure>
+<p>如上定义了Dashboard的角色绑定，其名称为kubernetes-dashboard-minimal，roleRef中为被绑定的角色，也叫kubernetes-dashboard-minimal，subjects中为绑定的用户：kubernetes-dashboard。</p>
+<h4 id="Dashboard-Secret"><a href="#Dashboard-Secret" class="headerlink" title="Dashboard Secret"></a>Dashboard Secret</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-certs</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">Opaque</span></span><br></pre></td></tr></table></figure>
+<h4 id="Dashboard-Deployment"><a href="#Dashboard-Deployment" class="headerlink" title="Dashboard Deployment"></a>Dashboard Deployment</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1beta2</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">  revisionHistoryLimit:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    matchLabels:</span></span><br><span class="line"><span class="attr">      k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        k8s-app:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="attr">        - containerPort:</span> <span class="number">8443</span></span><br><span class="line"><span class="attr">          protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">        args:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="bullet">--auto-generate-certificates</span></span><br><span class="line">          <span class="comment"># Uncomment the following line to manually specify Kubernetes API server Host</span></span><br><span class="line">          <span class="comment"># If not specified, Dashboard will attempt to auto discover the API server and connect</span></span><br><span class="line">          <span class="comment"># to it. Uncomment only if the default does not work.</span></span><br><span class="line">          <span class="comment"># - --apiserver-host=http://my-address:port</span></span><br><span class="line"><span class="attr">        volumeMounts:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">kubernetes-dashboard-certs</span></span><br><span class="line"><span class="attr">          mountPath:</span> <span class="string">/certs</span></span><br><span class="line">          <span class="comment"># Create on-disk volume to store exec logs</span></span><br><span class="line"><span class="attr">        - mountPath:</span> <span class="string">/tmp</span></span><br><span class="line"><span class="attr">          name:</span> <span class="string">tmp-volume</span></span><br><span class="line"><span class="attr">        livenessProbe:</span></span><br><span class="line"><span class="attr">          httpGet:</span></span><br><span class="line"><span class="attr">            scheme:</span> <span class="string">HTTPS</span></span><br><span class="line"><span class="attr">            path:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">            port:</span> <span class="number">8443</span></span><br><span class="line"><span class="attr">          initialDelaySeconds:</span> <span class="number">30</span></span><br><span class="line"><span class="attr">          timeoutSeconds:</span> <span class="number">30</span></span><br><span class="line"><span class="attr">      volumes:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">kubernetes-dashboard-certs</span></span><br><span class="line"><span class="attr">        secret:</span></span><br><span class="line"><span class="attr">          secretName:</span> <span class="string">kubernetes-dashboard-certs</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">tmp-volume</span></span><br><span class="line"><span class="attr">        emptyDir:</span> <span class="string">&#123;&#125;</span></span><br><span class="line"><span class="attr">      serviceAccountName:</span> <span class="string">kubernetes-dashboard</span></span><br><span class="line">      <span class="comment"># Comment the following tolerations if Dashboard must not be deployed on master</span></span><br><span class="line"><span class="attr">      tolerations:</span></span><br><span class="line"><span class="attr">      - key:</span> <span class="string">node-role.kubernetes.io/master</span></span><br><span class="line"><span class="attr">        effect:</span> <span class="string">NoSchedule</span></span><br></pre></td></tr></table></figure>
+<p>如上可以看到，Dashboard的Deployment指定了其使用的ServiceAccount是kubernetes-dashboard。并且还将Secret kubernetes-dashboard-certs通过volumes挂在到pod内部的/certs路径。为何要挂载Secret ？原因是创建Secret 时会自动生成token。请注意参数–auto-generate-certificates，其表示Dashboard会自动生成证书。</p>
+<h3 id="四、安装Dashboard"><a href="#四、安装Dashboard" class="headerlink" title="四、安装Dashboard"></a>四、安装Dashboard</h3><h4 id="1-导入镜像"><a href="#1-导入镜像" class="headerlink" title="1.导入镜像"></a>1.导入镜像</h4><p>如果直接使用官方的kubernetes-dashboard.yaml创建Dashboard，你会踩到很多坑，首先是镜像拉取会超时失败。截止目前，Dashboard的最新版本是1.8.3，我已经将镜像k8s.gcr.io#kubernetes-dashboard-amd64.tar导出，提供给大家：<br>链接：<a href="https://pan.baidu.com/s/11AheivJxFzc4X6Q5_qCw8A" target="_blank" rel="noopener">https://pan.baidu.com/s/11AheivJxFzc4X6Q5_qCw8A</a> 密码：2zov</p>
+<p>在所有节点上（因为你不知道K8S会将Dashboard的pod调度到哪个节点），使用如下命令导入镜像：<br>docker load &lt; k8s.gcr.io#kubernetes-dashboard-amd64.tar</p>
+<h4 id="导入成功后，执行docker-images可以看到Dashboard的版本是1-8-3："><a href="#导入成功后，执行docker-images可以看到Dashboard的版本是1-8-3：" class="headerlink" title="导入成功后，执行docker images可以看到Dashboard的版本是1.8.3："></a>导入成功后，执行docker images可以看到Dashboard的版本是1.8.3：</h4><p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-0e80216a1f808eb8.webp" alt="img"></p>
+<h4 id="2-创建Dashboard"><a href="#2-创建Dashboard" class="headerlink" title="2.创建Dashboard"></a>2.创建Dashboard</h4><p>导入镜像后，使用之前下载的yaml文件即可创建Dashboard：<br>kubectl create -f kubernetes-dashboard.yaml</p>
+<h4 id="3-访问Dashboard"><a href="#3-访问Dashboard" class="headerlink" title="3.访问Dashboard"></a>3.访问Dashboard</h4><p>根据官方文档，目前访问Dashboard有四种方式：</p>
+<p>NodePort<br>API Server<br>kubectl proxy<br>Ingress<br>以上四种方式，我测试了前三种，目前只有NodePort和kubectl proxy可用，API Server暂时没有解决。</p>
+<h4 id="使用NodePort"><a href="#使用NodePort" class="headerlink" title="使用NodePort"></a>使用NodePort</h4><h4 id="为kubernetes-dashboard-yaml添加Service后，就可以使用NodePort访问Dashboard。在我们的物理机上，使用Chrome访问https-192-168-56-101-32159-，结果如下图所示："><a href="#为kubernetes-dashboard-yaml添加Service后，就可以使用NodePort访问Dashboard。在我们的物理机上，使用Chrome访问https-192-168-56-101-32159-，结果如下图所示：" class="headerlink" title="为kubernetes-dashboard.yaml添加Service后，就可以使用NodePort访问Dashboard。在我们的物理机上，使用Chrome访问https://192.168.56.101:32159/，结果如下图所示："></a>为kubernetes-dashboard.yaml添加Service后，就可以使用NodePort访问Dashboard。在我们的物理机上，使用Chrome访问<a href="https://192.168.56.101:32159/，结果如下图所示：" target="_blank" rel="noopener">https://192.168.56.101:32159/，结果如下图所示：</a></h4><p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-1b8e649ffbe75e0d.webp" alt="img"></p>
+<p>如上可以看到，这里提示了证书错误NET::ERR_CERT_INVALID，原因是由于物理机的浏览器证书不可用。但是，不要放弃，我们这里不打算使用物理机访问浏览器，而使用Dashboard所在节点上的浏览器来访问（即CentOS自带的浏览器），这样的证书应该是可行的（官方默认就是这种方式）。</p>
+<p>由于之前建立虚拟机环境时，我们关闭了CentOS的图形界面，这里我们为了访问Dashboard临时开启，执行：systemctl set-default graphical.target。重启后，即可进入图形界面。我们用Firefox访问：<a href="https://192.168.56.101:32159/，成功后出现如下界面：" target="_blank" rel="noopener">https://192.168.56.101:32159/，成功后出现如下界面：</a></p>
+<p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-550955da128d252e.webp" alt="img"></p>
+<p>需要注意的是，若提示“连接不安全”的警告时，点击“高级”，点击“添加例外”后即可：</p>
+<p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-776698b1334214bc.webp" alt="img"></p>
+<p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-8c1181c63a328b14.webp" alt="img"></p>
+<h4 id="使用API-Server"><a href="#使用API-Server" class="headerlink" title="使用API Server"></a>使用API Server</h4><p>在我们的物理机上，使用Chrome访问地址：<a href="https://192.168.56.101:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/，返回如下错误：" target="_blank" rel="noopener">https://192.168.56.101:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/，返回如下错误：</a></p>
+<h4 id><a href="#" class="headerlink" title="{"></a>{</h4><p>  “kind”: “Status”,<br>  “apiVersion”: “v1”,<br>  “metadata”: {</p>
+<p>  },<br>  “status”: “Failure”,<br>  “message”: “services “https:kubernetes-dashboard:” is forbidden: User “system:anonymous” cannot get services/proxy in the namespace “kube-system””,<br>  “reason”: “Forbidden”,<br>  “details”: {<br>    “name”: “https:kubernetes-dashboard:”,<br>    “kind”: “services”<br>  },<br>  “code”: 403<br>}</p>
+<p>原因是由于kube-apiserver使用了TLS认证，而我们的真实物理机上的浏览器使用匿名证书（因为没有可用的证书）去访问Dashboard，导致授权失败而不无法访问。官方提供的解决方法是将kubelet的证书转化为浏览器可用的证书，然后导入进浏览器。</p>
+<p>Note: This way of accessing Dashboard is only possible if you choose to install your user certificates in the browser. In example certificates used by kubeconfig file to contact API Server can be used.</p>
+<p>但是该方法目前似乎不适用于kubeadm方式安装的集群，参见：<a href="https://github.com/opsnull/follow-me-install-kubernetes-cluster/issues/5" target="_blank" rel="noopener">https://github.com/opsnull/follow-me-install-kubernetes-cluster/issues/5</a></p>
+<h4 id="那如果使用节点自带的Firefox呢？我们在Firefox中访问：https-192-168-56-101-6443-api-v1-namespaces-kube-system-services-https-kubernetes-dashboard-proxy-，仍然提示上面的错误："><a href="#那如果使用节点自带的Firefox呢？我们在Firefox中访问：https-192-168-56-101-6443-api-v1-namespaces-kube-system-services-https-kubernetes-dashboard-proxy-，仍然提示上面的错误：" class="headerlink" title="那如果使用节点自带的Firefox呢？我们在Firefox中访问：https://192.168.56.101:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/，仍然提示上面的错误："></a>那如果使用节点自带的Firefox呢？我们在Firefox中访问：<a href="https://192.168.56.101:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/，仍然提示上面的错误：" target="_blank" rel="noopener">https://192.168.56.101:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/，仍然提示上面的错误：</a></h4><p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-b9156c5b44822e86.webp" alt="img"></p>
+<p>看来，无论物理机还是K8S节点上的浏览器，都需要导入这个证书，暂时无解。</p>
+<h4 id="使用kubectl-proxy"><a href="#使用kubectl-proxy" class="headerlink" title="使用kubectl proxy"></a>使用kubectl proxy</h4><p>这里，我主要介绍一下最便捷的kubectl proxy方式。在Master上执行kubecll proxy，然后使用如下地址访问Dashboard：<br><a href="http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy" target="_blank" rel="noopener">http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy</a><br>但限制就是必须在Master上访问，这显然是个坑，我们的目标是在我们真实的物理机上去访问Master的Dashboard。</p>
+<p>所以，在主节点上，我们执行kubectl proxy –address=192.168.56.101 –disable-filter=true开启代理。<br>其中：</p>
+<p>address表示外界可以使用192.168.56.101来访问Dashboard，我们也可以使用0.0.0.0<br>disable-filter=true表示禁用请求过滤功能，否则我们的请求会被拒绝，并提示 Forbidden (403) Unauthorized。<br>我们也可以指定端口，具体请查看kubectl proxy –help<br>如下图所示，proxy默认对Master的8001端口进行监听：</p>
+<p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-0dab62d668f362ef.webp" alt="img"></p>
+<p>这样，我们就可以使用如下地址访问登录界面：<br><code>http://192.168.56.101:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login</code></p>
+<p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-3b902b6add2135a1.webp" alt="img"></p>
+<h4 id="4-配置Dashboard"><a href="#4-配置Dashboard" class="headerlink" title="4.配置Dashboard"></a>4.配置Dashboard</h4><p>Dashboard的配置是难点，尤其是涉及到安全权限相关，相当复杂，坑也比较多。</p>
+<h2 id="进入Dashboard的登录界面后，认证方式有Kubeconfig和令牌两种方式（实际上还有账号密码的方式，默认不开启不显示）。看到Kubeconfig和令牌，估计头都大了。是否有简便的方法，让我们能直接访问Dashboard？当然有，选择跳过，会出现如下页面："><a href="#进入Dashboard的登录界面后，认证方式有Kubeconfig和令牌两种方式（实际上还有账号密码的方式，默认不开启不显示）。看到Kubeconfig和令牌，估计头都大了。是否有简便的方法，让我们能直接访问Dashboard？当然有，选择跳过，会出现如下页面：" class="headerlink" title="进入Dashboard的登录界面后，认证方式有Kubeconfig和令牌两种方式（实际上还有账号密码的方式，默认不开启不显示）。看到Kubeconfig和令牌，估计头都大了。是否有简便的方法，让我们能直接访问Dashboard？当然有，选择跳过，会出现如下页面："></a>进入Dashboard的登录界面后，认证方式有Kubeconfig和令牌两种方式（实际上还有账号密码的方式，默认不开启不显示）。看到Kubeconfig和令牌，估计头都大了。是否有简便的方法，让我们能直接访问Dashboard？当然有，选择跳过，会出现如下页面：</h2><p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-523e36c577c62c7d.webp" alt="img"></p>
+<p>如上图，很遗憾，我们看到了很多权限错误提示，主要是system:serviceaccount:kube-system:kubernetes-dashboard的权限不足引起的。</p>
+<p>我们回想本文第三小节对kubernetes-dashboard.yaml的介绍，现在就理解了为什么其角色的名称为kubernetes-dashboard-minimal。一句话，这个Role的权限不够！</p>
+<p>因此，我们可以更改RoleBinding修改为ClusterRoleBinding，并且修改roleRef中的kind和name，使用cluster-admin这个非常牛逼的CusterRole（超级用户权限，其拥有访问kube-apiserver的所有权限）。如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRoleBinding</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard-minimal</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"><span class="attr">roleRef:</span></span><br><span class="line"><span class="attr">  apiGroup:</span> <span class="string">rbac.authorization.k8s.io</span></span><br><span class="line"><span class="attr">  kind:</span> <span class="string">ClusterRole</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">cluster-admin</span></span><br><span class="line"><span class="attr">subjects:</span></span><br><span class="line"><span class="attr">- kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubernetes-dashboard</span></span><br></pre></td></tr></table></figure>
+<p>修改后，重新创建kubernetes-dashboard.yaml，Dashboard就可以拥有访问整个K8S 集群API的权限。我们重新访问Dashboard，如下图所示：</p>
+<p><img src="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/6709127-f6a2440ae68beaa3.webp" alt="img"></p>
+<p>如上，一切正常，请在界面上尽情的乱点吧。另外，如果有兴趣，你还可以安装Dashboard的Heapster插件，这里就不再介绍了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/02/ant design pro 页面加载原理及过程，@connect 装饰器/" rel="next" title="ant design pro 页面加载原理及过程，@connect 装饰器">
+                <i class="fa fa-chevron-left"></i> ant design pro 页面加载原理及过程，@connect 装饰器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhengding</p>
+              <p class="site-description motion-element" itemprop="description">This site is used to record notes</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Please-note-this-works-only-if-the-apiserver-is-set-up-to-allow-authentication-with-username-and-password-This-is-not-currently-the-case-with-some-setup-tools-e-g-kubeadm-Refer-to-the-authentication-admin-documentation-for-information-on-how-to-configure-authentication-manually"><span class="nav-number">1.</span> <span class="nav-text">Please note, this works only if the apiserver is set up to allow authentication with username and password. This is not currently the case with some setup tools (e.g., kubeadm). Refer to the authentication admin documentation for information on how to configure authentication manually.</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dashboard-Role"><span class="nav-number">1.0.1.</span> <span class="nav-text">Dashboard Role</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RoleBinding"><span class="nav-number">1.0.2.</span> <span class="nav-text">RoleBinding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dashboard-Secret"><span class="nav-number">1.0.3.</span> <span class="nav-text">Dashboard Secret</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dashboard-Deployment"><span class="nav-number">1.0.4.</span> <span class="nav-text">Dashboard Deployment</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、安装Dashboard"><span class="nav-number">1.1.</span> <span class="nav-text">四、安装Dashboard</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-导入镜像"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.导入镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导入成功后，执行docker-images可以看到Dashboard的版本是1-8-3："><span class="nav-number">1.1.2.</span> <span class="nav-text">导入成功后，执行docker images可以看到Dashboard的版本是1.8.3：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-创建Dashboard"><span class="nav-number">1.1.3.</span> <span class="nav-text">2.创建Dashboard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-访问Dashboard"><span class="nav-number">1.1.4.</span> <span class="nav-text">3.访问Dashboard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用NodePort"><span class="nav-number">1.1.5.</span> <span class="nav-text">使用NodePort</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为kubernetes-dashboard-yaml添加Service后，就可以使用NodePort访问Dashboard。在我们的物理机上，使用Chrome访问https-192-168-56-101-32159-，结果如下图所示："><span class="nav-number">1.1.6.</span> <span class="nav-text">为kubernetes-dashboard.yaml添加Service后，就可以使用NodePort访问Dashboard。在我们的物理机上，使用Chrome访问https://192.168.56.101:32159/，结果如下图所示：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用API-Server"><span class="nav-number">1.1.7.</span> <span class="nav-text">使用API Server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#"><span class="nav-number">1.1.8.</span> <span class="nav-text">{</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#那如果使用节点自带的Firefox呢？我们在Firefox中访问：https-192-168-56-101-6443-api-v1-namespaces-kube-system-services-https-kubernetes-dashboard-proxy-，仍然提示上面的错误："><span class="nav-number">1.1.9.</span> <span class="nav-text">那如果使用节点自带的Firefox呢？我们在Firefox中访问：https://192.168.56.101:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/，仍然提示上面的错误：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用kubectl-proxy"><span class="nav-number">1.1.10.</span> <span class="nav-text">使用kubectl proxy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-配置Dashboard"><span class="nav-number">1.1.11.</span> <span class="nav-text">4.配置Dashboard</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#进入Dashboard的登录界面后，认证方式有Kubeconfig和令牌两种方式（实际上还有账号密码的方式，默认不开启不显示）。看到Kubeconfig和令牌，估计头都大了。是否有简便的方法，让我们能直接访问Dashboard？当然有，选择跳过，会出现如下页面："><span class="nav-number">2.</span> <span class="nav-text">进入Dashboard的登录界面后，认证方式有Kubeconfig和令牌两种方式（实际上还有账号密码的方式，默认不开启不显示）。看到Kubeconfig和令牌，估计头都大了。是否有简便的方法，让我们能直接访问Dashboard？当然有，选择跳过，会出现如下页面：</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhengding</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

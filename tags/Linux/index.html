@@ -99,7 +99,7 @@
   <meta name="description" content="This site is used to record notes">
 <meta property="og:type" content="website">
 <meta property="og:title" content="zhengding">
-<meta property="og:url" content="http://zhengding.github.io/tags/Linux/index.html">
+<meta property="og:url" content="http://zhengding.github.io/tags/linux/index.html">
 <meta property="og:site_name" content="zhengding">
 <meta property="og:description" content="This site is used to record notes">
 <meta property="og:locale" content="zh-CN">
@@ -112,7 +112,7 @@
 
 
 
-  <link rel="canonical" href="http://zhengding.github.io/tags/Linux/">
+  <link rel="canonical" href="http://zhengding.github.io/tags/linux/">
 
 
 
@@ -122,7 +122,7 @@
   };
 </script>
 
-  <title>标签: Linux | zhengding</title>
+  <title>标签: linux | zhengding</title>
   
 
 
@@ -360,7 +360,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>Linux<small>标签</small>
+        <h1>linux<small>标签</small>
         </h1>
       </div>
 
@@ -372,35 +372,9 @@
 
       <h2 class="post-title">
         
-          <a class="post-title-link" href="/2019/03/29/Linux之java环境变量配置/" itemprop="url">
+          <a class="post-title-link" href="/2019/03/29/Centos7.0 中的中iptables、firewall和SELINUX/" itemprop="url">
             
-              <span itemprop="name">Linux之Java环境变量配置</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-29T11:19:41+08:00" content="2019-03-29">
-          03-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/29/Linux常用命令/" itemprop="url">
-            
-              <span itemprop="name">Linux常用命令</span>
+              <span itemprop="name">Centos7.0 中的中iptables、firewall和SELINUX</span>
             
           </a>
         
@@ -464,7 +438,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-count">48</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -604,7 +578,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">48</span>
+                      
+                    
+                    <span class="site-state-item-count">49</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1074,6 +1050,58 @@
     $('.popup-trigger').click(function(e) {
       e.stopPropagation();
       if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+tched === false) {
         searchFunc(path, 'local-search-input', 'local-search-result');
       } else {
         proceedsearch();
