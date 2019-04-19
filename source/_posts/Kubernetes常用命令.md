@@ -6,3 +6,10 @@ tag:
 categories: Docker
 ---
 
+1、批量删除Evicted Pods
+
+```shell
+kubectl get pods | grep Evicted | awk '{print $1}' | xargs kubectl delete pod
+kubectl get pods | grep OutOfcpu | awk '{print $1}' | xargs kubectl delete pod
+```
+

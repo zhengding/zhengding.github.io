@@ -96,27 +96,25 @@
 
 
 
-  <meta name="description" content="1、启动跳过jar包检查 在conf/catalina.properties中加入 1org.apache.el.parser.SKIP_IDENTIFIER_CHECK=true 2、应用中需要绘图，例如activiti的流程图： 在catalina.sh加入">
-<meta name="keywords" content="tomcat">
+  <meta name="description" content="1、不同浏览器无法共享localStorage和sessionStorage的值。 2、相同浏览器下，并且是同源窗口（协议、域名、端口一致），不同页面可以共享localStorage值，通过跳转的页面可以共享sessionStorage值。 3、关于sessionStorage，通常说sessionStorage关闭页面即消失，但是通过跳转的页面可以共享sessionStorage值，跳转有多种方">
+<meta name="keywords" content="sessionStorage">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tomcat常用配置">
-<meta property="og:url" content="http://zhengding.github.io/2019/03/29/tomcat常用配置/index.html">
+<meta property="og:title" content="sessionStorage可共享情况和localStorage">
+<meta property="og:url" content="http://zhengding.github.io/2019/04/19/sessionStorage可共享情况和localStorage/index.html">
 <meta property="og:site_name" content="zhengding">
-<meta property="og:description" content="1、启动跳过jar包检查 在conf/catalina.properties中加入 1org.apache.el.parser.SKIP_IDENTIFIER_CHECK=true 2、应用中需要绘图，例如activiti的流程图： 在catalina.sh加入">
+<meta property="og:description" content="1、不同浏览器无法共享localStorage和sessionStorage的值。 2、相同浏览器下，并且是同源窗口（协议、域名、端口一致），不同页面可以共享localStorage值，通过跳转的页面可以共享sessionStorage值。 3、关于sessionStorage，通常说sessionStorage关闭页面即消失，但是通过跳转的页面可以共享sessionStorage值，跳转有多种方">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://zhengding.github.io/2019/03/29/tomcat常用配置/Users/ADMINI~1/AppData/Local/Temp/1528354046187.png">
-<meta property="og:updated_time" content="2019-03-29T03:19:41.277Z">
+<meta property="og:updated_time" content="2019-04-19T06:26:27.503Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tomcat常用配置">
-<meta name="twitter:description" content="1、启动跳过jar包检查 在conf/catalina.properties中加入 1org.apache.el.parser.SKIP_IDENTIFIER_CHECK=true 2、应用中需要绘图，例如activiti的流程图： 在catalina.sh加入">
-<meta name="twitter:image" content="http://zhengding.github.io/2019/03/29/tomcat常用配置/Users/ADMINI~1/AppData/Local/Temp/1528354046187.png">
+<meta name="twitter:title" content="sessionStorage可共享情况和localStorage">
+<meta name="twitter:description" content="1、不同浏览器无法共享localStorage和sessionStorage的值。 2、相同浏览器下，并且是同源窗口（协议、域名、端口一致），不同页面可以共享localStorage值，通过跳转的页面可以共享sessionStorage值。 3、关于sessionStorage，通常说sessionStorage关闭页面即消失，但是通过跳转的页面可以共享sessionStorage值，跳转有多种方">
 
 
 
 
 
 
-  <link rel="canonical" href="http://zhengding.github.io/2019/03/29/tomcat常用配置/">
+  <link rel="canonical" href="http://zhengding.github.io/2019/04/19/sessionStorage可共享情况和localStorage/">
 
 
 
@@ -126,7 +124,7 @@
   };
 </script>
 
-  <title>tomcat常用配置 | zhengding</title>
+  <title>sessionStorage可共享情况和localStorage | zhengding</title>
   
 
 
@@ -354,7 +352,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/03/29/tomcat常用配置/">
+    <link itemprop="mainEntityOfPage" href="http://zhengding.github.io/2019/04/19/sessionStorage可共享情况和localStorage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhengding">
@@ -371,7 +369,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">tomcat常用配置
+          <h1 class="post-title" itemprop="name headline">sessionStorage可共享情况和localStorage
 
               
             
@@ -397,30 +395,16 @@
                 
               
 
-              <time title="创建时间：2019-03-29 11:19:41" itemprop="dateCreated datePublished" datetime="2019-03-29T11:19:41+08:00">2019-03-29</time>
+              <time title="创建时间：2019-04-19 14:23:13 / 修改时间：14:26:27" itemprop="dateCreated datePublished" datetime="2019-04-19T14:23:13+08:00">2019-04-19</time>
             
 
+            
+              
+
+              
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/后端/" itemprop="url" rel="index"><span itemprop="name">后端</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -450,12 +434,16 @@
       
 
       
-        <p>1、启动跳过jar包检查</p>
-<p>在conf/catalina.properties中加入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.el.parser.SKIP_IDENTIFIER_CHECK=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>2、应用中需要绘图，例如activiti的流程图：</p>
-<p>在catalina.sh加入</p>
-<p><img src="/2019/03/29/tomcat常用配置/Users\ADMINI~1\AppData\Local\Temp\1528354046187.png" alt="1528354046187"></p>
+        <p>1、不同浏览器无法共享localStorage和sessionStorage的值。</p>
+<p>2、相同浏览器下，并且是同源窗口（协议、域名、端口一致），不同页面可以共享localStorage值，通过跳转的页面可以共享sessionStorage值。</p>
+<p>3、关于sessionStorage，通常说sessionStorage关闭页面即消失，但是通过跳转的页面可以共享sessionStorage值，跳转有多种方式：</p>
+<p>​    (1)  “<a href="同源页面" target="_self">跳转</a> “  //原窗口</p>
+<p>​    (2) <a href="同源页面" target="_blank">跳转</a>  //新开窗口</p>
+<p>​    (3) window.location.href = ‘同源页面’      //原窗口</p>
+<p>​    (4) window.location.replace(‘同源页面’)   //原窗口</p>
+<p>​    (5) window.open(‘同源页面’)       //新开窗口</p>
+<p>​    (6) this.$router.push({path: ‘同源页面’})   //通过路由跳转共享值</p>
+<p>app端通过原生方法更换webView实现跳转，这种方式不能共享sessionStorage，原窗口跳转的页面传递sessionStorage，改变存储值会相互影响，新开窗口跳转方式传递sessionStorage，改变存储值互不影响。</p>
 
       
     </div>
@@ -479,7 +467,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+            <a href="/tags/sessionStorage/" rel="tag"># sessionStorage</a>
           
         </div>
       
@@ -492,8 +480,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/29/react引入antd/" rel="next" title="react引入antd">
-                <i class="fa fa-chevron-left"></i> react引入antd
+              <a href="/2019/04/10/从零开始搭建K8S-搭建K8S-Dashboard/" rel="next" title="从零开始搭建K8S--搭建K8S Dashboard">
+                <i class="fa fa-chevron-left"></i> 从零开始搭建K8S--搭建K8S Dashboard
               </a>
             
           </div>
@@ -501,10 +489,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/29/webpack踩坑之路图片的路径与打包/" rel="prev" title="webpack踩坑之路图片的路径与打包">
-                webpack踩坑之路图片的路径与打包 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
