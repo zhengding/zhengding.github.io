@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="zhengding">
 <meta property="og:description" content="1、不同浏览器无法共享localStorage和sessionStorage的值。 2、相同浏览器下，并且是同源窗口（协议、域名、端口一致），不同页面可以共享localStorage值，通过跳转的页面可以共享sessionStorage值。 3、关于sessionStorage，通常说sessionStorage关闭页面即消失，但是通过跳转的页面可以共享sessionStorage值，跳转有多种方">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-19T06:26:27.503Z">
+<meta property="og:updated_time" content="2019-04-19T06:58:05.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sessionStorage可共享情况和localStorage">
 <meta name="twitter:description" content="1、不同浏览器无法共享localStorage和sessionStorage的值。 2、相同浏览器下，并且是同源窗口（协议、域名、端口一致），不同页面可以共享localStorage值，通过跳转的页面可以共享sessionStorage值。 3、关于sessionStorage，通常说sessionStorage关闭页面即消失，但是通过跳转的页面可以共享sessionStorage值，跳转有多种方">
@@ -395,7 +395,7 @@
                 
               
 
-              <time title="创建时间：2019-04-19 14:23:13 / 修改时间：14:26:27" itemprop="dateCreated datePublished" datetime="2019-04-19T14:23:13+08:00">2019-04-19</time>
+              <time title="创建时间：2019-04-19 14:23:13 / 修改时间：14:58:05" itemprop="dateCreated datePublished" datetime="2019-04-19T14:23:13+08:00">2019-04-19</time>
             
 
             
@@ -437,8 +437,10 @@
         <p>1、不同浏览器无法共享localStorage和sessionStorage的值。</p>
 <p>2、相同浏览器下，并且是同源窗口（协议、域名、端口一致），不同页面可以共享localStorage值，通过跳转的页面可以共享sessionStorage值。</p>
 <p>3、关于sessionStorage，通常说sessionStorage关闭页面即消失，但是通过跳转的页面可以共享sessionStorage值，跳转有多种方式：</p>
-<p>​    (1)  “<a href="同源页面" target="_self">跳转</a> “  //原窗口</p>
-<p>​    (2) <a href="同源页面" target="_blank">跳转</a>  //新开窗口</p>
+<p>​    (1)  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 原窗口</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"同源页面"</span> <span class="attr">target</span>=<span class="string">"_self"</span>&gt;</span>跳转<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>​    (2)  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 新开窗口</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"同源页面"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>跳转<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>​    (3) window.location.href = ‘同源页面’      //原窗口</p>
 <p>​    (4) window.location.replace(‘同源页面’)   //原窗口</p>
 <p>​    (5) window.open(‘同源页面’)       //新开窗口</p>
