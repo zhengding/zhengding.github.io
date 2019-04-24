@@ -260,10 +260,11 @@ export default class NewReactComponent extends Component {
 
 旧的生命周期
 
-![111](React-新的生命周期/2107079795-5bbb1373a3614_articlex-1556076831287.jpg)
+
 
 新的生命周期
-![图片描述](React-新的生命周期（React16版本）/2103351222-5bbb1369e1f41_articlex.jpg)
+
+
 
 1. React16新的生命周期弃用了componentWillMount、componentWillReceivePorps，componentWillUpdate
 2. 新增了getDerivedStateFromProps、getSnapshotBeforeUpdate来代替弃用的三个钩子函数（componentWillMount、componentWillReceivePorps，componentWillUpdate）
