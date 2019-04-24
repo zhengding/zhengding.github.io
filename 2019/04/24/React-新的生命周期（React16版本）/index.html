@@ -105,9 +105,7 @@
 <meta property="og:description" content="组件生命周期的三个阶段 Mounting（加载阶段） Updating（更新阶段） Unmounting（卸载阶段）  旧的生命周期 Mounting（加载阶段：涉及6个钩子函数）constructor() 1加载的时候调用一次，可以初始化state getDefaultProps() 1设置默认的props，也可以用dufaultProps设置组件的默认属性。 getInitialState()">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://zhengding.github.io/2019/04/24/React-新的生命周期（React16版本）/3284159097-5bbb08d17db33_articlex.png">
-<meta property="og:image" content="http://zhengding.github.io/2019/04/24/React-新的生命周期（React16版本）/2107079795-5bbb1373a3614_articlex-1556076831287.jpg">
-<meta property="og:image" content="http://zhengding.github.io/2019/04/24/React-新的生命周期（React16版本）/2103351222-5bbb1369e1f41_articlex.jpg">
-<meta property="og:updated_time" content="2019-04-24T03:36:22.824Z">
+<meta property="og:updated_time" content="2019-04-24T03:41:28.849Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React-新的生命周期">
 <meta name="twitter:description" content="组件生命周期的三个阶段 Mounting（加载阶段） Updating（更新阶段） Unmounting（卸载阶段）  旧的生命周期 Mounting（加载阶段：涉及6个钩子函数）constructor() 1加载的时候调用一次，可以初始化state getDefaultProps() 1设置默认的props，也可以用dufaultProps设置组件的默认属性。 getInitialState()">
@@ -399,7 +397,7 @@
                 
               
 
-              <time title="创建时间：2019-04-24 11:29:47 / 修改时间：11:36:22" itemprop="dateCreated datePublished" datetime="2019-04-24T11:29:47+08:00">2019-04-24</time>
+              <time title="创建时间：2019-04-24 11:29:47 / 修改时间：11:41:28" itemprop="dateCreated datePublished" datetime="2019-04-24T11:29:47+08:00">2019-04-24</time>
             
 
             
@@ -510,8 +508,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">任何一处的javascript报错会触发</span><br></pre></td></tr></table></figure>
 <h4 id="组件的基本写法-1"><a href="#组件的基本写法-1" class="headerlink" title="组件的基本写法"></a>组件的基本写法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &apos;react&apos;</span><br><span class="line"></span><br><span class="line">export default class NewReactComponent extends Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props)</span><br><span class="line">        // getDefaultProps：接收初始props</span><br><span class="line">        // getInitialState：初始化state</span><br><span class="line">    &#125;</span><br><span class="line">    state = &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    static getDerivedStateFromProps(props, state) &#123; // 组件每次被rerender的时候，包括在组件构建之后(虚拟dom之后，实际dom挂载之前)，每次获取新的props或state之后；;每次接收新的props之后都会返回一个对象作为新的state，返回null则说明不需要更新state</span><br><span class="line">        return state</span><br><span class="line">    &#125;</span><br><span class="line">    componentDidCatch(error, info) &#123; // 获取到javascript错误</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;h2&gt;New React.Component&lt;/h2&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">    componentDidMount() &#123; // 挂载后</span><br><span class="line">        </span><br><span class="line">    &#125;   </span><br><span class="line">    shouldComponentUpdate(nextProps, nextState) &#123; // 组件Props或者state改变时触发，true：更新，false：不更新</span><br><span class="line">        return true</span><br><span class="line">    &#125;</span><br><span class="line">    getSnapshotBeforeUpdate(prevProps, prevState) &#123; // 组件更新前触发</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    componentDidUpdate() &#123; // 组件更新后触发</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    componentWillUnmount() &#123; // 组件卸载时触发</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>旧的生命周期</p>
-<p><img src="/2019/04/24/React-新的生命周期（React16版本）/2107079795-5bbb1373a3614_articlex-1556076831287.jpg" alt="111"></p>
-<p>新的生命周期<br><img src="/2019/04/24/React-新的生命周期（React16版本）/2103351222-5bbb1369e1f41_articlex.jpg" alt="图片描述"></p>
+<p>新的生命周期</p>
 <ol>
 <li>React16新的生命周期弃用了componentWillMount、componentWillReceivePorps，componentWillUpdate</li>
 <li>新增了getDerivedStateFromProps、getSnapshotBeforeUpdate来代替弃用的三个钩子函数（componentWillMount、componentWillReceivePorps，componentWillUpdate）</li>
@@ -554,8 +551,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/19/sessionStorage可共享情况和localStorage/" rel="next" title="sessionStorage可共享情况和localStorage">
-                <i class="fa fa-chevron-left"></i> sessionStorage可共享情况和localStorage
+              <a href="/2019/04/24/React-新的生命周期/" rel="next" title="React-新的生命周期">
+                <i class="fa fa-chevron-left"></i> React-新的生命周期
               </a>
             
           </div>
@@ -631,7 +628,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
