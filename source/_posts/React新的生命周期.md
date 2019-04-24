@@ -1,6 +1,6 @@
 ---
-title: React-新的生命周期
-date: 2019-04-24 11:29:47
+title: React新的生命周期
+date: 2019-04-24 12:37:41
 tags:
 - React
 categories: 前端
@@ -14,7 +14,7 @@ categories: 前端
 
 ### 旧的生命周期
 
-![图片描述](React-新的生命周期/3284159097-5bbb08d17db33_articlex.png)
+![图片描述](React新的生命周期/3284159097-5bbb08d17db33_articlex.png)
 
 #### Mounting（加载阶段：涉及6个钩子函数）
 
@@ -25,8 +25,6 @@ categories: 前端
 ```
 
 **getDefaultProps()**
-
-
 
 ```
 设置默认的props，也可以用dufaultProps设置组件的默认属性。
@@ -98,7 +96,7 @@ react最重要的步骤，创建虚拟dom，进行diff算法，更新dom树都�
 
 #### 组件的基本写法
 
-```
+```javascript
 import React, { Component } from 'react'
 
 export default class OldReactComponent extends Component {
@@ -215,7 +213,7 @@ react最重要的步骤，创建虚拟dom，进行diff算法，更新dom树都�
 
 #### 组件的基本写法
 
-```
+```javascript
 import React, { Component } from 'react'
 
 export default class NewReactComponent extends Component {
@@ -259,12 +257,9 @@ export default class NewReactComponent extends Component {
 ### 总结
 
 旧的生命周期
-
-![å¾çæè¿°](React-新的生命周期/2107079795-5bbb1373a3614_articlex.jpg)
-
+![图片描述](React新的生命周期/2107079795-5bbb1373a3614_articlex.jpg)
 新的生命周期
-
-![å¾çæè¿°](React-新的生命周期/2103351222-5bbb1369e1f41_articlex.jpg)
+![图片描述](React新的生命周期/2103351222-5bbb1369e1f41_articlex.jpg)
 
 1. React16新的生命周期弃用了componentWillMount、componentWillReceivePorps，componentWillUpdate
 2. 新增了getDerivedStateFromProps、getSnapshotBeforeUpdate来代替弃用的三个钩子函数（componentWillMount、componentWillReceivePorps，componentWillUpdate）
