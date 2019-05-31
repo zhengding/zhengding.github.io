@@ -10,6 +10,7 @@
     "c": "hexo g && hexo d && git add . && git commit -am 'zhengding' && git push"
   },
   "dependencies": {
+    "g": "^2.0.1",
     "hexo": "^3.8.0",
     "hexo-asset-image": "git+https://github.com/CodeFalling/hexo-asset-image.git",
     "hexo-deployer-git": "^0.3.1",

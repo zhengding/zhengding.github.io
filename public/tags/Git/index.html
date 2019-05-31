@@ -99,7 +99,7 @@
   <meta name="description" content="This site is used to record notes">
 <meta property="og:type" content="website">
 <meta property="og:title" content="zhengding">
-<meta property="og:url" content="http://zhengding.github.io/tags/git/index.html">
+<meta property="og:url" content="http://zhengding.github.io/tags/Git/index.html">
 <meta property="og:site_name" content="zhengding">
 <meta property="og:description" content="This site is used to record notes">
 <meta property="og:locale" content="zh-CN">
@@ -112,7 +112,7 @@
 
 
 
-  <link rel="canonical" href="http://zhengding.github.io/tags/git/">
+  <link rel="canonical" href="http://zhengding.github.io/tags/Git/">
 
 
 
@@ -122,7 +122,7 @@
   };
 </script>
 
-  <title>标签: git | zhengding</title>
+  <title>标签: Git | zhengding</title>
   
 
 
@@ -360,7 +360,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>git<small>标签</small>
+        <h1>Git<small>标签</small>
         </h1>
       </div>
 
@@ -372,17 +372,69 @@
 
       <h2 class="post-title">
         
-          <a class="post-title-link" href="/2017/11/20/git教程/" itemprop="url">
+          <a class="post-title-link" href="/2019/03/29/把项目同时托管到github和oschina/" itemprop="url">
             
-              <span itemprop="name">git教程</span>
+              <span itemprop="name">把项目同时托管到github和oschina</span>
             
           </a>
         
       </h2>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-11-20T16:16:01+08:00" content="2017-11-20">
-          11-20
+        <time class="post-time" itemprop="dateCreated" datetime="2019-03-29T11:19:41+08:00" content="2019-03-29">
+          03-29
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+          <a class="post-title-link" href="/2019/03/29/git reset revert 回退回滚取消提交返回上一版本/" itemprop="url">
+            
+              <span itemprop="name">git reset revert 回退回滚取消提交返回上一版本</span>
+            
+          </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-03-29T11:19:41+08:00" content="2019-03-29">
+          03-29
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+          <a class="post-title-link" href="/2019/03/29/Git撤销&回滚操作/" itemprop="url">
+            
+              <span itemprop="name">Git撤销&回滚操作</span>
+            
+          </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-03-29T11:19:41+08:00" content="2019-03-29">
+          03-29
         </time>
       </div>
 
@@ -438,7 +490,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">53</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -584,7 +636,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">51</span>
+                      
+                    
+                    <span class="site-state-item-count">52</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1025,86 +1079,6 @@
               resultItems.forEach(function (result) {
                 searchResultList += result.item;
               })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
               searchResultList += "</ul>";
               resultContent.innerHTML = searchResultList;
             }
